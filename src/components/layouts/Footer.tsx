@@ -5,11 +5,13 @@ import {
   AiFillTwitterCircle,
 } from "react-icons/ai";
 
+// px-16 py-4 flex justify-between items-center
+
 export default function Footer() {
   return (
-    <footer className="px-16 py-4 flex justify-between items-center border-t h-[8vh]">
+    <footer className="border-t h-[8vh] flex flex-col items-center">
       <nav>
-        <ul className="flex uppercase gap-x-16 font-medium">
+        <ul className="flex uppercase font-medium justify-between items-center flex-wrap px-2 ">
           <li className="font-medium">
             <Link className="font-medium text-base tracking-widest" href="#">
               About us
