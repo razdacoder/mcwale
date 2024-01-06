@@ -10,7 +10,7 @@ import {
 export default function Footer() {
   return (
     <footer className="border-t h-[8vh] flex flex-col items-center">
-      <nav>
+      <nav className="hidden md:block">
         <ul className="flex uppercase font-medium justify-between items-center flex-wrap px-2 ">
           <li className="font-medium">
             <Link className="font-medium text-base tracking-widest" href="#">
@@ -44,16 +44,19 @@ export default function Footer() {
           </li>
         </ul>
       </nav>
-      <div className="flex items-center gap-x-4">
-        <Link href="#">
-          <AiFillFacebook className="w-8 h-8" />
-        </Link>
-        <Link href="#">
-          <AiFillTwitterCircle className="w-8 h-8" />
-        </Link>
-        <Link href="#">
-          <AiFillInstagram className="w-8 h-8" />
-        </Link>
+      <div className="flex flex-col justify-center py-2 items-center ">
+        <div className="flex items-center gap-x-4">
+          <Link href="#">
+            <AiFillFacebook className="w-8 h-8" />
+          </Link>
+          <Link href="#">
+            <AiFillTwitterCircle className="w-8 h-8" />
+          </Link>
+          <Link href="#">
+            <AiFillInstagram className="w-8 h-8" />
+          </Link>
+        </div>
+        <p>&copy; Mcwale {new Date().getFullYear()}</p>
       </div>
     </footer>
   );
