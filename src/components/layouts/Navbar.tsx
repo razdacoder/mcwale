@@ -7,7 +7,7 @@ export default function Navbar() {
   return (
     <header className="flex flex-col-reverse items-center justify-center gap-y-6 border-b h-[15vh] md:flex-row md:justify-between md:items-end md:pb-4 md:px-8">
       <nav className="w-full">
-        <ul className="flex uppercase justify-between px-2 md:justify-start md:gap-x-8">
+        <ul className="flex uppercase justify-between px-2 md:justify-start md:gap-x-8 lg:gap-x-16">
           <li className="font-medium">
             <Link
               className="font-semibold text-xs lg:text-base tracking-widest"

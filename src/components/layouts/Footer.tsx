@@ -9,9 +9,9 @@ import {
 
 export default function Footer() {
   return (
-    <footer className="border-t h-[8vh] flex flex-col items-center md:flex-row md:justify-between md:px-8">
+    <footer className="border-t h-[8vh] flex flex-col items-center md:flex-row md:justify-between md:px-8 lg:px-16">
       <nav className="hidden md:block">
-        <ul className="md:flex gap-x-3 uppercase">
+        <ul className="md:flex md:gap-x-3 lg:gap-x-16 uppercase">
           <li className="font-medium">
             <Link
               className="font-medium text-xs lg:text-base tracking-widest"
@@ -74,7 +74,9 @@ export default function Footer() {
             <AiFillInstagram className="w-6 h-6" />
           </Link>
         </div>
-        <p className="uppercase">&copy; Mcwale {new Date().getFullYear()}</p>
+        <p className="uppercase text-xs">
+          &copy; Mcwale {new Date().getFullYear()}
+        </p>
       </div>
     </footer>
   );
