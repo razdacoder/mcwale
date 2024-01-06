@@ -7,7 +7,7 @@ export default function Navbar() {
       <nav>
         <ul className="flex uppercase gap-x-16 font-medium">
           <li className="font-medium">
-            <Link className="font-medium text-base tracking-widest" href="#">
+            <Link className="font-semibold text-base tracking-widest" href="#">
               / Campaign
             </Link>
           </li>
