@@ -9,36 +9,54 @@ import {
 
 export default function Footer() {
   return (
-    <footer className="border-t h-[8vh] flex flex-col items-center">
+    <footer className="border-t h-[8vh] flex flex-col items-center md:flex-row md:justify-between md:px-8">
       <nav className="hidden md:block">
-        <ul className="flex uppercase font-medium justify-between items-center flex-wrap px-2 ">
+        <ul className="md:flex gap-x-3 uppercase">
           <li className="font-medium">
-            <Link className="font-medium text-base tracking-widest" href="#">
+            <Link
+              className="font-medium text-xs lg:text-base tracking-widest"
+              href="#"
+            >
               About us
             </Link>
           </li>
           <li>
-            <Link className="font-medium text-base tracking-widest" href="#">
+            <Link
+              className="font-medium text-xs lg:text-base tracking-widest"
+              href="#"
+            >
               Appointment
             </Link>
           </li>
           <li>
-            <Link className="font-medium text-base tracking-widest" href="#">
+            <Link
+              className="font-medium text-xs lg:text-base tracking-widest"
+              href="#"
+            >
               Contact
             </Link>
           </li>
           <li>
-            <Link className="font-medium text-base tracking-widest" href="#">
+            <Link
+              className="font-medium text-xs lg:text-base tracking-widest"
+              href="#"
+            >
               Policy
             </Link>
           </li>
           <li>
-            <Link className="font-medium text-base tracking-widest" href="#">
+            <Link
+              className="font-medium text-xs lg:text-base tracking-widest"
+              href="#"
+            >
               Newsletter
             </Link>
           </li>
           <li>
-            <Link className="font-medium text-base tracking-widest" href="#">
+            <Link
+              className="font-medium text-xs lg:text-base tracking-widest"
+              href="#"
+            >
               #Mcwalemen
             </Link>
           </li>
@@ -47,16 +65,16 @@ export default function Footer() {
       <div className="flex flex-col justify-center py-2 items-center ">
         <div className="flex items-center gap-x-4">
           <Link href="#">
-            <AiFillFacebook className="w-8 h-8" />
+            <AiFillFacebook className="w-6 h-6" />
           </Link>
           <Link href="#">
-            <AiFillTwitterCircle className="w-8 h-8" />
+            <AiFillTwitterCircle className="w-6 h-6" />
           </Link>
           <Link href="#">
-            <AiFillInstagram className="w-8 h-8" />
+            <AiFillInstagram className="w-6 h-6" />
           </Link>
         </div>
-        <p>&copy; Mcwale {new Date().getFullYear()}</p>
+        <p className="uppercase">&copy; Mcwale {new Date().getFullYear()}</p>
       </div>
     </footer>
   );
