@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import {
   AiFillFacebook,
@@ -5,16 +6,19 @@ import {
   AiFillTwitterCircle,
 } from "react-icons/ai";
 
-// px-16 py-4 flex justify-between items-center
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
+  const pathname = usePathname();
   return (
     <footer className="border-t h-[8vh] flex flex-col items-center md:flex-row md:justify-between md:px-8 lg:px-16">
       <nav className="hidden md:block">
         <ul className="md:flex md:gap-x-3 lg:gap-x-16 uppercase">
           <li className="font-medium">
             <Link
-              className="font-medium text-xs lg:text-base tracking-widest"
+              className={`text-xs lg:text-base tracking-widest ${
+                pathname === "/about" ? "font-semibold" : "font-medium"
+              }`}
               href="#"
             >
               About us
@@ -22,23 +26,29 @@ export default function Footer() {
           </li>
           <li>
             <Link
-              className="font-medium text-xs lg:text-base tracking-widest"
-              href="#"
+              className={`text-xs lg:text-base tracking-widest ${
+                pathname === "/appointment" ? "font-semibold" : "font-medium"
+              }`}
+              href="/appointment"
             >
               Appointment
             </Link>
           </li>
           <li>
             <Link
-              className="font-medium text-xs lg:text-base tracking-widest"
-              href="#"
+              className={`text-xs lg:text-base tracking-widest ${
+                pathname === "/contact" ? "font-semibold" : "font-medium"
+              }`}
+              href="/contact"
             >
               Contact
             </Link>
           </li>
           <li>
             <Link
-              className="font-medium text-xs lg:text-base tracking-widest"
+              className={`text-xs lg:text-base tracking-widest ${
+                pathname === "/policy" ? "font-semibold" : "font-medium"
+              }`}
               href="#"
             >
               Policy
@@ -46,7 +56,9 @@ export default function Footer() {
           </li>
           <li>
             <Link
-              className="font-medium text-xs lg:text-base tracking-widest"
+              className={`text-xs lg:text-base tracking-widest ${
+                pathname === "/newsletter" ? "font-semibold" : "font-medium"
+              }`}
               href="#"
             >
               Newsletter
@@ -74,7 +86,7 @@ export default function Footer() {
             <AiFillInstagram className="w-6 h-6" />
           </Link>
         </div>
-        <p className="uppercase text-xs">
+        <p className="uppercase text-xs tracking-widest">
           &copy; Mcwale {new Date().getFullYear()}
         </p>
       </div>
