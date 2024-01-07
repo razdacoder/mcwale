@@ -3,10 +3,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export default function Navbar() {
+type NavbarProps = {
+  className?: string;
+};
+
+export default function Navbar({ className }: NavbarProps) {
   const pathname = usePathname();
   return (
-    <header className="flex flex-col-reverse items-center justify-center gap-y-6 border-b h-[15vh] md:flex-row md:justify-between md:items-end md:pb-4 md:px-8">
+    <header
+      className={`flex flex-col-reverse items-center justify-center gap-y-6 border-b h-[15vh] md:flex-row md:justify-between md:items-end md:pb-4 md:px-8 ${className}`}
+    >
       <nav className="w-full">
         <ul className="flex uppercase justify-between px-2 md:justify-start md:gap-x-8 lg:gap-x-16">
           <li className="font-medium">
