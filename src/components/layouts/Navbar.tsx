@@ -1,7 +1,7 @@
 "use client";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Logo from "../ui/Logo";
 
 type NavbarProps = {
   className?: string;
@@ -58,7 +58,7 @@ export default function Navbar({ className }: NavbarProps) {
         </ul>
       </nav>
       <div>
-        <Image src="/next.svg" alt="Mcwale Logo" width={200} height={100} />
+        <Logo />
       </div>
     </header>
   );
