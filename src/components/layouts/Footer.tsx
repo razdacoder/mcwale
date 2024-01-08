@@ -22,7 +22,7 @@ export default function Footer({ className }: FooterProps) {
         <ul className="md:flex md:gap-x-3 lg:gap-x-16 uppercase">
           <li className="font-medium">
             <Link
-              className={`text-xs lg:text-base tracking-widest ${
+              className={`text-xs lg:text-base tracking-widest relative before:block before:content-[""] before:w-0 before:border-b-[3px] before:border-black before:py-2 before:transition-all before:duration-[0.5s] before:ease-in-out hover:before:w-full  ${
                 pathname === "/about" ? "font-semibold" : "font-medium"
               }`}
               href="#"
@@ -32,7 +32,7 @@ export default function Footer({ className }: FooterProps) {
           </li>
           <li>
             <Link
-              className={`text-xs lg:text-base tracking-widest ${
+              className={`text-xs lg:text-base tracking-widest relative before:block before:content-[""] before:w-0 before:border-b-[3px] before:border-black before:py-2 before:transition-all before:duration-[0.5s] before:ease-in-out hover:before:w-full  ${
                 pathname === "/appointment" ? "font-semibold" : "font-medium"
               }`}
               href="/appointment"
@@ -42,7 +42,7 @@ export default function Footer({ className }: FooterProps) {
           </li>
           <li>
             <Link
-              className={`text-xs lg:text-base tracking-widest ${
+              className={`text-xs lg:text-base tracking-widest relative before:block before:content-[""] before:w-0 before:border-b-[3px] before:border-black before:py-2 before:transition-all before:duration-[0.5s] before:ease-in-out hover:before:w-full  ${
                 pathname === "/contact" ? "font-semibold" : "font-medium"
               }`}
               href="/contact"
@@ -52,7 +52,7 @@ export default function Footer({ className }: FooterProps) {
           </li>
           <li>
             <Link
-              className={`text-xs lg:text-base tracking-widest ${
+              className={`text-xs lg:text-base tracking-widest relative before:block before:content-[""] before:w-0 before:border-b-[3px] before:border-black before:py-2 before:transition-all before:duration-[0.5s] before:ease-in-out hover:before:w-full  ${
                 pathname === "/policy" ? "font-semibold" : "font-medium"
               }`}
               href="#"
@@ -62,7 +62,7 @@ export default function Footer({ className }: FooterProps) {
           </li>
           <li>
             <Link
-              className={`text-xs lg:text-base tracking-widest ${
+              className={`text-xs lg:text-base tracking-widest relative before:block before:content-[""] before:w-0 before:border-b-[3px] before:border-black before:py-2 before:transition-all before:duration-[0.5s] before:ease-in-out hover:before:w-full  ${
                 pathname === "/newsletter" ? "font-semibold" : "font-medium"
               }`}
               href="#"
@@ -72,7 +72,7 @@ export default function Footer({ className }: FooterProps) {
           </li>
           <li>
             <Link
-              className="font-medium text-xs lg:text-base tracking-widest"
+              className="text-xs lg:text-base tracking-widest relative before:block before:content-[''] before:w-0 before:border-b-[3px] before:border-black before:py-2 before:transition-all before:duration-[0.5s] before:ease-in-out hover:before:w-full"
               href="#"
             >
               #Mcwalemen

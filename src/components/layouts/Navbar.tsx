@@ -17,7 +17,7 @@ export default function Navbar({ className }: NavbarProps) {
         <ul className="flex uppercase justify-between px-2 md:justify-start md:gap-x-8 lg:gap-x-16">
           <li className="font-medium">
             <Link
-              className={`text-xs lg:text-base tracking-widest ${
+              className={`text-xs lg:text-base tracking-widest relative before:block before:content-[""] before:w-0 before:border-b-[3px] before:border-black before:py-2 before:transition-all before:duration-[0.5s] before:ease-in-out hover:before:w-full ${
                 pathname === "/campaign" ? "font-semibold" : "font-medium"
               }`}
               href="/campaign"
@@ -27,7 +27,7 @@ export default function Navbar({ className }: NavbarProps) {
           </li>
           <li>
             <Link
-              className={`text-xs lg:text-base tracking-widest ${
+              className={`text-xs lg:text-base tracking-widest relative before:block before:content-[""] before:w-0 before:border-b-[3px] before:border-black before:py-2 before:transition-all before:duration-[0.5s] before:ease-in-out hover:before:w-full  ${
                 pathname === "/tailoring" ? "font-semibold" : "font-medium"
               }`}
               href="/tailoring"
@@ -37,7 +37,7 @@ export default function Navbar({ className }: NavbarProps) {
           </li>
           <li>
             <Link
-              className={`text-xs lg:text-base tracking-widest ${
+              className={`text-xs lg:text-base tracking-widest relative before:block before:content-[""] before:w-0 before:border-b-[3px] before:border-black before:py-2 before:transition-all before:duration-[0.5s] before:ease-in-out hover:before:w-full  ${
                 pathname === "/casuals" ? "font-semibold" : "font-medium"
               }`}
               href="/casuals"
@@ -47,7 +47,7 @@ export default function Navbar({ className }: NavbarProps) {
           </li>
           <li>
             <Link
-              className={`text-xs lg:text-base tracking-widest ${
+              className={`text-xs lg:text-base tracking-widest relative before:block before:content-[""] before:w-0 before:border-b-[3px] before:border-black before:py-2 before:transition-all before:duration-[0.5s] before:ease-in-out hover:before:w-full  ${
                 pathname === "/backstage" ? "font-semibold" : "font-medium"
               }`}
               href="/backstage"
