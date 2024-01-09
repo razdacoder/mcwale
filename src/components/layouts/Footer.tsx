@@ -16,7 +16,7 @@ export default function Footer({ className }: FooterProps) {
   const pathname = usePathname();
   return (
     <footer
-      className={`border-t h-[8vh] flex flex-col items-center md:flex-row md:justify-between md:px-8 lg:px-16 ${className}`}
+      className={`hidden border-t h-[8vh] md:flex md:items-center md:flex-row md:justify-between md:px-8 lg:px-16 ${className}`}
     >
       <nav className="hidden md:block">
         <ul className="md:flex md:gap-x-3 lg:gap-x-16 uppercase">
