@@ -85,7 +85,7 @@ export default function HomePage() {
         <h2 className="scroll-m-20 pb-2 relative text-3xl font-semibold tracking-tight before:block before:content-[''] before:absolute before:bottom-0 before:w-20 before:border-[3px] before:border-primary">
           Featured Products
         </h2>
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-x-4">
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
           <div className="w-full relative">
             <div className="absolute z-20 w-full top-0 left-0 px-3 py-2 flex justify-between items-center">
               <Button size="icon" className="rounded-full shadow-md">
@@ -311,7 +311,7 @@ export default function HomePage() {
         <h2 className="scroll-m-20 pb-2 relative text-3xl font-semibold tracking-tight before:block before:content-[''] before:absolute before:bottom-0 before:w-20 before:border-[3px] before:border-primary">
           Trending Products
         </h2>
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-x-4">
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
           <div className="w-full relative">
             <div className="absolute z-20 w-full top-0 left-0 px-3 py-2 flex justify-between items-center">
               <Button size="icon" className="rounded-full shadow-md">
