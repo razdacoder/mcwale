@@ -1,5 +1,17 @@
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 
-export default function Logo() {
-  return <Image src="/next.svg" alt="Logo" width={200} height={100} />;
+type LogoProps = {
+  className?: string;
+};
+export default function Logo({ className }: LogoProps) {
+  return (
+    <Image
+      src="/next.svg"
+      alt="Logo"
+      width={100}
+      height={50}
+      className={cn(className)}
+    />
+  );
 }

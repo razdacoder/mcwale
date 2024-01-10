@@ -18,7 +18,7 @@ export default function TailoringPage() {
       <Navbar className="fixed top-0 left-0 w-full bg-white" />
       <section
         id="sec"
-        className="h-[78vh] mt-[15vh] mb-[8vh] overflow-y-scroll bg-yellow-500 scroll-smooth scrollbar-hide"
+        className="h-[85vh] mt-[15vh] lg:mb-[8vh] overflow-y-scroll bg-yellow-500 scroll-smooth scrollbar-hide"
       >
         <div className="tailor w-full h-full bg-red-500"></div>
         <div className="tailor w-full h-full bg-blue-500"></div>

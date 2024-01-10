@@ -5,8 +5,8 @@ export default function Home() {
   return (
     <main className="w-full h-screen flex flex-col">
       <Navbar />
-      <section className="h-[78vh] flex flex-col">
-        <div className="h-5/6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <section className="h-[85vh] lg:h-[78vh] flex flex-col">
+        <div className="h-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           <div className="w-full h-full bg-[url('/img1-min.jpg')] bg-cover bg-center bg-no-repeat flex items-end">
             <div className="bg-white text-sm py-4 px-16 w-full h-1/4">
               Model: ANIMASHAUN FA’HD
@@ -20,7 +20,14 @@ export default function Home() {
           </div>
           {/* <div className="w-full h-full bg-[url('/img5-min.jpg')] bg-cover bg-center bg-no-repeat"></div> */}
         </div>
-        <div className="h-1/6 px-16 flex justify-between items-center bg-slate-200">
+      </section>
+      <Footer />
+    </main>
+  );
+}
+
+{
+  /* <div className="h-1/6 px-16 flex justify-between items-center bg-slate-200">
           <div className="inline-flex items-center gap-x-3">
             <label
               className="relative flex items-center p-3 rounded-full cursor-pointer"
@@ -68,9 +75,5 @@ export default function Home() {
               id="email"
             />
           </div>
-        </div>
-      </section>
-      <Footer />
-    </main>
-  );
+        </div> */
 }

@@ -1,12 +1,9 @@
 "use client";
-import Link from "next/link";
-import {
-  AiFillFacebook,
-  AiFillInstagram,
-  AiFillTwitterCircle,
-} from "react-icons/ai";
 
+import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 
 type FooterProps = {
   className?: string;
@@ -15,85 +12,31 @@ type FooterProps = {
 export default function Footer({ className }: FooterProps) {
   const pathname = usePathname();
   return (
-    <footer
-      className={`hidden border-t h-[8vh] md:flex md:items-center md:flex-row md:justify-between md:px-8 lg:px-16 ${className}`}
-    >
-      <nav className="hidden md:block">
-        <ul className="md:flex md:gap-x-3 lg:gap-x-16 uppercase">
-          <li className="font-medium">
-            <Link
-              className={`text-xs lg:text-base tracking-widest relative before:block before:content-[""] before:w-0 before:border-b-[3px] before:border-black before:py-2 before:transition-all before:duration-[0.5s] before:ease-in-out hover:before:w-full  ${
-                pathname === "/about" ? "font-semibold" : "font-medium"
-              }`}
-              href="#"
-            >
-              About us
-            </Link>
-          </li>
-          <li>
-            <Link
-              className={`text-xs lg:text-base tracking-widest relative before:block before:content-[""] before:w-0 before:border-b-[3px] before:border-black before:py-2 before:transition-all before:duration-[0.5s] before:ease-in-out hover:before:w-full  ${
-                pathname === "/appointment" ? "font-semibold" : "font-medium"
-              }`}
-              href="/appointment"
-            >
-              Appointment
-            </Link>
-          </li>
-          <li>
-            <Link
-              className={`text-xs lg:text-base tracking-widest relative before:block before:content-[""] before:w-0 before:border-b-[3px] before:border-black before:py-2 before:transition-all before:duration-[0.5s] before:ease-in-out hover:before:w-full  ${
-                pathname === "/contact" ? "font-semibold" : "font-medium"
-              }`}
-              href="/contact"
-            >
-              Contact
-            </Link>
-          </li>
-          <li>
-            <Link
-              className={`text-xs lg:text-base tracking-widest relative before:block before:content-[""] before:w-0 before:border-b-[3px] before:border-black before:py-2 before:transition-all before:duration-[0.5s] before:ease-in-out hover:before:w-full  ${
-                pathname === "/policy" ? "font-semibold" : "font-medium"
-              }`}
-              href="#"
-            >
-              Policy
-            </Link>
-          </li>
-          <li>
-            <Link
-              className={`text-xs lg:text-base tracking-widest relative before:block before:content-[""] before:w-0 before:border-b-[3px] before:border-black before:py-2 before:transition-all before:duration-[0.5s] before:ease-in-out hover:before:w-full  ${
-                pathname === "/newsletter" ? "font-semibold" : "font-medium"
-              }`}
-              href="#"
-            >
-              Newsletter
-            </Link>
-          </li>
-          <li>
-            <Link
-              className="text-xs lg:text-base tracking-widest relative before:block before:content-[''] before:w-0 before:border-b-[3px] before:border-black before:py-2 before:transition-all before:duration-[0.5s] before:ease-in-out hover:before:w-full"
-              href="#"
-            >
-              #Mcwalemen
-            </Link>
-          </li>
-        </ul>
-      </nav>
-      <div className="flex flex-col justify-center py-2 items-center ">
-        <div className="flex items-center gap-x-4">
-          <Link href="#">
-            <AiFillFacebook className="w-6 h-6" />
-          </Link>
-          <Link href="#">
-            <AiFillTwitterCircle className="w-6 h-6" />
-          </Link>
-          <Link href="#">
-            <AiFillInstagram className="w-6 h-6" />
-          </Link>
+    <footer className="px-6 pt-12 pb-6">
+      <div className="flex items-center flex-col gap-y-6">
+        <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
+          Newsletter
+        </h3>
+        <p>Get timely updates from your favourite products</p>
+        <form
+          className="w-full flex flex-col  md:flex-row md:w-1/2 md:gap-x-3 items-center gap-y-3"
+          action=""
+        >
+          <Input className="py-3" placeholder="Enter your email address" />
+          <Button className="uppercase" type="submit">
+            Subscribe
+          </Button>
+        </form>
+      </div>
+      <div className="flex flex-col justify-center md:flex-row gap-y-3 items-center mt-6 md:justify-between md:items-center">
+        <div className="uppercase font-medium tracking-wide text-sm flex flex-col items-center gap-y-3 md:flex-row md:gap-x-6">
+          <Link href="#">Terms and Policy</Link>
+          <Link href="#">About us</Link>
+          <Link href="#">Magazine</Link>
+          <Link href="#">#Mcwale</Link>
         </div>
-        <p className="uppercase text-xs tracking-widest">
-          &copy; Mcwale {new Date().getFullYear()}
+        <p className="mt-4 font-normal uppercase text-muted-foreground">
+          &copy; {new Date().getFullYear()} Mcwale
         </p>
       </div>
     </footer>
