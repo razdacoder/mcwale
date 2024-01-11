@@ -1,8 +1,9 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { Menu, Search, ShoppingBagIcon, User } from "lucide-react";
+import { Menu, Search, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { MdOutlineShoppingBag } from "react-icons/md";
 import Logo from "../ui/Logo";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
@@ -13,6 +14,43 @@ type NavbarProps = {
 };
 
 export default function Navbar({ className }: NavbarProps) {
+  const components: { title: string; href: string; description: string }[] = [
+    {
+      title: "Alert Dialog",
+      href: "/docs/primitives/alert-dialog",
+      description:
+        "A modal dialog that interrupts the user with important content and expects a response.",
+    },
+    {
+      title: "Hover Card",
+      href: "/docs/primitives/hover-card",
+      description:
+        "For sighted users to preview content available behind a link.",
+    },
+    {
+      title: "Progress",
+      href: "/docs/primitives/progress",
+      description:
+        "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
+    },
+    {
+      title: "Scroll-area",
+      href: "/docs/primitives/scroll-area",
+      description: "Visually or semantically separates content.",
+    },
+    {
+      title: "Tabs",
+      href: "/docs/primitives/tabs",
+      description:
+        "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
+    },
+    {
+      title: "Tooltip",
+      href: "/docs/primitives/tooltip",
+      description:
+        "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
+    },
+  ];
   const pathname = usePathname();
   return (
     <header>
@@ -27,7 +65,8 @@ export default function Navbar({ className }: NavbarProps) {
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="flex flex-col justify-between">
-            <div className="mt-6">
+            {/* <ScrollArea className=""> */}
+            <div className="mt-6 overflow-y-scroll">
               <form className="flex gap-x-2 items-center border-b border-primary">
                 <Input
                   className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
@@ -39,57 +78,17 @@ export default function Navbar({ className }: NavbarProps) {
                 <Link
                   className={cn(
                     "tracking-widest relative before:block before:content-[''] before:w-0 before:border-b-[3px] before:border-black before:py-2 before:transition-all before:duration-[0.5s] before:ease-in-out hover:before:w-full",
-                    pathname === "/campaign" && "before:w-full"
+                    pathname === "/shop" && "before:w-1/3"
                   )}
-                  href="/campaign"
+                  href="/shop"
                 >
-                  campaigns
+                  shop
                 </Link>
 
                 <Link
                   className={cn(
                     "tracking-widest relative before:block before:content-[''] before:w-0 before:border-b-[3px] before:border-black before:py-2 before:transition-all before:duration-[0.5s] before:ease-in-out hover:before:w-full",
-                    pathname === "/tailoring" && "before:w-full"
-                  )}
-                  href="/tailoring"
-                >
-                  NATIVEs
-                </Link>
-
-                <Link
-                  className={cn(
-                    "tracking-widest relative before:block before:content-[''] before:w-0 before:border-b-[3px] before:border-black before:py-2 before:transition-all before:duration-[0.5s] before:ease-in-out hover:before:w-full",
-                    pathname === "/casuals" && "before:w-full"
-                  )}
-                  href="/casuals"
-                >
-                  casuals
-                </Link>
-
-                <Link
-                  className={cn(
-                    "tracking-widest relative before:block before:content-[''] before:w-0 before:border-b-[3px] before:border-black before:py-2 before:transition-all before:duration-[0.5s] before:ease-in-out hover:before:w-full",
-                    pathname === "/backstage" && "before:w-full"
-                  )}
-                  href="/backstage"
-                >
-                  Backstage
-                </Link>
-
-                <Link
-                  className={cn(
-                    "tracking-widest relative before:block before:content-[''] before:w-0 before:border-b-[3px] before:border-black before:py-2 before:transition-all before:duration-[0.5s] before:ease-in-out hover:before:w-full",
-                    pathname === "/about" && "before:w-full"
-                  )}
-                  href="#"
-                >
-                  About us
-                </Link>
-
-                <Link
-                  className={cn(
-                    "tracking-widest relative before:block before:content-[''] before:w-0 before:border-b-[3px] before:border-black before:py-2 before:transition-all before:duration-[0.5s] before:ease-in-out hover:before:w-full",
-                    pathname === "/appointment" && "before:w-full"
+                    pathname === "/appointment" && "before:w-1/3"
                   )}
                   href="/appointment"
                 >
@@ -99,28 +98,23 @@ export default function Navbar({ className }: NavbarProps) {
                 <Link
                   className={cn(
                     "tracking-widest relative before:block before:content-[''] before:w-0 before:border-b-[3px] before:border-black before:py-2 before:transition-all before:duration-[0.5s] before:ease-in-out hover:before:w-full",
-                    pathname === "/contact" && "before:w-full"
+                    pathname === "/about" && "before:w-1/3"
                   )}
-                  href="/contact"
+                  href="#"
+                >
+                  About us
+                </Link>
+
+                <Link
+                  className={cn(
+                    "tracking-widest relative before:block before:content-[''] before:w-0 before:border-b-[3px] before:border-black before:py-2 before:transition-all before:duration-[0.5s] before:ease-in-out hover:before:w-full",
+                    pathname === "/contact" && "before:w-1/3"
+                  )}
+                  href="/#contact"
                 >
                   Contact us
                 </Link>
               </div>
-            </div>
-            <div>
-              <Button className="w-full bg-transparent p-0 uppercase text-primary font-semibold text-sm flex gap-x-3 items-center">
-                <ShoppingBagIcon className="text-primary" />
-                <div className="flex justify-between items-center flex-1">
-                  <span>Shopping cart</span>
-                  <span className="bg-primary text-white rounded-full px-2 py-1">
-                    0
-                  </span>
-                </div>
-              </Button>
-              <Button className="bg-transparent p-0 uppercase text-primary font-semibold text-sm flex gap-x-3 items-center">
-                <User className="text-primary" />
-                Login
-              </Button>
             </div>
           </SheetContent>
         </Sheet>
@@ -129,31 +123,20 @@ export default function Navbar({ className }: NavbarProps) {
           <Link
             className={cn(
               "tracking-widest relative before:block before:content-[''] before:w-0 before:border-b-[3px] before:border-black before:py-2 before:transition-all before:duration-[0.5s] before:ease-in-out hover:before:w-full",
-              pathname === "/tailoring" && "before:w-full"
+              pathname === "/shop" && "before:w-full"
             )}
-            href="/tailoring"
+            href="/shop"
           >
-            NATIVEs
+            shop
           </Link>
-
           <Link
             className={cn(
               "tracking-widest relative before:block before:content-[''] before:w-0 before:border-b-[3px] before:border-black before:py-2 before:transition-all before:duration-[0.5s] before:ease-in-out hover:before:w-full",
-              pathname === "/casuals" && "before:w-full"
+              pathname === "/appointment" && "before:w-full"
             )}
-            href="/casuals"
+            href="/appointment"
           >
-            casuals
-          </Link>
-
-          <Link
-            className={cn(
-              "tracking-widest relative before:block before:content-[''] before:w-0 before:border-b-[3px] before:border-black before:py-2 before:transition-all before:duration-[0.5s] before:ease-in-out hover:before:w-full",
-              pathname === "/backstage" && "before:w-full"
-            )}
-            href="/backstage"
-          >
-            Backstage
+            Appointment
           </Link>
 
           <Link
@@ -169,42 +152,42 @@ export default function Navbar({ className }: NavbarProps) {
           <Link
             className={cn(
               "tracking-widest relative before:block before:content-[''] before:w-0 before:border-b-[3px] before:border-black before:py-2 before:transition-all before:duration-[0.5s] before:ease-in-out hover:before:w-full",
-              pathname === "/appointment" && "before:w-full"
-            )}
-            href="/appointment"
-          >
-            Appointment
-          </Link>
-
-          <Link
-            className={cn(
-              "tracking-widest relative before:block before:content-[''] before:w-0 before:border-b-[3px] before:border-black before:py-2 before:transition-all before:duration-[0.5s] before:ease-in-out hover:before:w-full",
               pathname === "/contact" && "before:w-full"
             )}
-            href="/contact"
+            href="/#contact"
           >
             Contact us
           </Link>
         </div>
-        <div className="xl:flex-1 xl:ml-24">
-          <Logo />
-        </div>
 
         <div className="flex gap-x-2 items-center">
+          <form className="hidden lg:flex gap-x-2 items-center border-b border-primary">
+            <Input
+              className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+              placeholder="Search..."
+            />
+            <Search />
+          </form>
           <Button
+            asChild
             size="icon"
             className="bg-transparent p-0 hover:bg-transparent"
           >
-            <User className="text-primary" />
+            <Link href="/account">
+              <User className="text-primary" />
+            </Link>
           </Button>
           <Button
             size="icon"
             className="bg-transparent p-0 hover:bg-transparent"
           >
-            <ShoppingBagIcon className="text-primary" />
+            <MdOutlineShoppingBag className="w-6 h-6 text-primary" />
           </Button>
         </div>
       </nav>
+      <div className="w-full flex justify-center mt-2 mb-4">
+        <Logo />
+      </div>
     </header>
   );
 }

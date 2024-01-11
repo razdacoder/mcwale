@@ -12,7 +12,7 @@ type FooterProps = {
 export default function Footer({ className }: FooterProps) {
   const pathname = usePathname();
   return (
-    <footer className="px-6 pt-12 pb-6">
+    <footer className="px-6 pt-12 pb-6 bg-slate-100">
       <div className="flex items-center flex-col gap-y-6">
         <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
           Newsletter
