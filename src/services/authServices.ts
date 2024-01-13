@@ -1,11 +1,12 @@
-import { getSupabaseBrowserClient } from "@/lib/supbase-client";
+import { TypedSupabaseClient } from "@/lib/types";
 import { loginSchema, registerSchema } from "@/schemas/formSchemas";
 import * as z from "zod";
 
-const supabase = getSupabaseBrowserClient();
-
-export const signUp = async (values: z.infer<typeof registerSchema>) => {
-  let { data, error } = await supabase.auth.signUp({
+export const signUp = (
+  client: TypedSupabaseClient,
+  values: z.infer<typeof registerSchema>
+) => {
+  return client.auth.signUp({
     email: values.email,
     password: values.password,
     options: {
@@ -16,34 +17,30 @@ export const signUp = async (values: z.infer<typeof registerSchema>) => {
       emailRedirectTo: `${location.origin}/auth/callback`,
     },
   });
-  if (error) {
-    throw new Error(error.message);
-  }
-
-  return data;
 };
 
-export const login = async (values: z.infer<typeof loginSchema>) => {
-  let { data, error } = await supabase.auth.signInWithPassword(values);
-  if (error) throw new Error(error.message);
-
-  return data;
+export const login = (
+  client: TypedSupabaseClient,
+  values: z.infer<typeof loginSchema>
+) => {
+  return client.auth.signInWithPassword(values);
 };
 
-export const logout = async () => {
-  let { error } = await supabase.auth.signOut();
-  if (error) throw new Error(error.message);
-
-  return {};
+export const logout = (client: TypedSupabaseClient) => {
+  return client.auth.signOut();
 };
 
-export const getSession = async () => {
-  let {
-    data: { session },
-    error,
-  } = await supabase.auth.getSession();
-  if (error) {
-    throw new Error(error.message);
-  }
-  return session;
+export const getSession = (client: TypedSupabaseClient) => {
+  return client.auth.getSession();
+};
+
+export const getProfile = (client: TypedSupabaseClient, id: string) => {
+  return client.from("profiles").select("*").eq("id", id).single();
+};
+
+export const updateProfile = async (
+  client: TypedSupabaseClient,
+  profile: any
+) => {
+  return client.from("profiles").update(profile).eq("id", profile.id).select();
 };
