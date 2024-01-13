@@ -1,12 +1,17 @@
+import useSupabaseBrowser from "@/lib/supabase-client";
 import { logout } from "@/services/authServices";
 import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 export default function useLogout() {
-  const router = useRouter();
+  const supabase = useSupabaseBrowser();
+
   const { mutate: logoutFn } = useMutation({
-    mutationFn: logout,
+    mutationFn: async () => {
+      const { error } = await logout(supabase);
+      if (error) throw new Error(error.message);
+      return {};
+    },
     onSuccess: () => {
       location.reload();
       toast.success("Logout Successfull");
