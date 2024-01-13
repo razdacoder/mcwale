@@ -10,6 +10,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import Spinner from "@/components/ui/spinner";
+import useCreateUser from "@/hooks/useCreateUser";
 import { registerSchema } from "@/schemas/formSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
@@ -17,6 +19,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 export default function RegisterForm() {
+  const { createUser, creating } = useCreateUser();
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -27,10 +30,13 @@ export default function RegisterForm() {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof registerSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  const { isValid } = form.formState;
+
+  function onSubmit(values: z.infer<typeof registerSchema>) {
+    if (isValid) {
+      createUser(values);
+    }
+    form.reset();
   }
   return (
     <Form {...form}>
@@ -45,7 +51,7 @@ export default function RegisterForm() {
             <FormItem>
               <FormLabel>First Name</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input disabled={creating === "pending"} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -58,7 +64,7 @@ export default function RegisterForm() {
             <FormItem>
               <FormLabel>Last Name</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input disabled={creating === "pending"} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -71,7 +77,11 @@ export default function RegisterForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input type="email" {...field} />
+                <Input
+                  disabled={creating === "pending"}
+                  type="email"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -85,15 +95,23 @@ export default function RegisterForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input type="password" {...field} />
+                <Input
+                  disabled={creating === "pending"}
+                  type="password"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
         <div className="flex items-center justify-between">
-          <Button type="submit" className="uppercase">
-            Create account
+          <Button
+            disabled={!isValid || creating === "pending"}
+            type="submit"
+            className="uppercase flex gap-x-3 items-center"
+          >
+            {creating === "pending" && <Spinner />} Create account
           </Button>
           <p className="text-sm">
             Already a customer?{" "}

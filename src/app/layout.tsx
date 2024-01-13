@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import ReactQueryProvider from "@/components/providers/react-query-provider";
+import ToastProvider from "@/components/providers/toast-provider";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -14,7 +16,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className=" scroll-smooth">
-      <body>{children}</body>
+      <body>
+        <ReactQueryProvider>
+          <ToastProvider />
+          {children}
+        </ReactQueryProvider>
+      </body>
     </html>
   );
 }

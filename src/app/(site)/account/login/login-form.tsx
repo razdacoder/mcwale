@@ -9,6 +9,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import Spinner from "@/components/ui/spinner";
+import useLogin from "@/hooks/useLogin";
 import { loginSchema } from "@/schemas/formSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
@@ -16,6 +18,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 export default function LoginForm() {
+  const { signIn, status } = useLogin();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -24,10 +27,12 @@ export default function LoginForm() {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof loginSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  const { isValid } = form.formState;
+  function onSubmit(values: z.infer<typeof loginSchema>) {
+    if (isValid) {
+      signIn(values);
+    }
+    form.reset();
   }
   return (
     <Form {...form}>
@@ -42,7 +47,11 @@ export default function LoginForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input type="email" {...field} />
+                <Input
+                  disabled={status === "pending"}
+                  type="email"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -61,15 +70,23 @@ export default function LoginForm() {
               </div>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input type="password" {...field} />
+                <Input
+                  disabled={status === "pending"}
+                  type="password"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
         <div className="flex items-center justify-between">
-          <Button type="submit" className="uppercase">
-            Login
+          <Button
+            disabled={!isValid || status === "pending"}
+            type="submit"
+            className="uppercase flex gap-x-3 items-center"
+          >
+            {status === "pending" && <Spinner />} Login
           </Button>
           <p className="text-sm">
             Not yet a customer?{" "}

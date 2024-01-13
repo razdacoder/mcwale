@@ -1,6 +1,8 @@
 "use client";
+import useAuth from "@/hooks/useAuth";
+import useLogout from "@/hooks/useLogout";
 import { cn } from "@/lib/utils";
-import { Menu, Search, User } from "lucide-react";
+import { LogOut, Menu, Search, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MdOutlineShoppingBag } from "react-icons/md";
@@ -14,44 +16,9 @@ type NavbarProps = {
 };
 
 export default function Navbar({ className }: NavbarProps) {
-  const components: { title: string; href: string; description: string }[] = [
-    {
-      title: "Alert Dialog",
-      href: "/docs/primitives/alert-dialog",
-      description:
-        "A modal dialog that interrupts the user with important content and expects a response.",
-    },
-    {
-      title: "Hover Card",
-      href: "/docs/primitives/hover-card",
-      description:
-        "For sighted users to preview content available behind a link.",
-    },
-    {
-      title: "Progress",
-      href: "/docs/primitives/progress",
-      description:
-        "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
-    },
-    {
-      title: "Scroll-area",
-      href: "/docs/primitives/scroll-area",
-      description: "Visually or semantically separates content.",
-    },
-    {
-      title: "Tabs",
-      href: "/docs/primitives/tabs",
-      description:
-        "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
-    },
-    {
-      title: "Tooltip",
-      href: "/docs/primitives/tooltip",
-      description:
-        "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
-    },
-  ];
   const pathname = usePathname();
+  const { logoutFn } = useLogout();
+  const { isAuthenticated } = useAuth();
   return (
     <header>
       <nav className="w-full flex justify-between items-center xl:items-end py-6 px-1 xl:px-6">
@@ -183,6 +150,15 @@ export default function Navbar({ className }: NavbarProps) {
           >
             <MdOutlineShoppingBag className="w-6 h-6 text-primary" />
           </Button>
+          {isAuthenticated && (
+            <Button
+              size="icon"
+              className="bg-transparent p-0 hover:bg-transparent"
+              onClick={() => logoutFn()}
+            >
+              <LogOut className="w-6 h-6 text-primary" />
+            </Button>
+          )}
         </div>
       </nav>
       <div className="w-full flex justify-center mt-2 mb-4">
