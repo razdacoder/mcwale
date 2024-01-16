@@ -1,10 +1,4 @@
 "use client";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import useAuth from "@/hooks/useAuth";
 import useLogout from "@/hooks/useLogout";
@@ -22,6 +16,24 @@ type NavbarProps = {
 };
 
 export default function Navbar({ className }: NavbarProps) {
+  const navlinks = [
+    {
+      name: "Home",
+      link: "/",
+    },
+    {
+      name: "Shop",
+      link: "/shop",
+    },
+    {
+      name: "About us",
+      link: "/about",
+    },
+    {
+      name: "Contact us",
+      link: "/contact",
+    },
+  ];
   const pathname = usePathname();
   const { logoutFn } = useLogout();
   const { isAuthenticated } = useAuth();
@@ -48,85 +60,18 @@ export default function Navbar({ className }: NavbarProps) {
                 <Search />
               </form>
               <div className="uppercase font-light text-sm flex flex-col gap-y-3">
-                <Link
-                  className={cn(
-                    "tracking-widest relative before:block before:content-[''] before:w-0 before:border-b-[3px] before:border-black before:py-2 before:transition-all before:duration-[0.5s] before:ease-in-out hover:before:w-full",
-                    pathname === "/new-in" && "before:w-1/3"
-                  )}
-                  href="/new-in"
-                >
-                  new in
-                </Link>
-                <Accordion type="single" collapsible>
-                  <AccordionItem
-                    className="border-0 no-underline py-0 my-0"
-                    value="item-1"
+                {navlinks.map((nav, index) => (
+                  <Link
+                    key={index}
+                    className={cn(
+                      "tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
+                      pathname === nav.link && "before:w-full"
+                    )}
+                    href={nav.link}
                   >
-                    <AccordionTrigger className="hover:no-underline py-0">
-                      <div className="tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300 font-light no-underline border-0">
-                        SHOP
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="py-0 ml-4 flex flex-col gap-y-3">
-                      <Link
-                        className={cn(
-                          "tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
-                          pathname === "/new-in" && "before:w-1/3"
-                        )}
-                        href="/new-in"
-                      >
-                        KAFTAN
-                      </Link>
-                      <Link
-                        className={cn(
-                          "tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
-                          pathname === "/new-in" && "before:w-1/3"
-                        )}
-                        href="/new-in"
-                      >
-                        AGBADA
-                      </Link>
-                      <Link
-                        className={cn(
-                          "tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
-                          pathname === "/new-in" && "before:w-1/3"
-                        )}
-                        href="/new-in"
-                      >
-                        CASUALS
-                      </Link>
-                      <Link
-                        className={cn(
-                          "tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
-                          pathname === "/new-in" && "before:w-1/3"
-                        )}
-                        href="/new-in"
-                      >
-                        ACCESSORIES AND KITS
-                      </Link>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-
-                <Link
-                  className={cn(
-                    "tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
-                    pathname === "/appointment" && "before:w-1/3"
-                  )}
-                  href="/appointment"
-                >
-                  Appointment
-                </Link>
-
-                <Link
-                  className={cn(
-                    "tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
-                    pathname === "/about" && "before:w-1/3"
-                  )}
-                  href="#"
-                >
-                  About us
-                </Link>
+                    {nav.name}
+                  </Link>
+                ))}
               </div>
             </div>
           </SheetContent>
@@ -198,44 +143,18 @@ export default function Navbar({ className }: NavbarProps) {
       <div className="w-full flex flex-col items-center gap-y-6 mt-2 mb-4">
         <Logo />
         <div className="hidden uppercase xl:flex gap-x-6 font-light text-sm">
-          <Link
-            className={cn(
-              "tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
-              pathname === "/new-in" && "after:w-full"
-            )}
-            href="/new-in"
-          >
-            new in
-          </Link>
-
-          <Link
-            className={cn(
-              "tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
-              pathname === "/shop" && "after:w-full"
-            )}
-            href="/shop"
-          >
-            shop
-          </Link>
-
-          <Link
-            className={cn(
-              "tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
-              pathname === "/appointment" && "after:w-full"
-            )}
-            href="/appointment"
-          >
-            appointment
-          </Link>
-          <Link
-            className={cn(
-              "tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
-              pathname === "/about" && "after:w-full"
-            )}
-            href="/about"
-          >
-            about us
-          </Link>
+          {navlinks.map((nav, index) => (
+            <Link
+              key={index}
+              className={cn(
+                "tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
+                pathname === nav.link && "after:w-full"
+              )}
+              href={nav.link}
+            >
+              {nav.name}
+            </Link>
+          ))}
         </div>
       </div>
     </header>

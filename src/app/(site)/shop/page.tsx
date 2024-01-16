@@ -1,6 +1,5 @@
 import ProductCard from "@/components/layouts/ProductCard";
-// import Filters from "./_components/filters";
-// import MobileDrawer from "./_components/mobile-drawer";
+import ShopFilters from "./filters";
 import Paginator from "./paginator";
 
 export default function ShopPage() {
@@ -13,13 +12,12 @@ export default function ShopPage() {
           </h2>
         </div>
 
-        {/* <MobileDrawer />
-        <Filters /> */}
+        <ShopFilters />
       </section>
       <section className="py-6 px-2 lg:px-6">
         <div className=" grid grid-cols-1 lg:grid-cols-4 gap-x-4 gap-y-6">
           {[...Array(20)].map((_, index) => (
-            <ProductCard key={index} />
+            <ProductCard height="h-[400px]" key={index} />
           ))}
         </div>
 

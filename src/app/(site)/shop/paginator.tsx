@@ -10,7 +10,7 @@ import {
 
 export default function Paginator() {
   return (
-    <Pagination className="mt-6">
+    <Pagination className="mt-12">
       <PaginationContent>
         <PaginationPrevious href="#" />
 
