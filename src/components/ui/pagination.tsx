@@ -1,3 +1,4 @@
+"use client";
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
@@ -39,11 +40,11 @@ type PaginationLinkProps = {
 } & Pick<ButtonProps, "size"> &
   React.ComponentProps<typeof Link>;
 
+// pagination.tsx
 const PaginationLink = ({
   className,
   isActive,
   size = "icon",
-
   ...props
 }: PaginationLinkProps) => (
   <PaginationItem>

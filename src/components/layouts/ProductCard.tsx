@@ -1,49 +1,68 @@
 "use client";
-import { formatPriceToNaira } from "@/lib/utils";
-import { Heart, ShoppingCart } from "lucide-react";
+import { cn, formatPriceToNaira } from "@/lib/utils";
 import Link from "next/link";
-import { Button } from "../ui/button";
 import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 
-export default function ProductCard() {
+type ProductCardProps = {
+  height?: string;
+};
+
+export default function ProductCard({ height }: ProductCardProps) {
   return (
-    <div className="w-full relative">
-      <div className="absolute z-20 w-full top-0 left-0 px-3 py-4 flex justify-between">
-        <Button size="icon" className="rounded-full shadow-md">
-          <ShoppingCart className="w-4 h-4" />
-        </Button>
-        <Button size="icon" className="rounded-full shadow-md">
-          <Heart className="w-4 h-4" />
-        </Button>
-      </div>
-      <div className="w-full h-[450px]">
-        <Carousel>
-          <CarouselContent className="h-[450px] gap-x-0">
-            <CarouselItem>
-              <div className="h-full bg-[url('/img1-min.jpg')] bg-no-repeat bg-cover bg-center flex items-center px-8 lg:px-32"></div>
-            </CarouselItem>
-            <CarouselItem>
-              <div className="h-full bg-[url('/img2-min.jpg')] bg-no-repeat bg-cover bg-center flex items-center px-8 lg:px-32"></div>
-            </CarouselItem>
-            <CarouselItem>
-              <div className="h-full bg-[url('/img4-min.jpg')] bg-no-repeat bg-cover bg-center flex items-center px-8 lg:px-32"></div>
-            </CarouselItem>
-            <CarouselItem>
-              <div className="h-full bg-[url('/img5-min.jpg')] bg-no-repeat bg-cover bg-center flex items-center px-8 lg:px-32"></div>
-            </CarouselItem>
-          </CarouselContent>
-        </Carousel>
-      </div>
-      <Link href="#">
+    <Link href="#">
+      <div className="w-full">
+        <div className={cn("h-[550px] w-full", height)}>
+          <Carousel className="w-full">
+            <CarouselContent className={cn("h-[550px] w-full -ml-2", height)}>
+              <CarouselItem>
+                <div className="h-full">
+                  <img
+                    src="/img1-min.jpg"
+                    className="w-full h-full"
+                    alt="Product Image"
+                  />
+                </div>
+              </CarouselItem>
+              <CarouselItem>
+                <div className="h-full">
+                  <img
+                    src="/img2-min.jpg"
+                    className="w-full h-full"
+                    alt="Product Image"
+                  />
+                </div>
+              </CarouselItem>
+              <CarouselItem>
+                <div className="h-full">
+                  <img
+                    src="/img4-min.jpg"
+                    className="w-full h-full"
+                    alt="Product Image"
+                  />
+                </div>
+              </CarouselItem>
+              <CarouselItem>
+                <div className="h-full">
+                  <img
+                    src="/img5-min.jpg"
+                    className="w-full h-full"
+                    alt="Product Image"
+                  />
+                </div>
+              </CarouselItem>
+            </CarouselContent>
+          </Carousel>
+        </div>
+
         <div className="w-5/6 mx-auto flex items-center flex-col gap-y-2 mt-4">
-          <span className="font-semibold text-center text-sm w-full leading-5">
-            A Cream White, peak lapel, Square Patterned jacquard jacket
+          <span className="font-light text-center text-lg w-full leading-5 uppercase tracking-wider">
+            AGBADA DRESS
           </span>
-          <span className="font-semibold text-sm tracking-wide">
+          <span className="font-light text-sm tracking-wide">
             {formatPriceToNaira(75000)}
           </span>
         </div>
-      </Link>
-    </div>
+      </div>
+    </Link>
   );
 }
