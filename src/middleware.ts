@@ -81,9 +81,9 @@ export async function middleware(request: NextRequest) {
     return null;
   }
 
-  if (!isLoggedIn && !isPublicRoute) {
-    return Response.redirect(new URL("/account/login", nextUrl));
-  }
+  // if (!isLoggedIn && !isPublicRoute) {
+  //   return Response.redirect(new URL("/account/login", nextUrl));
+  // }
   return null;
 }
 

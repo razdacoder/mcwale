@@ -15,7 +15,7 @@ export default function ShopPage() {
         <ShopFilters />
       </section>
       <section className="py-6 px-2 lg:px-6">
-        <div className=" grid grid-cols-1 lg:grid-cols-4 gap-x-4 gap-y-6">
+        <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-6">
           {[...Array(20)].map((_, index) => (
             <ProductCard height="h-[400px]" key={index} />
           ))}

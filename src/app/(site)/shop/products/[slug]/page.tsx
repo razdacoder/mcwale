@@ -1,23 +1,22 @@
 "use client";
 import ProductCard from "@/components/layouts/ProductCard";
-import { Button } from "@/components/ui/button";
 import ReviewStars from "@/components/ui/review-stars";
 import { formatPriceToNaira } from "@/lib/utils";
-import { Edit2 } from "lucide-react";
 import AddToCart from "./_components/add-to-cart";
 import ProductCarousel from "./_components/product-carousel";
 import ProductQuantity from "./_components/product-quantity";
 import ProductSize from "./_components/product-size";
+import ReviewForm from "./_components/review-from";
 import SizeChart from "./_components/size-chart";
 
 export default function ProductPage() {
   return (
     <main className="px-3 lg:px-0 lg:container my-6">
-      <section className="flex flex-col lg:flex-row pb-12 gap-x-4">
-        <div className="w-full lg:w-6/12">
+      <section className="flex flex-col md:flex-row pb-12 gap-x-4">
+        <div className="w-full md:w-7/12 lg:w-6/12">
           <ProductCarousel />
         </div>
-        <div className="w-full lg:w-5/12 py-3">
+        <div className="w-full md:w-5/12 lg:w-5/12 py-3">
           <h3 className="uppercase tracking-wider text-xl font-light">
             Rolling Stone Spotted Logo Shirt
           </h3>
@@ -48,7 +47,7 @@ export default function ProductPage() {
           </div>
           <div className="mt-6">
             <h4 className="text-lg tracking-wider font-light">Description</h4>
-            <p className="text-sm leading-8 font-light tracking-wide">
+            <p className="text-sm mt-2 font-light tracking-wide">
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolore
               impedit cum natus eius totam ducimus delectus velit minima
               recusandae, consectetur sit ex fugit voluptates quis?
@@ -59,24 +58,24 @@ export default function ProductPage() {
       </section>
       <section className="my-12">
         <div className="text-center mb-4">
-          <h2 className="inline-block scroll-m-20 pb-2 uppercase text-center tracking-wider relative text-3xl font-light before:flex before:justify-center before:content-[''] before:absolute before:bottom-0 before:w-full before:border-b-[3px] before:border-primary">
+          <h2 className="inline-block scroll-m-20 pb-2 uppercase text-center tracking-wider relative text-sxl font-light before:flex before:justify-center before:content-[''] before:absolute before:bottom-0 before:w-full before:border-b-[3px] before:border-primary">
             you may also like
           </h2>
         </div>
         <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-6">
           {[...Array(4)].map((_, index) => (
-            <ProductCard height="h-[400px]" key={index} />
+            <ProductCard height="h-[350px] md:h-[400px]" key={index} />
           ))}
         </div>
       </section>
       <section className="my-12">
         <div className="text-center mb-4">
-          <h2 className="inline-block scroll-m-20 pb-2 uppercase text-center tracking-wider relative text-3xl font-light before:flex before:justify-center before:content-[''] before:absolute before:bottom-0 before:w-full before:border-b-[3px] before:border-primary">
+          <h2 className="inline-block scroll-m-20 pb-2 uppercase text-center tracking-wider relative text-xl font-light before:flex before:justify-center before:content-[''] before:absolute before:bottom-0 before:w-full before:border-b-[3px] before:border-primary">
             reviews
           </h2>
         </div>
         <div className="flex lg:gap-x-6 py-6 flex-col lg:flex-row gap-y-3 lg:gap-y-0">
-          <div className="px-6 shadow-md py-4 ">
+          <div className="px-6 shadow-md py-4 border">
             <div className="flex justify-between lg:gap-x-8 items-center">
               <div className="flex items-end gap-x-3">
                 <span className="font-bold text-3xl text-primary/90">5.0</span>
@@ -117,13 +116,10 @@ export default function ProductPage() {
 
           <div className="flex-1 flex flex-col gap-y-3 font-light text-sm ">
             <div className="flex justify-end">
-              <Button className="flex gap-x-3 items-center">
-                <Edit2 className="w-4 h-4" />
-                Add review
-              </Button>
+              <ReviewForm />
             </div>
 
-            <div className="flex gap-x-3 shadow-md py-4 px-6">
+            <div className="flex gap-x-3 border shadow-md py-4 px-6">
               <div className="w-8 h-8 lg:w-12 lg:h-12 rounded-full bg-black/90 text-white flex justify-center items-center text-sm">
                 A
               </div>

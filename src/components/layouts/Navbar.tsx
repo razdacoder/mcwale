@@ -49,9 +49,15 @@ export default function Navbar({ className }: NavbarProps) {
               <Menu className="w-8 h-8 text-primary" />
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="flex flex-col justify-between">
+          <SheetContent
+            side="left"
+            className="flex flex-col justify-between gap-y-6"
+          >
             <div className="mt-6 overflow-y-scroll">
-              <form className="flex gap-x-2 items-center border-b border-primary">
+              <form
+                autoFocus={false}
+                className="flex gap-x-2 items-center border-b border-primary"
+              >
                 <Input
                   autoFocus={false}
                   className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
@@ -59,7 +65,7 @@ export default function Navbar({ className }: NavbarProps) {
                 />
                 <Search />
               </form>
-              <div className="uppercase font-light text-sm flex flex-col gap-y-3">
+              <div className="uppercase font-light text-sm flex flex-col gap-y-4 mt-6">
                 {navlinks.map((nav, index) => (
                   <Link
                     key={index}

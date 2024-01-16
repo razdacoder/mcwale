@@ -1,7 +1,7 @@
 import { TypedSupabaseClient } from "@/lib/types";
 
 export const getAllCategories = (client: TypedSupabaseClient) => {
-  return client.from("catgories").select("*");
+  return client.from("catgories").select("id, title, slug, image");
 };
 
 export const getCategoryById = (client: TypedSupabaseClient, id: string) => {
