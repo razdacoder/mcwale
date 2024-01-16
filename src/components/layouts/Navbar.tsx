@@ -208,57 +208,15 @@ export default function Navbar({ className }: NavbarProps) {
             new in
           </Link>
 
-          <div
+          <Link
             className={cn(
-              "group tracking-widest cursor-pointer py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
+              "tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
               pathname === "/shop" && "after:w-full"
             )}
+            href="/shop"
           >
             shop
-            <div className="absolute hidden group-hover:block shadow-xl mt-1 z-50 bg-white px-6 py-4 w-56">
-              <div className="flex flex-col gap-y-4">
-                <Link
-                  className={cn(
-                    "tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
-                    pathname === "/kaftan" && "after:w-full"
-                  )}
-                  href="/kaftan"
-                >
-                  kaftan
-                </Link>
-
-                <Link
-                  className={cn(
-                    "tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
-                    pathname === "/agbada" && "after:w-full"
-                  )}
-                  href="/agbada"
-                >
-                  agbada
-                </Link>
-
-                <Link
-                  className={cn(
-                    "tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
-                    pathname === "/casual" && "after:w-full"
-                  )}
-                  href="/casual"
-                >
-                  casual
-                </Link>
-
-                <Link
-                  className={cn(
-                    "tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
-                    pathname === "/accsesories" && "after:w-full"
-                  )}
-                  href="/acessories"
-                >
-                  ACCESSORIES
-                </Link>
-              </div>
-            </div>
-          </div>
+          </Link>
 
           <Link
             className={cn(
