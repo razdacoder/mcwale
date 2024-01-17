@@ -8,7 +8,7 @@ import {
 export default function ProductCarousel() {
   return (
     <Carousel className="w-full">
-      <CarouselContent className="h-[450px] md:h-[500px] -ml-0 w-full">
+      <CarouselContent className="h-[450px] md:min-h-[600px]  -ml-0 w-full">
         <CarouselItem className="pl-0">
           <div className="h-full w-full flex items-center">
             <img

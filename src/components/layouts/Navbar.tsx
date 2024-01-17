@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { LogOut, Menu, Search, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { MdOutlineShoppingBag } from "react-icons/md";
+import { AiOutlineShopping } from "react-icons/ai";
 import Logo from "../ui/Logo";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
@@ -46,7 +46,7 @@ export default function Navbar({ className }: NavbarProps) {
               size="icon"
               className="bg-transparent p-0 active:bg-transparent xl:hidden"
             >
-              <Menu className="w-8 h-8 text-primary" />
+              <Menu strokeWidth={1.5} className="w-8 h-8 text-primary" />
             </Button>
           </SheetTrigger>
           <SheetContent
@@ -63,7 +63,7 @@ export default function Navbar({ className }: NavbarProps) {
                   className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                   placeholder="Search..."
                 />
-                <Search />
+                <Search strokeWidth={1.5} />
               </form>
               <div className="uppercase font-light text-sm flex flex-col gap-y-4 mt-6">
                 {navlinks.map((nav, index) => (
@@ -89,14 +89,14 @@ export default function Navbar({ className }: NavbarProps) {
             className="bg-transparent p-0 hover:bg-transparent"
           >
             <Link href="/account">
-              <User className="text-primary" />
+              <User strokeWidth={1.5} className="text-primary" />
             </Link>
           </Button>
           <Button
             size="icon"
             className="bg-transparent p-0 hover:bg-transparent flex gap-1"
           >
-            <MdOutlineShoppingBag className="w-6 h-6 text-primary" />
+            <AiOutlineShopping className="w-6 h-6 text-primary" />
             <span className="text-primary">0</span>
           </Button>
           {isAuthenticated && (
@@ -105,7 +105,7 @@ export default function Navbar({ className }: NavbarProps) {
               className="bg-transparent p-0 hover:bg-transparent"
               onClick={() => logoutFn()}
             >
-              <LogOut className="w-6 h-6 text-primary" />
+              <LogOut strokeWidth={1.5} className="w-6 h-6 text-primary" />
             </Button>
           )}
         </div>
@@ -116,7 +116,7 @@ export default function Navbar({ className }: NavbarProps) {
             className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
             placeholder="Search..."
           />
-          <Search />
+          <Search strokeWidth={1.5} />
         </form>
         <div className="flex gap-x-2 items-center">
           <Button
@@ -125,14 +125,14 @@ export default function Navbar({ className }: NavbarProps) {
             className="bg-transparent p-0 hover:bg-transparent"
           >
             <Link href="/account">
-              <User className="text-primary font-light" />
+              <User strokeWidth={1.5} className="text-primary font-light" />
             </Link>
           </Button>
           <Button
             size="icon"
             className="bg-transparent p-0 hover:bg-transparent flex gap-1 items-center"
           >
-            <MdOutlineShoppingBag className="w-6 h-6 text-primary" />
+            <AiOutlineShopping className="w-6 h-6 text-primary" />
             <span className="text-primary">0</span>
           </Button>
           {isAuthenticated && (
@@ -141,7 +141,7 @@ export default function Navbar({ className }: NavbarProps) {
               className="bg-transparent p-0 hover:bg-transparent"
               onClick={() => logoutFn()}
             >
-              <LogOut className="w-6 h-6 text-primary" />
+              <LogOut strokeWidth={1.5} className="w-6 h-6 text-primary" />
             </Button>
           )}
         </div>

@@ -7,13 +7,14 @@ import ProductCarousel from "./_components/product-carousel";
 import ProductQuantity from "./_components/product-quantity";
 import ProductSize from "./_components/product-size";
 import ReviewForm from "./_components/review-from";
+import ReviewsList from "./_components/review-list";
 import SizeChart from "./_components/size-chart";
 
 export default function ProductPage() {
   return (
-    <main className="px-3 lg:px-0 lg:container my-6">
+    <main className="px-3 lg:container my-6">
       <section className="flex flex-col md:flex-row pb-12 gap-x-4">
-        <div className="w-full md:w-7/12 lg:w-6/12">
+        <div className="w-full md:w-7/12 lg:w-5/12">
           <ProductCarousel />
         </div>
         <div className="w-full md:w-5/12 lg:w-5/12 py-3">
@@ -41,7 +42,7 @@ export default function ProductPage() {
             <h4 className="text-lg tracking-wider font-light">Quantity</h4>
             <ProductQuantity />
           </div>
-          <p className="mt-6 font-light">Shipping calculated at checkout</p>
+
           <div className="mt-6 flex gap-x-3 items-center">
             <AddToCart />
           </div>
@@ -114,32 +115,12 @@ export default function ProductPage() {
             </div>
           </div>
 
-          <div className="flex-1 flex flex-col gap-y-3 font-light text-sm ">
+          <div className="flex-1 lg:w-[70%] flex flex-col gap-y-6 font-light text-sm ">
             <div className="flex justify-end">
               <ReviewForm />
             </div>
 
-            <div className="flex gap-x-3 border shadow-md py-4 px-6">
-              <div className="w-8 h-8 lg:w-12 lg:h-12 rounded-full bg-black/90 text-white flex justify-center items-center text-sm">
-                A
-              </div>
-              <div className="flex flex-1 justify-between text-xs lg:text-sm">
-                <div className="flex flex-col gap-y-6 justify-between">
-                  <div>
-                    <h6>Seth. K</h6>
-                    <ReviewStars rating={5} className="w-4 h-4" />
-                  </div>
-                  <div className="flex flex-col gap-y-3">
-                    <h6>Great design and quality</h6>
-                    <p>
-                      Love the design and quality of the shirt. Fits true to
-                      size. The easy care fabric is a bonus. Would buy again.
-                    </p>
-                  </div>
-                </div>
-                <span>01/10/2024</span>
-              </div>
-            </div>
+            <ReviewsList />
           </div>
         </div>
       </section>
