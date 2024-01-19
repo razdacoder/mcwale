@@ -34,6 +34,12 @@ export default function Navbar({ className }: NavbarProps) {
       link: "/contact",
     },
   ];
+  const shopLinks = [
+    { name: "Agbada", link: "/agbda" },
+    { name: "Kaftan", link: "/kaftan" },
+    { name: "Senator Wears", link: "/senatot-wear" },
+    { name: "Casuals", link: "/casuals" },
+  ];
   const pathname = usePathname();
   const { logoutFn } = useLogout();
   const { isAuthenticated } = useAuth();
@@ -150,16 +156,39 @@ export default function Navbar({ className }: NavbarProps) {
         <Logo />
         <div className="hidden uppercase xl:flex gap-x-6 font-light text-sm">
           {navlinks.map((nav, index) => (
-            <Link
-              key={index}
-              className={cn(
-                "tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
-                pathname === nav.link && "after:w-full"
+            <>
+              {nav.link === "/shop" ? (
+                <div className="relative">
+                  <span className="peer tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300 cursor-pointer">
+                    Shop
+                  </span>
+                  <div className="hidden peer-hover:inline-flex absolute pb-3 -left-6 px-6 hover:inline-flex gap-y-2 flex-col w-[250px] py-1 pt-6 bg-white z-20">
+                    {shopLinks.map((nav, index) => (
+                      <Link
+                        className={cn(
+                          "inline-block w-max tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
+                          pathname === nav.link && "after:w-full"
+                        )}
+                        href={nav.link}
+                      >
+                        {nav.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <Link
+                  key={index}
+                  className={cn(
+                    "tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
+                    pathname === nav.link && "after:w-full"
+                  )}
+                  href={nav.link}
+                >
+                  {nav.name}
+                </Link>
               )}
-              href={nav.link}
-            >
-              {nav.name}
-            </Link>
+            </>
           ))}
         </div>
       </div>

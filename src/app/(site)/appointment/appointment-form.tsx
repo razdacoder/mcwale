@@ -25,6 +25,13 @@ export default function AppointmentForm() {
     resolver: zodResolver(appointmentSchema),
     defaultValues: {
       date: new Date(),
+      first_name: "",
+      last_name: "",
+      address: "",
+      email: "",
+      phone_number: "",
+      hh: "",
+      mm: "",
     },
   });
   return (
@@ -114,7 +121,8 @@ export default function AppointmentForm() {
                     <Input
                       type="date"
                       className="w-full px-1 outline-none border-[3px] border-black"
-                      {...field}
+                      value={new Date(field.value).toDateString()}
+                      onChange={(e) => (field.value = e.target.value)}
                     />
                   </FormControl>
                 </FormItem>

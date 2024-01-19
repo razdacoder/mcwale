@@ -6,30 +6,42 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
 import { Label } from "@/components/ui/label";
+import {
+  Sheet,
+  SheetContent,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { SlidersHorizontal } from "lucide-react";
 
 export default function MobileDrawer() {
   return (
-    <Drawer>
-      <DrawerTrigger className="lg:hidden border px-4 py-1">
-        Filter
-      </DrawerTrigger>
-      <DrawerContent>
-        <DrawerHeader>
-          <DrawerTitle>Filters</DrawerTitle>
-        </DrawerHeader>
-        <Accordion type="single" collapsible className="w-full px-2">
-          <AccordionItem value="item-1">
-            <AccordionTrigger className="hover:no-underline uppercase font-light">
-              style
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button
+          variant="outline"
+          size="lg"
+          className="py-6 md:py-6 px-8 md:px-16 border-primary flex gap-x-6"
+        >
+          <SlidersHorizontal className="w-4 h-4" />
+          <span className="font-semibold">Filter</span>
+        </Button>
+      </SheetTrigger>
+      <SheetContent className="w-1/3 px-0 flex flex-col">
+        <SheetHeader className="py-3 border-b px-6">
+          <SheetTitle className=" racking-wide">Filter (250 items)</SheetTitle>
+        </SheetHeader>
+        <Accordion
+          type="single"
+          collapsible
+          className="w-full flex-1 px-6 space-y-2"
+        >
+          <AccordionItem className="border-none" value="item-1">
+            <AccordionTrigger className="hover:no-underline border-none text-sm font-semibold">
+              Style
             </AccordionTrigger>
             <AccordionContent className="ml-3 flex gap-x-3">
               <div className="flex items-center space-x-2">
@@ -64,8 +76,8 @@ export default function MobileDrawer() {
               </div>
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="item-2">
-            <AccordionTrigger className="hover:no-underline uppercase font-light">
+          <AccordionItem value="item-2" className="border-none">
+            <AccordionTrigger className="hover:no-underline text-sm font-semibold">
               Color
             </AccordionTrigger>
             <AccordionContent className="ml-3 flex gap-x-3">
@@ -138,8 +150,8 @@ export default function MobileDrawer() {
               </div>
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="item-3">
-            <AccordionTrigger className="hover:no-underline uppercase font-light">
+          <AccordionItem value="item-3" className="border-none">
+            <AccordionTrigger className="hover:no-underline text-sm font-semibold">
               Price
             </AccordionTrigger>
             <AccordionContent className="flex gap-3 items-center flex-wrap">
@@ -223,13 +235,13 @@ export default function MobileDrawer() {
             </AccordionContent>
           </AccordionItem>
         </Accordion>
-        <DrawerFooter className="flex flex-row w-full gap-x-3 items-center">
-          <Button className="w-full" variant="outline">
+        <SheetFooter className="flex px-6 flex-row w-full gap-x-3 items-center mt-6">
+          <Button className="w-full py-3 px-12 font-bold" variant="outline">
             Clear
           </Button>
-          <Button className="w-full">Show</Button>
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
+          <Button className="w-full py-3 px-12 font-bold">Show</Button>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
   );
 }

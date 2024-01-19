@@ -7,10 +7,10 @@ type LogoProps = {
 export default function Logo({ className }: LogoProps) {
   return (
     <Image
-      src="/next.svg"
+      src="/mcwale logo.svg"
       alt="Logo"
       width={100}
-      height={50}
+      height={30}
       className={cn(className)}
     />
   );

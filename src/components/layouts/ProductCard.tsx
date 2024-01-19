@@ -54,11 +54,12 @@ export default function ProductCard({ height }: ProductCardProps) {
           </Carousel>
         </div>
 
-        <div className="w-5/6 mx-auto flex items-center flex-col gap-y-2 mt-4">
-          <span className="font-light text-center text-lg w-full leading-5 uppercase tracking-wider">
+        <div className="w-full flex items-center flex-col gap-y-1 mt-4">
+          <span className="font-semibold text-center text-sm w-full leading-5 uppercase tracking-wider">
             AGBADA DRESS
           </span>
-          <span className="font-light text-sm tracking-wide">
+
+          <span className="font-semibold text-sm mb-3 tracking-wide">
             {formatPriceToNaira(75000)}
           </span>
         </div>

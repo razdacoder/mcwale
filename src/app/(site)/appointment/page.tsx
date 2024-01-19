@@ -2,7 +2,7 @@ import AppointmentForm from "./appointment-form";
 
 export default function AppointmentPage() {
   return (
-    <main className="">
+    <main className="my-12">
       <h2 className="block scroll-m-20 my-12 pb-2 uppercase text-center tracking-wider text-2xl font-light ">
         appointment
       </h2>
