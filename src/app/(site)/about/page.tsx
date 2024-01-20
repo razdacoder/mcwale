@@ -19,16 +19,16 @@ export default function AboutPage() {
           <p className="mb-6">
             Having launched as a shirt specialist of some repute in Glasgow Ted
             Baker quickly became the place to buy some of the very best
-            contemporary men's shirting around.
+            contemporary men&apos;s shirting around.
           </p>
           <p className="mb-4">
             From the beginning Ted has had a very clear, unswerving, focus on
             quality, attention to detail and a quirky sense of humour, so much
             so in fact that the first stores used to provide a laundry service
             for every shirt purchased - something that gained the quickly
-            growing brand the title of 'No Ordinary Designer Label'. Everything
-            produced under the Ted Baker name has his personality woven into its
-            very heart.
+            growing brand the title of &apos;No Ordinary Designer Label&aspos;.
+            Everything produced under the Ted Baker name has his personality
+            woven into its very heart.
           </p>
           <ul className="list-disc list-inside ps-4 lg:ps-10">
             <li>
@@ -50,11 +50,11 @@ export default function AboutPage() {
             </li>
             <li>
               After signing three new territorial license agreements in 2006 and
-              initially opening stores in Hong Kong, Singapore and Dubai we've
-              continued our expansion in 2007 with the opening of a further
-              store in Hong Kong, <br /> Singapore, Bangkok, three in Kuala
-              Lumpur and two each in Dubai and Jakarta. We also have locations
-              in Taiwan and Bangkok.
+              initially opening stores in Hong Kong, Singapore and Dubai
+              we&apos;ve continued our expansion in 2007 with the opening of a
+              further store in Hong Kong, <br /> Singapore, Bangkok, three in
+              Kuala Lumpur and two each in Dubai and Jakarta. We also have
+              locations in Taiwan and Bangkok.
             </li>
           </ul>
         </div>
