@@ -42,7 +42,7 @@ export default function AppointmentForm() {
           name="first_name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="uppercase text-sm font-semibold tracking-wider">
+              <FormLabel className="uppercase text-sm font-medium tracking-wider">
                 first name
               </FormLabel>
               <FormControl>
@@ -59,7 +59,7 @@ export default function AppointmentForm() {
           name="last_name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="uppercase text-sm font-semibold tracking-wider">
+              <FormLabel className="uppercase text-sm font-medium tracking-wider">
                 last name
               </FormLabel>
               <FormControl>
@@ -76,7 +76,7 @@ export default function AppointmentForm() {
           name="address"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="uppercase text-sm font-semibold tracking-wider">
+              <FormLabel className="uppercase text-sm font-medium tracking-wider">
                 address
               </FormLabel>
               <FormControl>
@@ -93,7 +93,7 @@ export default function AppointmentForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="uppercase text-sm font-semibold tracking-wider">
+              <FormLabel className="uppercase text-sm font-medium tracking-wider">
                 email
               </FormLabel>
               <FormControl>
@@ -114,7 +114,7 @@ export default function AppointmentForm() {
               name="date"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="uppercase text-sm font-semibold tracking-wider">
+                  <FormLabel className="uppercase text-sm font-medium tracking-wider">
                     date
                   </FormLabel>
                   <FormControl>
@@ -136,7 +136,7 @@ export default function AppointmentForm() {
               name="hh"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="uppercase text-sm font-semibold tracking-wider">
+                  <FormLabel className="uppercase text-sm font-medium tracking-wider">
                     time
                   </FormLabel>
                   <FormControl>
@@ -145,7 +145,7 @@ export default function AppointmentForm() {
                       {...field}
                     />
                   </FormControl>
-                  <FormLabel className="uppercase text-sm font-semibold tracking-wider">
+                  <FormLabel className="uppercase text-sm font-medium tracking-wider">
                     hh
                   </FormLabel>
                 </FormItem>
@@ -156,7 +156,7 @@ export default function AppointmentForm() {
               name="mm"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="uppercase text-sm font-semibold tracking-wider">
+                  <FormLabel className="uppercase text-sm font-medium tracking-wider">
                     &nbsp;
                   </FormLabel>
                   <FormControl>
@@ -165,7 +165,7 @@ export default function AppointmentForm() {
                       {...field}
                     />
                   </FormControl>
-                  <FormLabel className="uppercase text-sm font-semibold tracking-wider">
+                  <FormLabel className="uppercase text-sm font-medium tracking-wider">
                     mm
                   </FormLabel>
                 </FormItem>
@@ -176,7 +176,7 @@ export default function AppointmentForm() {
               name="period"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="uppercase text-sm font-semibold tracking-wider">
+                  <FormLabel className="uppercase text-sm font-medium tracking-wider">
                     &nbsp;
                   </FormLabel>
                   <Select
@@ -203,7 +203,7 @@ export default function AppointmentForm() {
           name="phone_number"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="uppercase text-sm font-semibold tracking-wider">
+              <FormLabel className="uppercase text-sm font-medium tracking-wider">
                 phone number
               </FormLabel>
               <FormControl>

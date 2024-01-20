@@ -29,7 +29,7 @@ export default function MainNav() {
           >
             <Link className="flex items-center gap-[1.2rem] " href="/admin">
               <HomeIcon className="w-6 h-6" />
-              <span className="text-base font-semibold">Dashboard</span>
+              <span className="text-base font-medium">Dashboard</span>
             </Link>
           </Button>
         </li>
@@ -45,7 +45,7 @@ export default function MainNav() {
           >
             <Link className="flex items-center gap-[1.2rem]" href="/bookings">
               <CalendarDaysIcon className="w-6 h-6" />
-              <span className="text-base font-semibold">Bookings</span>
+              <span className="text-base font-medium">Bookings</span>
             </Link>
           </Button>
         </li>
@@ -61,7 +61,7 @@ export default function MainNav() {
           >
             <Link className="flex items-center gap-[1.2rem]" href="/rooms">
               <BedSingleIcon className="w-6 h-6" />
-              <span className="text-base font-semibold">Rooms</span>
+              <span className="text-base font-medium">Rooms</span>
             </Link>
           </Button>
         </li>
@@ -80,7 +80,7 @@ export default function MainNav() {
               href="/manage-users"
             >
               <UsersRound className="w-6 h-6" />
-              <span className="text-base font-semibold">Manege Users</span>
+              <span className="text-base font-medium">Manege Users</span>
             </Link>
           </Button>
         </li>
@@ -96,7 +96,7 @@ export default function MainNav() {
           >
             <Link className="flex items-center gap-[1.2rem]" href="/settings">
               <SettingsIcon className="w-6 h-6" />
-              <span className="text-base font-semibold">Settings</span>
+              <span className="text-base font-medium">Settings</span>
             </Link>
           </Button>
         </li>

@@ -28,7 +28,7 @@ export default function CarouselBanner() {
               <div>
                 <Button
                   size="lg"
-                  className="uppercase py-8 px-16 font-semibold tracking-wider"
+                  className="uppercase py-8 px-16 font-medium tracking-wider"
                 >
                   Shop now
                 </Button>

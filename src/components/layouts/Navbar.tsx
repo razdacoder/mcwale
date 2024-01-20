@@ -8,6 +8,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AiOutlineShopping } from "react-icons/ai";
 import Logo from "../ui/Logo";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../ui/accordion";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
@@ -30,8 +36,8 @@ export default function Navbar({ className }: NavbarProps) {
       link: "/about",
     },
     {
-      name: "Contact us",
-      link: "/contact",
+      name: "Appointment",
+      link: "/appointment",
     },
   ];
   const shopLinks = [
@@ -73,21 +79,50 @@ export default function Navbar({ className }: NavbarProps) {
               </form>
               <div className="uppercase font-light text-sm flex flex-col gap-y-4 mt-6">
                 {navlinks.map((nav, index) => (
-                  <Link
-                    key={index}
-                    className={cn(
-                      "tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
-                      pathname === nav.link && "before:w-full"
+                  <>
+                    {nav.link === "/shop" ? (
+                      <Accordion type="single" collapsible>
+                        <AccordionItem value="shop" className="border-none">
+                          <AccordionTrigger className="uppercase flex justify-between hover:no-underline font-light tracking-widest py-0">
+                            Shop
+                          </AccordionTrigger>
+                          <AccordionContent className="inline-flex flex-col gap-y-2 ml-1 mt-3">
+                            {shopLinks.map((nav, index) => (
+                              <Link
+                                key={nav.name}
+                                className={cn(
+                                  "w-max tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
+                                  pathname === nav.link && "after:w-full"
+                                )}
+                                href={nav.link}
+                              >
+                                {nav.name}
+                              </Link>
+                            ))}
+                          </AccordionContent>
+                        </AccordionItem>
+                      </Accordion>
+                    ) : (
+                      <Link
+                        key={index}
+                        className={cn(
+                          "tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
+                          pathname === nav.link && "before:w-full"
+                        )}
+                        href={nav.link}
+                      >
+                        {nav.name}
+                      </Link>
                     )}
-                    href={nav.link}
-                  >
-                    {nav.name}
-                  </Link>
+                  </>
                 ))}
               </div>
             </div>
           </SheetContent>
         </Sheet>
+        <div className="lg:hidden flex-1 flex justify-center">
+          <Logo />
+        </div>
         <div className="flex gap-x-2 items-center">
           <Button
             asChild
@@ -116,6 +151,7 @@ export default function Navbar({ className }: NavbarProps) {
           )}
         </div>
       </nav>
+
       <div className="hidden lg:flex lg:justify-between px-6 py-3">
         <form className="flex gap-x-2 items-center border-b border-primary">
           <Input
@@ -153,7 +189,10 @@ export default function Navbar({ className }: NavbarProps) {
         </div>
       </div>
       <div className="w-full flex flex-col items-center gap-y-6 mt-2 mb-4">
-        <Logo />
+        <div className="hidden lg:block">
+          <Logo />
+        </div>
+
         <div className="hidden uppercase xl:flex gap-x-6 font-light text-sm">
           {navlinks.map((nav, index) => (
             <>

@@ -56,7 +56,7 @@ export default function Home() {
                 </svg>
               </span>
             </label>
-            <span className="text-sm font-semibold tracking-widest">
+            <span className="text-sm font-medium tracking-widest">
               ACCEPT THE PRIVACY POLICY
             </span>
           </div>
@@ -64,7 +64,7 @@ export default function Home() {
           <div className="flex gap-x-2 items-center">
             <label
               htmlFor="email"
-              className="uppercase text-sm font-semibold tracking-wider"
+              className="uppercase text-sm font-medium tracking-wider"
             >
               sign up for our newsletter:
             </label>

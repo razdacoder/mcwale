@@ -115,7 +115,7 @@ export default function RegisterForm() {
           </Button>
           <p className="text-sm">
             Already a customer?{" "}
-            <Link className="underline font-semibold" href="/account/login">
+            <Link className="underline font-medium" href="/account/login">
               Login
             </Link>{" "}
           </p>

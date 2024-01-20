@@ -1,66 +1,62 @@
+import Heading from "@/components/ui/Heading";
+import Link from "next/link";
+
 export default function AboutPage() {
   return (
-    <main className="">
-      <h2 className="block scroll-m-20 my-12 pb-2 uppercase text-center tracking-wider text-2xl font-light ">
-        About us
-      </h2>
-      <section className="container my-12 flex gap-24 h-[500px]">
-        <div className="w-1/2">
-          <h2 className="block scroll-m-20 my-12 pb-2 uppercase tracking-wider text-2xl font-light ">
-            Our History
-          </h2>
-          <p className="leading-8 font-light">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
-            debitis voluptatem dolore, animi quisquam sint esse fuga nemo
-            praesentium laborum temporibus porro inventore, reiciendis
-            voluptatibus, neque hic quod ad unde aliquam. Quisquam esse nulla
-            exercitationem ipsam reiciendis saepe in, aliquam quidem dolorem
-            repellat sunt dignissimos commodi doloremque sapiente beatae tempora
-            minus quos facere? Consequatur blanditiis in incidunt ratione, iste
-            odit. Nam nihil quis iusto amet suscipit fugit dolorem, omnis
-            consequuntur aliquid explicabo! Laboriosam vel itaque corrupti eaque
-            alias, eos labore molestiae quos consequatur sit quas vero, veniam
-            tempore. Quia tempora cupiditate aut laboriosam dolorum beatae
-            vitae, porro deserunt nesciunt tempore.
+    <main className="px-3 lg:container py-12">
+      <div className="lg:mb-6 flex flex-col lg:gap-y-6">
+        <span className="hidden lg:inline-flex text-muted-foreground text-sm  gap-x-3">
+          <Link href="/">Home</Link>|
+          <span className="font-medium text-primary">About McWale</span>
+        </span>
+      </div>
+      <section className="py-6">
+        <Heading className="text-left text-xl normal-case">
+          The Design Story
+        </Heading>
+
+        <div className="text-xs lg:text-sm tracking-wide leading-8 text-slate-900 font-medium">
+          <p className="mb-6">
+            Having launched as a shirt specialist of some repute in Glasgow Ted
+            Baker quickly became the place to buy some of the very best
+            contemporary men's shirting around.
           </p>
-        </div>
-        <div className="w-1/2 h-full">
-          <img
-            src="/img5-min.jpg"
-            alt="McWale Image"
-            className="w-full h-full"
-          />
-        </div>
-      </section>
-      <section className="container gap-24 my-12 flex h-[500px]">
-        <div className="w-1/2 h-full">
-          <img
-            src="/img5-min.jpg"
-            alt="McWale Image"
-            className="w-full h-full"
-          />
-        </div>
-        <div className="w-1/2">
-          <h2 className="block scroll-m-20 my-12 pb-2 uppercase tracking-wider text-2xl font-light ">
-            McWale
-          </h2>
-          <p className="leading-8 font-light">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
-            debitis voluptatem dolore, animi quisquam sint esse fuga nemo
-            praesentium laborum temporibus porro inventore, reiciendis
-            voluptatibus, neque hic quod ad unde aliquam. Quisquam esse nulla
-            exercitationem ipsam reiciendis saepe in, aliquam quidem dolorem
-            repellat sunt dignissimos commodi doloremque sapiente beatae tempora
-            minus quos facere? Consequatur blanditiis in incidunt ratione, iste
-            odit. Nam nihil quis iusto amet suscipit fugit dolorem, omnis
-            consequuntur aliquid explicabo! Laboriosam vel itaque corrupti eaque
-            alias, eos labore molestiae quos consequatur sit quas vero, veniam
-            tempore. Quia tempora cupiditate aut laboriosam dolorum beatae
-            vitae, porro deserunt nesciunt tempore.
+          <p className="mb-4">
+            From the beginning Ted has had a very clear, unswerving, focus on
+            quality, attention to detail and a quirky sense of humour, so much
+            so in fact that the first stores used to provide a laundry service
+            for every shirt purchased – something that gained the quickly
+            growing brand the title of ‘No Ordinary Designer Label’. Everything
+            produced under the Ted Baker name has his personality woven into its
+            very heart.
           </p>
-          <span className="mt-4 font-light block uppercase">
-            Afeez Animashaun - CEO
-          </span>
+          <ul className="list-disc list-inside ps-4 lg:ps-10">
+            <li>
+              Ted Baker is one of the fastest-growing leading lifestyle brands
+              in the UK.
+            </li>
+            <li>
+              The collections have expanded rapidly since its beginnings as a
+              menswear brand in Glasgow in 1987.
+            </li>
+            <li>
+              Today Ted Baker offers a wide range of collections including:
+              Menswear, Womenswear, Global, Endurance, Pashion, Langley,
+              Accessories, Fragrance, Skinwear, Footwear, Eyewear and Watches.
+            </li>
+            <li>
+              Ted Baker has a portfolio of stores in the UK and USA and is also
+              present in leading department stores.
+            </li>
+            <li>
+              After signing three new territorial license agreements in 2006 and
+              initially opening stores in Hong Kong, Singapore and Dubai we've
+              continued our expansion in 2007 with the opening of a further
+              store in Hong Kong, <br /> Singapore, Bangkok, three in Kuala
+              Lumpur and two each in Dubai and Jakarta. We also have locations
+              in Taiwan and Bangkok.
+            </li>
+          </ul>
         </div>
       </section>
     </main>

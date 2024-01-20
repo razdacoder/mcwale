@@ -9,7 +9,7 @@ export default function NotFound() {
         unavailable.
       </p>
       <Link
-        className="bg-black text-white px-6 py-3 uppercase font-semibold"
+        className="bg-black text-white px-6 py-3 uppercase font-medium"
         href="/"
       >
         Go to homepage

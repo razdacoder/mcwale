@@ -55,11 +55,11 @@ export default function ProductCard({ height }: ProductCardProps) {
         </div>
 
         <div className="w-full flex items-center flex-col gap-y-1 mt-4">
-          <span className="font-semibold text-center text-sm w-full leading-5 uppercase tracking-wider">
+          <span className="font-medium text-center text-sm w-full leading-5 uppercase tracking-wider">
             AGBADA DRESS
           </span>
 
-          <span className="font-semibold text-sm mb-3 tracking-wide">
+          <span className="font-medium text-sm mb-3 tracking-wide">
             {formatPriceToNaira(75000)}
           </span>
         </div>

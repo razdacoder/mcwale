@@ -90,7 +90,7 @@ export default function LoginForm() {
           </Button>
           <p className="text-sm">
             Not yet a customer?{" "}
-            <Link className="underline font-semibold" href="/account/register">
+            <Link className="underline font-medium" href="/account/register">
               Register
             </Link>{" "}
           </p>

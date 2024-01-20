@@ -24,15 +24,17 @@ export default function MobileDrawer() {
         <Button
           variant="outline"
           size="lg"
-          className="py-6 md:py-6 px-8 md:px-16 border-primary flex gap-x-6"
+          className="py-6 w-[150px] md:w-[200px] px-8  border-primary flex gap-x-6 items-center"
         >
           <SlidersHorizontal className="w-4 h-4" />
-          <span className="font-semibold">Filter</span>
+          <span className="font-medium">Filter</span>
         </Button>
       </SheetTrigger>
-      <SheetContent className="w-1/3 px-0 flex flex-col">
+      <SheetContent className="w-3/4 lg:w-1/3 px-0 flex flex-col">
         <SheetHeader className="py-3 border-b px-6">
-          <SheetTitle className=" racking-wide">Filter (250 items)</SheetTitle>
+          <SheetTitle className="text-left tracking-wide">
+            Filter (250 items)
+          </SheetTitle>
         </SheetHeader>
         <Accordion
           type="single"
@@ -40,10 +42,10 @@ export default function MobileDrawer() {
           className="w-full flex-1 px-6 space-y-2"
         >
           <AccordionItem className="border-none" value="item-1">
-            <AccordionTrigger className="hover:no-underline border-none text-sm font-semibold">
+            <AccordionTrigger className="hover:no-underline border-none text-sm font-medium">
               Style
             </AccordionTrigger>
-            <AccordionContent className="ml-3 flex gap-x-3">
+            <AccordionContent className="ml-1 flex gap-x-3">
               <div className="flex items-center space-x-2">
                 <input
                   type="radio"
@@ -54,7 +56,7 @@ export default function MobileDrawer() {
                 />
                 <Label
                   htmlFor="option-one"
-                  className="border px-2 py-2 peer-checked:bg-primary peer-checked:text-white"
+                  className="border px-3 py-2 peer-checked:bg-primary peer-checked:text-white"
                 >
                   Plane
                 </Label>
@@ -77,10 +79,10 @@ export default function MobileDrawer() {
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-2" className="border-none">
-            <AccordionTrigger className="hover:no-underline text-sm font-semibold">
+            <AccordionTrigger className="hover:no-underline text-sm font-medium">
               Color
             </AccordionTrigger>
-            <AccordionContent className="ml-3 flex gap-x-3">
+            <AccordionContent className="ml-1 flex gap-x-3">
               <div className="flex items-center space-x-2">
                 <input
                   type="radio"
@@ -151,7 +153,7 @@ export default function MobileDrawer() {
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-3" className="border-none">
-            <AccordionTrigger className="hover:no-underline text-sm font-semibold">
+            <AccordionTrigger className="hover:no-underline text-sm font-medium">
               Price
             </AccordionTrigger>
             <AccordionContent className="flex gap-3 items-center flex-wrap">

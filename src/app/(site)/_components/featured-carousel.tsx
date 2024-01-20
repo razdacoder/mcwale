@@ -21,7 +21,7 @@ export default function FeaturedCarousel() {
                   className="w-full h-full"
                 />
               </div>
-              <span className="block font-semibold uppercase mt-3 text-primary text-sm text-center">
+              <span className="block font-medium uppercase mt-3 text-primary text-sm text-center">
                 Abgada Style
               </span>
             </Link>

@@ -16,7 +16,7 @@ export default function Footer({ className }: FooterProps) {
   return (
     <footer className="pt-12 pb-6 bg-slate-100">
       <div className="px-3 md:container">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-6 my-6 uppercase font-semibold text-sm">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-6 my-6 uppercase font-medium text-sm">
           <div>
             <h4 className="mb-3">My account</h4>
             <div className="flex flex-col gap-y-2">
@@ -106,7 +106,7 @@ export default function Footer({ className }: FooterProps) {
           </div>
         </div>
         <div className="flex items-center flex-col gap-y-6 mt-12">
-          <h3 className="scroll-m-20 text-2xl font-semibold tracking-wider uppercase">
+          <h3 className="scroll-m-20 text-2xl font-medium tracking-wider uppercase">
             Be the first to know!
           </h3>
           <p>Get timely updates from your favourite products</p>

@@ -1,11 +1,21 @@
+import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
 
-export default function Heading({ children }: { children: ReactNode }) {
+export default function Heading({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
   return (
-    <div className="text-center mb-4">
-      <h2 className="inline-block scroll-m-20 pb-2 uppercase text-center tracking-wider relative text-2xl font-semibold">
-        {children}
-      </h2>
-    </div>
+    <h2
+      className={cn(
+        "inline-block mb-4 scroll-m-20 pb-2 uppercase text-center tracking-wider relative text-2xl font-medium",
+        className
+      )}
+    >
+      {children}
+    </h2>
   );
 }

@@ -41,7 +41,7 @@ export default function CartItem() {
           </div>
         </div>
         <div className="text-sm mt-2 flex items-center gap-x-3">
-          <span className="text-sm font-semibold tracking-wider">TOTAL:</span>
+          <span className="text-sm font-medium tracking-wider">TOTAL:</span>
           <span className=" font-light tracking-wider text-red-500">
             {formatPriceToNaira(75000)}
           </span>
