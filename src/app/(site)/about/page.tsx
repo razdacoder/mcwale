@@ -5,7 +5,7 @@ export default function AboutPage() {
   return (
     <main className="px-3 lg:container py-12">
       <div className="lg:mb-6 flex flex-col lg:gap-y-6">
-        <span className="hidden lg:inline-flex text-muted-foreground text-sm  gap-x-3">
+        <span className="inline-flex text-muted-foreground text-sm  gap-x-3">
           <Link href="/">Home</Link>|
           <span className="font-medium text-primary">About McWale</span>
         </span>

@@ -3,12 +3,18 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
 } from "@/components/ui/carousel";
 
 export default function ProductCarousel() {
   return (
-    <Carousel className="w-full">
-      <CarouselContent className="h-[450px] md:min-h-[600px]  -ml-0 w-full">
+    <Carousel className="w-full relative">
+      <CarouselPrevious className="absolute top-[50%] left-2 z-10" />
+
+      <CarouselNext className="absolute top-[50%] right-2 z-10" />
+
+      <CarouselContent className="xl:h-[90vh] -ml-0 w-full">
         <CarouselItem className="pl-0">
           <div className="h-full w-full flex items-center">
             <img

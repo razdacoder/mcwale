@@ -193,7 +193,7 @@ export default function Navbar({ className }: NavbarProps) {
           <Logo />
         </div>
 
-        <div className="hidden uppercase xl:flex gap-x-6 font-light text-sm">
+        <div className="hidden uppercase lg:flex gap-x-6 font-light text-sm">
           {navlinks.map((nav, index) => (
             <>
               {nav.link === "/shop" ? (
@@ -206,7 +206,7 @@ export default function Navbar({ className }: NavbarProps) {
                   >
                     Shop
                   </span>
-                  <div className="hidden peer-hover:inline-flex absolute pb-3 -left-6 px-6 hover:inline-flex gap-y-2 flex-col w-[250px] py-1 pt-6 bg-white z-20">
+                  <div className="hidden peer-hover:inline-flex absolute pb-3 -left-6 px-6 hover:inline-flex gap-y-2 flex-col w-[250px] py-1 pt-6 bg-white z-50 shadow-md border">
                     {shopLinks.map((nav, index) => (
                       <Link
                         key={nav.name}

@@ -11,7 +11,7 @@ export default function Heading({
   return (
     <h2
       className={cn(
-        "inline-block mb-4 scroll-m-20 pb-2 uppercase text-center tracking-wider relative text-2xl font-medium",
+        "inline-block mb-2 scroll-m-20 uppercase text-center tracking-wider relative text-2xl font-medium",
         className
       )}
     >

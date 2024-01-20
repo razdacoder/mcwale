@@ -13,8 +13,8 @@ export default function ProductCard({ height }: ProductCardProps) {
       <div className="w-full">
         <div className={cn("h-[550px] w-full", height)}>
           <Carousel className="w-full">
-            <CarouselContent className={cn("h-[550px] w-full -ml-2", height)}>
-              <CarouselItem>
+            <CarouselContent className={cn("h-[550px] w-full -ml-0", height)}>
+              <CarouselItem className="pl-0">
                 <div className="h-full">
                   <img
                     src="/img1-min.jpg"
@@ -23,7 +23,7 @@ export default function ProductCard({ height }: ProductCardProps) {
                   />
                 </div>
               </CarouselItem>
-              <CarouselItem>
+              <CarouselItem className="pl-0">
                 <div className="h-full">
                   <img
                     src="/img2-min.jpg"
@@ -32,7 +32,7 @@ export default function ProductCard({ height }: ProductCardProps) {
                   />
                 </div>
               </CarouselItem>
-              <CarouselItem>
+              <CarouselItem className="pl-0">
                 <div className="h-full">
                   <img
                     src="/img4-min.jpg"
@@ -41,7 +41,7 @@ export default function ProductCard({ height }: ProductCardProps) {
                   />
                 </div>
               </CarouselItem>
-              <CarouselItem>
+              <CarouselItem className="pl-0">
                 <div className="h-full">
                   <img
                     src="/img5-min.jpg"
