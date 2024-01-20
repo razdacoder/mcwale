@@ -25,8 +25,8 @@ export default function AboutPage() {
             From the beginning Ted has had a very clear, unswerving, focus on
             quality, attention to detail and a quirky sense of humour, so much
             so in fact that the first stores used to provide a laundry service
-            for every shirt purchased – something that gained the quickly
-            growing brand the title of ‘No Ordinary Designer Label’. Everything
+            for every shirt purchased - something that gained the quickly
+            growing brand the title of 'No Ordinary Designer Label'. Everything
             produced under the Ted Baker name has his personality woven into its
             very heart.
           </p>
