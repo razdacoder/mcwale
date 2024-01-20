@@ -165,6 +165,7 @@ export default function Navbar({ className }: NavbarProps) {
                   <div className="hidden peer-hover:inline-flex absolute pb-3 -left-6 px-6 hover:inline-flex gap-y-2 flex-col w-[250px] py-1 pt-6 bg-white z-20">
                     {shopLinks.map((nav, index) => (
                       <Link
+                        key={nav.name}
                         className={cn(
                           "inline-block w-max tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
                           pathname === nav.link && "after:w-full"
