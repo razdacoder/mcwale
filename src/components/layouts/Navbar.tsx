@@ -41,10 +41,10 @@ export default function Navbar({ className }: NavbarProps) {
     },
   ];
   const shopLinks = [
-    { name: "Agbada", link: "/agbda" },
-    { name: "Kaftan", link: "/kaftan" },
-    { name: "Senator Wears", link: "/senatot-wear" },
-    { name: "Casuals", link: "/casuals" },
+    { name: "Agbada", link: "/shop/categories/agbda" },
+    { name: "Kaftan", link: "/shop/categories/kaftan" },
+    { name: "Senator Wears", link: "/shop/categories/senatot-wear" },
+    { name: "Casuals", link: "/shop/categories/casuals" },
   ];
   const pathname = usePathname();
   const { logoutFn } = useLogout();
@@ -198,7 +198,12 @@ export default function Navbar({ className }: NavbarProps) {
             <>
               {nav.link === "/shop" ? (
                 <div className="relative">
-                  <span className="peer tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300 cursor-pointer">
+                  <span
+                    className={cn(
+                      "peer tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300 cursor-pointer",
+                      pathname.startsWith("/shop") && "after:w-full"
+                    )}
+                  >
                     Shop
                   </span>
                   <div className="hidden peer-hover:inline-flex absolute pb-3 -left-6 px-6 hover:inline-flex gap-y-2 flex-col w-[250px] py-1 pt-6 bg-white z-20">
