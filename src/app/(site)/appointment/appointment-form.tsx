@@ -122,7 +122,7 @@ export default function AppointmentForm() {
                       type="date"
                       className="w-full px-1 outline-none border-[3px] border-black"
                       value={new Date(field.value).toDateString()}
-                      onChange={(e) => (field.value = e.target.value)}
+                      onChange={(e) => (field.value = new Date(e.target.value))}
                     />
                   </FormControl>
                 </FormItem>
