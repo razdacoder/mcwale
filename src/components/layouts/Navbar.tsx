@@ -50,16 +50,14 @@ export default function Navbar({ className }: NavbarProps) {
   const { logoutFn } = useLogout();
   const { isAuthenticated } = useAuth();
   return (
-    <header className="border-b">
-      <nav className="w-full flex justify-between items-center lg:hidden px-3 py-2">
+    <header className="border-b py-3">
+      <nav className="w-full flex justify-between items-center lg:hidden px-4">
         <Sheet>
-          <SheetTrigger asChild>
-            <Button
-              size="icon"
-              className="bg-transparent p-0 active:bg-transparent xl:hidden"
-            >
-              <Menu strokeWidth={1.5} className="w-8 h-8 text-primary" />
-            </Button>
+          <SheetTrigger className="px-0" asChild>
+            <Menu
+              strokeWidth={1.5}
+              className="w-8 h-8 text-primary cursor-pointer"
+            />
           </SheetTrigger>
           <SheetContent
             side="left"
@@ -152,7 +150,7 @@ export default function Navbar({ className }: NavbarProps) {
         </div>
       </nav>
 
-      <div className="hidden lg:flex lg:justify-between px-6 py-3">
+      <div className="hidden lg:flex lg:justify-between px-4">
         <form className="flex gap-x-2 items-center border-b border-primary">
           <Input
             className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
@@ -188,7 +186,7 @@ export default function Navbar({ className }: NavbarProps) {
           )}
         </div>
       </div>
-      <div className="w-full flex flex-col items-center gap-y-6 mt-2 mb-4">
+      <div className="w-full flex flex-col items-center gap-y-6">
         <div className="hidden lg:block">
           <Logo />
         </div>

@@ -10,3 +10,5 @@ export default function RegisterPage() {
     </main>
   );
 }
+
+// F1C5BB53-0F194425-9BBB6BF9-00DDB7CE

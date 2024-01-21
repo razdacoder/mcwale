@@ -15,7 +15,7 @@ export default function Footer({ className }: FooterProps) {
   const pathname = usePathname();
   return (
     <footer className="pt-12 pb-6 bg-slate-100">
-      <div className="px-3 md:container">
+      <div className="px-4 md:container">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-6 my-6 uppercase font-medium text-sm">
           <div>
             <h4 className="mb-3">My account</h4>

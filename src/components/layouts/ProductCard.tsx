@@ -9,11 +9,11 @@ type ProductCardProps = {
 
 export default function ProductCard({ height }: ProductCardProps) {
   return (
-    <Link href="#">
+    <Link href="/shop/products/agbada">
       <div className="w-full">
-        <div className={cn("h-[550px] w-full", height)}>
+        <div className={cn("h-[450px] w-full", height)}>
           <Carousel className="w-full">
-            <CarouselContent className={cn("h-[550px] w-full -ml-0", height)}>
+            <CarouselContent className={cn("h-[450px] w-full -ml-0", height)}>
               <CarouselItem className="pl-0">
                 <div className="h-full">
                   <img

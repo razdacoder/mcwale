@@ -12,9 +12,12 @@ export default function FeaturedCarousel() {
     <Carousel className="w-full relative">
       <CarouselContent className="-ml-2 ">
         {Array.from({ length: 12 }).map((_, index) => (
-          <CarouselItem key={index} className="pl-2 md:basis-1/2 xl:basis-1/5">
-            <Link href="#" className="w-full h-[500px] md:h-[450px]">
-              <div className="h-[450px] md:h-[400px] w-full">
+          <CarouselItem
+            key={index}
+            className="pl-2 basis-2/2 md:basis-1/3 lg:basis-1/5"
+          >
+            <Link href="#" className="w-full h-[400px]">
+              <div className="h-[350px] w-full">
                 <img
                   src="/img1-min.jpg"
                   alt="Featured Product"

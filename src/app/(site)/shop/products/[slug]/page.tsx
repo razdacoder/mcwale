@@ -17,16 +17,17 @@ export default function ProductPage() {
         <span className="inline-flex text-muted-foreground text-sm  gap-x-3">
           <Link href="/">Home</Link>|<Link href="/shop">Shop</Link>|
           <Link href="/shop/categories/agbada">Agbada</Link>
+          <span className="hidden md:inline">|</span>
           <span className="hidden md:inline font-meidum text-primary truncate">
-            | Rolling Stone Spotted Logo Shirt
+            Rolling Stone Spotted Logo Shirt
           </span>
         </span>
       </section>
       <section className="lg:container lg:px-4 flex flex-col lg:flex-row gap-y-6 gap-x-3 xl:gap-x-12">
-        <div className="w-full lg:w-6/12">
+        <div className="w-full lg:w-5/12">
           <ProductCarousel />
         </div>
-        <div className="w-full container px-4 lg:w-5/12 py-3 lg:px-0">
+        <div className="w-full container px-4 lg:w-6/12 py-3 lg:px-0">
           <h3 className="uppercase tracking-wider text-xl font-medium">
             Rolling Stone Spotted Logo Shirt
           </h3>
@@ -73,7 +74,7 @@ export default function ProductPage() {
           <SizeChart />
         </div>
       </section>
-      <section className="container px-4 lg:px-0 lg:container my-12">
+      <section className=" px-4 lg:container my-12">
         <div className="mb-4">
           <h2 className="inline-block scroll-m-20 pb-2 tracking-wider relative text-xl font-medium ">
             May Also Like
@@ -85,7 +86,7 @@ export default function ProductPage() {
           ))}
         </div>
       </section>
-      <section className="container px-4 lg:container my-12">
+      <section className="px-4 lg:container my-12">
         <div className=" mb-4">
           <h2 className="inline-block scroll-m-20 pb-2 text-center tracking-wider relative text-xl font-medium ">
             Reviews
