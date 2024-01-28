@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function InfoPage() {
   return (
-    <main className="px-4 lg:container py-12">
+    <main className="px-4 container py-12">
       <div className="lg:mb-6 flex flex-col lg:gap-y-6">
         <span className="inline-flex text-muted-foreground text-sm  gap-x-3">
           <Link href="/">Home</Link>|
@@ -20,7 +20,7 @@ export default function InfoPage() {
       <section className="py-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
         <Link href="/info/faq" className="flex h-32 border">
           <div className="w-2/12 bg-gray-200/60 flex items-center justify-center">
-            <Info strokeWidth={1.5} />
+            <Info strokeWidth={1.5} className="w-4 h-4" />
           </div>
           <div className="w-11/12 px-6 flex flex-col justify-center text-sm">
             <h5>Help and FAQs</h5>
@@ -32,7 +32,7 @@ export default function InfoPage() {
         </Link>
         <Link href="/info/size-guides" className="flex h-32 border">
           <div className="w-2/12 bg-gray-200/60 flex items-center justify-center">
-            <Ruler strokeWidth={1.5} />
+            <Ruler strokeWidth={1.5} className="w-4 h-4" />
           </div>
           <div className="w-11/12 px-6 flex flex-col justify-center text-sm">
             <h5>Size Guides</h5>
@@ -43,7 +43,7 @@ export default function InfoPage() {
         </Link>
         <Link href="/info/contact" className="flex h-32 border">
           <div className="w-2/12 bg-gray-200/60 flex items-center justify-center">
-            <NotebookPen strokeWidth={1.5} />
+            <NotebookPen strokeWidth={1.5} className="w-4 h-4" />
           </div>
           <div className="w-11/12 px-6 flex flex-col justify-center text-sm">
             <h5>Contact us</h5>
@@ -54,7 +54,7 @@ export default function InfoPage() {
         </Link>
         <Link href="/info/appointment" className="flex h-32 border">
           <div className="w-2/12 bg-gray-200/60 flex items-center justify-center">
-            <Calendar strokeWidth={1.5} />
+            <Calendar strokeWidth={1.5} className="w-4 h-4" />
           </div>
           <div className="w-11/12 px-6 flex flex-col justify-center text-sm">
             <h5>Appointment</h5>

@@ -24,7 +24,7 @@ export default function ProductPage() {
           </span>
         </span>
       </section>
-      <section className="lg:container lg:px-4 flex flex-col lg:flex-row gap-y-6 gap-x-3 xl:gap-x-12">
+      <section className="container lg:px-4 flex flex-col lg:flex-row gap-y-6 gap-x-3 xl:gap-x-12">
         <div className="w-full lg:w-5/12 px-4 lg:px-0">
           <ProductCarousel />
         </div>
@@ -72,7 +72,7 @@ export default function ProductPage() {
           <SizeChart />
         </div>
       </section>
-      <section className=" px-4 lg:container my-12">
+      <section className=" px-4 container my-12">
         <div className="mb-4">
           <h2 className="inline-block scroll-m-20 pb-2 tracking-wider relative text-xl font-medium ">
             May Also Like
@@ -80,11 +80,11 @@ export default function ProductPage() {
         </div>
         <div className=" grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-6">
           {[...Array(5)].map((_, index) => (
-            <ProductCard height="h-[220px] md:h-[350px]" key={index} />
+            <ProductCard height="h-[220px] md:h-[300px]" key={index} />
           ))}
         </div>
       </section>
-      <section className="px-4 lg:container my-12">
+      <section className="px-4 container my-12">
         <div className=" mb-4">
           <h2 className="inline-block scroll-m-20 pb-2 text-center tracking-wider relative text-xl font-medium ">
             Reviews

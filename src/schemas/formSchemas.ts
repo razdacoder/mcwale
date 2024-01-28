@@ -51,3 +51,23 @@ export const contactSchema = z.object({
   email: z.string().email(),
   message: z.string().min(1, { message: "Message can not be empty" }).max(300),
 });
+
+export const billingSchema = z.object({
+  first_name: z
+    .string()
+    .min(2, { message: "Name must ne at least 2 characters" }),
+  last_name: z
+    .string()
+    .min(2, { message: "Name must be at least 2 characters" }),
+  email: z.string().email(),
+  phoneNumber: z
+    .string()
+    .max(11, { message: "Phone number should not be more than 12 characters" }),
+  address1: z.string().min(1, { message: "Field is required" }),
+  address2: z.string().optional(),
+  town: z.string().min(1),
+  state: z.string().min(1),
+  country: z.string().min(1),
+  postal_code: z.number(),
+  order_note: z.string().min(1),
+});

@@ -7,7 +7,7 @@ import SortBy from "./_components/sort";
 export default function ShopCategoryPage() {
   return (
     <main className="relative">
-      <section className="px-3 lg:px-0 lg:container py-3 ">
+      <section className="px-4 lg:px-0 container py-3 ">
         <div className="lg:mb-3 flex flex-col gap-y-6">
           <span className="inline-flex text-muted-foreground text-sm  gap-x-3">
             <Link href="/">Home</Link>|<Link href="/shop">Shop</Link>|
@@ -19,7 +19,7 @@ export default function ShopCategoryPage() {
         </div>
       </section>
       <section className="bg-white py-3">
-        <div className="px-3 lg:px-0 lg:container flex justify-between items-center">
+        <div className="px-3 container flex justify-between items-center">
           <span className="hidden lg:block text-sm lg:text-lg font-medium text-primary tracking-wider">
             (250 items)
           </span>
@@ -31,7 +31,7 @@ export default function ShopCategoryPage() {
         </div>
       </section>
       <br />
-      <section className="px-3 lg:px-0 lg:container py-3">
+      <section className="px-4 container py-3">
         <div className=" grid grid-cols-2 lg:grid-cols-3 gap-2 md:gap-6">
           {[...Array(20)].map((_, index) => (
             <ProductCard

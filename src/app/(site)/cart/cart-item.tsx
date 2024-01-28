@@ -4,15 +4,15 @@ import { Minus, Plus, X } from "lucide-react";
 
 export default function CartItem() {
   return (
-    <div className=" flex gap-x-3 border shadow-md p-2 ">
-      <div className="w-5/12 md:w-3/12 h-[150px] md:h-[200px]">
+    <div className=" flex gap-x-6 border p-2 h-[150px] md:h-[250px] ">
+      <div className="w-5/12 md:w-3/12">
         <img src="/img1-min.jpg" className="w-full h-full" />
       </div>
-      <div className="w-6/12 md:w-8/12 md:py-2">
+      <div className="w-6/12 md:w-8/12 flex flex-col justify-center">
         <h3 className="uppercase tracking-wider text-xs lg:text-lg font-medium">
           Rolling Stone Spotted Logo Shirt
         </h3>
-        <div className="mt-1 lg:mt-2 flex md:flex-col gap-2 text-xs lg:text-sm">
+        <div className="hidden mt-1 lg:mt-2 md:flex md:flex-col gap-2 text-xs lg:text-sm">
           <span>Color: Black</span>
           <span>Size: XL</span>
           <span>Price: {formatPriceToNaira(90000)}</span>

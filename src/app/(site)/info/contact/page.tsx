@@ -10,7 +10,7 @@ import ContactForm from "./contact-form";
 
 export default function ContactPage() {
   return (
-    <div className="px-4 lg:container py-12">
+    <div className="px-4 container py-12">
       <div className="lg:mb-6 flex flex-col lg:gap-y-6">
         <span className="inline-flex text-muted-foreground text-sm  gap-x-3">
           <Link href="/">Home</Link>|<Link href="/info">Info</Link>|
@@ -37,9 +37,9 @@ export default function ContactPage() {
           <div className="w-2/12 lg:w-1/12 bg-gray-200/60 flex items-center justify-center">
             <AiOutlineEdit />
           </div>
-          <div className="w-11/12 px-6 flex flex-col justify-center text-sm">
+          <div className="w-11/12 px-3 flex flex-col justify-center text-xs lg:text-sm">
             <h5>Contact Form</h5>
-            <p className="font-light mt-1 mb-3">
+            <p className="font-light mt-1 mb-1">
               Click <ContactForm /> to submit a specific comment or query.
             </p>
             <span className="font-light"> (Up to 48 hour reply time)</span>
@@ -49,9 +49,9 @@ export default function ContactPage() {
           <div className="w-2/12 lg:w-1/12 bg-gray-200/60 flex items-center justify-center">
             <AiOutlinePhone />
           </div>
-          <div className="w-11/12 px-6 flex flex-col justify-center text-sm">
+          <div className="w-11/12 px-3 flex flex-col justify-center text-xs lg:text-sm">
             <h5>Telephone</h5>
-            <p className="font-light mt-1 mb-3">
+            <p className="font-light mt-1 mb-1">
               Give us a ring on{" "}
               <span className="underline">+23490836876872</span>
             </p>
@@ -65,9 +65,9 @@ export default function ContactPage() {
           <div className="w-2/12 lg:w-1/12 bg-gray-200/60 flex items-center justify-center">
             <AiOutlineMail />
           </div>
-          <div className="w-11/12 px-6 flex flex-col justify-center text-sm">
+          <div className="w-11/12 px-3 flex flex-col justify-center text-xs lg:text-sm">
             <h5>Email</h5>
-            <p className="font-light mt-1 mb-3">
+            <p className="font-light mt-1 mb-1">
               Reach McWale&apos;s inbox at{" "}
               <Link href="ask@mcwale.com" className="underline">
                 ask@mcwale.com
@@ -80,9 +80,9 @@ export default function ContactPage() {
           <div className="w-2/12 lg:w-1/12 bg-gray-200/60 flex items-center justify-center">
             <AiOutlineWhatsApp />
           </div>
-          <div className="w-11/12 px-6 flex flex-col justify-center text-sm">
+          <div className="w-11/12 px-3 flex flex-col justify-center text-xs lg:text-sm">
             <h5>WhatsApp</h5>
-            <p className="font-light mt-1 mb-3">
+            <p className="font-light mt-1 mb-1">
               Chat with us{" "}
               <Link href="" className="underline">
                 here

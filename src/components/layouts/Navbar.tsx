@@ -126,14 +126,28 @@ export default function Navbar({ className }: NavbarProps) {
         <div className="lg:hidden flex-1 flex justify-center">
           <Logo />
         </div>
-        <div className="flex gap-x-2 items-center">
+        <div className="flex gap-x-3 items-center">
           <Button
             size="icon"
             className="bg-transparent p-0 hover:bg-transparent flex gap-1"
+            asChild
           >
-            <AiOutlineShopping className="w-6 h-6 text-primary" />
-            <span className="text-primary">0</span>
+            <Link href="/cart">
+              <AiOutlineShopping className="w-6 h-6 text-primary" />
+              <span className="text-primary">0</span>
+            </Link>
           </Button>
+          <Select defaultValue="NGN">
+            <SelectTrigger className="w-full px-1 outline-none border-none focus-within:ring-0">
+              <SelectValue defaultValue="NGN" placeholder="Select period" />
+            </SelectTrigger>
+
+            <SelectContent>
+              <SelectItem value="NGN">🇳🇬 NGN</SelectItem>
+              <SelectItem value="GBP">🇬🇧 GBP</SelectItem>
+              <SelectItem value="USD">🇺🇸 USD</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </nav>
 
@@ -145,13 +159,16 @@ export default function Navbar({ className }: NavbarProps) {
           />
           <Search strokeWidth={1.5} />
         </form>
-        <div className="flex gap-x-2 items-center">
+        <div className="flex gap-x-3 items-center">
           <Button
             size="icon"
-            className="bg-transparent p-0 hover:bg-transparent flex gap-1 items-center"
+            className="bg-transparent p-0 hover:bg-transparent flex gap-1"
+            asChild
           >
-            <AiOutlineShopping className="w-6 h-6 text-primary" />
-            <span className="text-primary">0</span>
+            <Link href="/cart">
+              <AiOutlineShopping className="w-6 h-6 text-primary" />
+              <span className="text-primary">0</span>
+            </Link>
           </Button>
           <Select defaultValue="NGN">
             <SelectTrigger className="w-full px-1 outline-none border-none focus-within:ring-0">

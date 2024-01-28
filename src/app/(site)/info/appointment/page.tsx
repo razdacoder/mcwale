@@ -3,15 +3,17 @@ import AppointmentForm from "./appointment-form";
 
 export default function AppointmentPage() {
   return (
-    <>
-      <div className="lg:mb-6 flex flex-col lg:gap-y-6">
-        <span className="inline-flex text-muted-foreground text-sm  gap-x-3">
-          <Link href="/">Home</Link>|<Link href="/info">Info</Link>|
-          <span className="font-medium text-primary">Appointment</span>
-        </span>
-      </div>
+    <main>
+      <section className="px-4 container my-4">
+        <div className="lg:mb-6 flex flex-col lg:gap-y-6">
+          <span className="inline-flex text-muted-foreground text-sm  gap-x-3">
+            <Link href="/">Home</Link>|<Link href="/info">Info</Link>|
+            <span className="font-medium text-primary">Appointment</span>
+          </span>
+        </div>
+      </section>
 
-      <section className="container h-[78vh] px-8 py-3 md:pl-6 md:pr-0 xl:px-16 flex ">
+      <section className="container h-[78vh] px-4 py-3 flex ">
         <div className="w-full md:w-2/4 flex items-center">
           <AppointmentForm />
         </div>
@@ -31,6 +33,6 @@ export default function AppointmentPage() {
           </div>
         </div>
       </section>
-    </>
+    </main>
   );
 }
