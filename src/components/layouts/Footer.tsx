@@ -16,48 +16,20 @@ export default function Footer({ className }: FooterProps) {
   return (
     <footer className="pt-12 pb-6 bg-slate-100">
       <div className="px-4 md:container">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-6 my-6 uppercase font-medium text-sm">
-          <div>
-            <h4 className="mb-3">My account</h4>
-            <div className="flex flex-col gap-y-2">
-              <Link href="/account" className="flex gap-x-3 items-center">
-                <span className="text-sm text-muted-foreground">
-                  My Account
-                </span>
-              </Link>
-              <Link
-                href="/account/orders"
-                className="flex gap-x-3 items-center"
-              >
-                <span className="text-sm text-muted-foreground">
-                  Order History
-                </span>
-              </Link>
-              <Link
-                href="/account/register"
-                className="flex gap-x-3 items-center"
-              >
-                <span className="text-sm text-muted-foreground">Register</span>
-              </Link>
-              <Link href="/account/login" className="flex gap-x-3 items-center">
-                <span className="text-sm text-muted-foreground">Login</span>
-              </Link>
-            </div>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-y-6 my-6 uppercase font-medium text-sm">
           <div>
             <h4 className="mb-3">Customer services</h4>
             <div className="flex flex-col gap-y-2">
-              <Link href="/about" className="flex gap-x-3 items-center">
+              <Link href="/info/about" className="flex gap-x-3 items-center">
                 <span className="text-sm text-muted-foreground">About us</span>
               </Link>
-              <Link href="#" className="flex gap-x-3 items-center">
+
+              <Link
+                href="/info/appointment"
+                className="flex gap-x-3 items-center"
+              >
                 <span className="text-sm text-muted-foreground">
-                  Return & Privacy Policy
-                </span>
-              </Link>
-              <Link href="#" className="flex gap-x-3 items-center">
-                <span className="text-sm text-muted-foreground">
-                  Terms and Conditions
+                  Appointment
                 </span>
               </Link>
               <Link href="#" className="flex gap-x-3 items-center">
@@ -69,17 +41,21 @@ export default function Footer({ className }: FooterProps) {
           <div>
             <h4 className="mb-3">HELP Center</h4>
             <div className="flex flex-col gap-y-2">
-              <Link href="/faq" className="flex gap-x-3 items-center">
+              <Link href="/info/faq" className="flex gap-x-3 items-center">
                 <span className="text-sm text-muted-foreground">FAQ</span>
               </Link>
-              <Link href="#" className="flex gap-x-3 items-center">
-                <span className="text-sm text-muted-foreground">
-                  How to shop on Mcwale
-                </span>
-              </Link>
-              <Link href="#" className="flex gap-x-3 items-center">
+
+              <Link
+                href="/info/size-guides"
+                className="flex gap-x-3 items-center"
+              >
                 <span className="text-sm text-muted-foreground">
                   Size Guides
+                </span>
+              </Link>
+              <Link href="/info/terms" className="flex gap-x-3 items-center">
+                <span className="text-sm text-muted-foreground">
+                  Terms and Conditions
                 </span>
               </Link>
             </div>
@@ -101,6 +77,9 @@ export default function Footer({ className }: FooterProps) {
                 <span className="text-sm  lowercase text-muted-foreground">
                   mcwale@gmail.com
                 </span>
+              </Link>
+              <Link href="/info/contact" className="flex gap-x-3 items-center">
+                <span className="text-sm text-muted-foreground">Contact</span>
               </Link>
             </div>
           </div>

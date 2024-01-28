@@ -3,10 +3,10 @@ import Link from "next/link";
 
 export default function AboutPage() {
   return (
-    <main className="px-3 lg:container py-12">
+    <div className="px-4 lg:container py-12">
       <div className="lg:mb-6 flex flex-col lg:gap-y-6">
         <span className="inline-flex text-muted-foreground text-sm  gap-x-3">
-          <Link href="/">Home</Link>|
+          <Link href="/">Home</Link>|<Link href="/info">Info</Link>|
           <span className="font-medium text-primary">About McWale</span>
         </span>
       </div>
@@ -15,7 +15,7 @@ export default function AboutPage() {
           The Design Story
         </Heading>
 
-        <div className="text-xs lg:text-sm tracking-wide leading-8 text-slate-900 font-medium">
+        <div className="text-xs lg:text-sm tracking-wide leading-8 text-slate-900">
           <p className="mb-6">
             Having launched as a shirt specialist of some repute in Glasgow Ted
             Baker quickly became the place to buy some of the very best
@@ -52,13 +52,13 @@ export default function AboutPage() {
               After signing three new territorial license agreements in 2006 and
               initially opening stores in Hong Kong, Singapore and Dubai
               we&apos;ve continued our expansion in 2007 with the opening of a
-              further store in Hong Kong, <br /> Singapore, Bangkok, three in
-              Kuala Lumpur and two each in Dubai and Jakarta. We also have
-              locations in Taiwan and Bangkok.
+              further store in Hong Kong, Singapore, Bangkok, three in Kuala
+              Lumpur and two each in Dubai and Jakarta. We also have locations
+              in Taiwan and Bangkok.
             </li>
           </ul>
         </div>
       </section>
-    </main>
+    </div>
   );
 }
