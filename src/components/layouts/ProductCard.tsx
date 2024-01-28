@@ -54,7 +54,7 @@ export default function ProductCard({ height }: ProductCardProps) {
           </Carousel>
         </div>
 
-        <div className="w-full flex items-center flex-col gap-y-1 mt-4">
+        <div className="w-full flex items-center flex-col gap-y-2 mt-4">
           <span className="font-medium text-center text-sm w-full leading-5 uppercase tracking-wider">
             AGBADA DRESS
           </span>

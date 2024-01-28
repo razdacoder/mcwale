@@ -1,9 +1,7 @@
 "use client";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import useAuth from "@/hooks/useAuth";
-import useLogout from "@/hooks/useLogout";
 import { cn } from "@/lib/utils";
-import { LogOut, Menu, Search, User } from "lucide-react";
+import { Menu, Search } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AiOutlineShopping } from "react-icons/ai";
@@ -16,6 +14,13 @@ import {
 } from "../ui/accordion";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 type NavbarProps = {
   className?: string;
@@ -33,11 +38,11 @@ export default function Navbar({ className }: NavbarProps) {
     },
     {
       name: "About us",
-      link: "/about",
+      link: "/info/about",
     },
     {
       name: "Appointment",
-      link: "/appointment",
+      link: "/info/appointment",
     },
   ];
   const shopLinks = [
@@ -45,12 +50,12 @@ export default function Navbar({ className }: NavbarProps) {
     { name: "Kaftan", link: "/shop/categories/kaftan" },
     { name: "Senator Wears", link: "/shop/categories/senatot-wear" },
     { name: "Casuals", link: "/shop/categories/casuals" },
+    { name: "Accesssories", link: "/shop/categories/accessories" },
   ];
   const pathname = usePathname();
-  const { logoutFn } = useLogout();
-  const { isAuthenticated } = useAuth();
+
   return (
-    <header className="border-b py-3">
+    <header className="border-b py-3 sticky top-0 z-20 w-full bg-white">
       <nav className="w-full flex justify-between items-center lg:hidden px-4">
         <Sheet>
           <SheetTrigger className="px-0" asChild>
@@ -75,13 +80,13 @@ export default function Navbar({ className }: NavbarProps) {
                 />
                 <Search strokeWidth={1.5} />
               </form>
-              <div className="uppercase font-light text-sm flex flex-col gap-y-4 mt-6">
+              <div className="  text-sm flex flex-col gap-y-4 mt-6">
                 {navlinks.map((nav, index) => (
                   <>
                     {nav.link === "/shop" ? (
                       <Accordion type="single" collapsible>
                         <AccordionItem value="shop" className="border-none">
-                          <AccordionTrigger className="uppercase flex justify-between hover:no-underline font-light tracking-widest py-0">
+                          <AccordionTrigger className=" flex justify-between hover:no-underline  tracking-widest py-0">
                             Shop
                           </AccordionTrigger>
                           <AccordionContent className="inline-flex flex-col gap-y-2 ml-1 mt-3">
@@ -123,30 +128,12 @@ export default function Navbar({ className }: NavbarProps) {
         </div>
         <div className="flex gap-x-2 items-center">
           <Button
-            asChild
-            size="icon"
-            className="bg-transparent p-0 hover:bg-transparent"
-          >
-            <Link href="/account">
-              <User strokeWidth={1.5} className="text-primary" />
-            </Link>
-          </Button>
-          <Button
             size="icon"
             className="bg-transparent p-0 hover:bg-transparent flex gap-1"
           >
             <AiOutlineShopping className="w-6 h-6 text-primary" />
             <span className="text-primary">0</span>
           </Button>
-          {isAuthenticated && (
-            <Button
-              size="icon"
-              className="bg-transparent p-0 hover:bg-transparent"
-              onClick={() => logoutFn()}
-            >
-              <LogOut strokeWidth={1.5} className="w-6 h-6 text-primary" />
-            </Button>
-          )}
         </div>
       </nav>
 
@@ -160,38 +147,31 @@ export default function Navbar({ className }: NavbarProps) {
         </form>
         <div className="flex gap-x-2 items-center">
           <Button
-            asChild
-            size="icon"
-            className="bg-transparent p-0 hover:bg-transparent"
-          >
-            <Link href="/account">
-              <User strokeWidth={1.5} className="text-primary font-light" />
-            </Link>
-          </Button>
-          <Button
             size="icon"
             className="bg-transparent p-0 hover:bg-transparent flex gap-1 items-center"
           >
             <AiOutlineShopping className="w-6 h-6 text-primary" />
             <span className="text-primary">0</span>
           </Button>
-          {isAuthenticated && (
-            <Button
-              size="icon"
-              className="bg-transparent p-0 hover:bg-transparent"
-              onClick={() => logoutFn()}
-            >
-              <LogOut strokeWidth={1.5} className="w-6 h-6 text-primary" />
-            </Button>
-          )}
+          <Select defaultValue="NGN">
+            <SelectTrigger className="w-full px-1 outline-none border-none focus-within:ring-0">
+              <SelectValue defaultValue="NGN" placeholder="Select period" />
+            </SelectTrigger>
+
+            <SelectContent>
+              <SelectItem value="NGN">🇳🇬 NGN</SelectItem>
+              <SelectItem value="GBP">🇬🇧 GBP</SelectItem>
+              <SelectItem value="USD">🇺🇸 USD</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </div>
-      <div className="w-full flex flex-col items-center gap-y-6">
+      <div className="w-full flex flex-col items-center gap-y-8">
         <div className="hidden lg:block">
           <Logo />
         </div>
 
-        <div className="hidden uppercase lg:flex gap-x-6 font-light text-sm">
+        <div className="hidden  lg:flex gap-x-6  text-sm">
           {navlinks.map((nav, index) => (
             <>
               {nav.link === "/shop" ? (

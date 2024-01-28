@@ -4,7 +4,7 @@ import Paginator from "./paginator";
 
 export default function ShopPage() {
   return (
-    <main>
+    <>
       <section className="px-6 py-6 border-b">
         <div className="text-center mb-6">
           <h2 className="inline-block scroll-m-20 pb-2 uppercase text-center tracking-wider text-xl font-light ">
@@ -23,6 +23,6 @@ export default function ShopPage() {
 
         <Paginator />
       </section>
-    </main>
+    </>
   );
 }

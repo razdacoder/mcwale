@@ -6,19 +6,19 @@ import SortBy from "./_components/sort";
 
 export default function ShopCategoryPage() {
   return (
-    <main>
+    <main className="relative">
       <section className="px-3 lg:px-0 lg:container py-3 ">
-        <div className="lg:mb-3 flex flex-col lg:gap-y-6">
-          <span className="hidden lg:inline-flex text-muted-foreground text-sm  gap-x-3">
+        <div className="lg:mb-3 flex flex-col gap-y-6">
+          <span className="inline-flex text-muted-foreground text-sm  gap-x-3">
             <Link href="/">Home</Link>|<Link href="/shop">Shop</Link>|
             <span className="font-meidum text-primary">Agbada</span>
           </span>
-          <h2 className="block text-center lg:text-left scroll-m-20 uppercase font-medium tracking-wider text-xl ">
+          <h2 className="block gap-x-3 scroll-m-20 uppercase font-medium tracking-wider text-lg ">
             Abgada
           </h2>
         </div>
       </section>
-      <section className="bg-white py-6 shadow-sm sticky z-20 top-0">
+      <section className="bg-white py-3">
         <div className="px-3 lg:px-0 lg:container flex justify-between items-center">
           <span className="hidden lg:block text-sm lg:text-lg font-medium text-primary tracking-wider">
             (250 items)

@@ -45,3 +45,9 @@ export const appointmentSchema = z.object({
   mm: z.string().max(2),
   period: z.string().max(2),
 });
+
+export const contactSchema = z.object({
+  name: z.string().min(2, { message: "Name must be at least 2 characters" }),
+  email: z.string().email(),
+  message: z.string().min(1, { message: "Message can not be empty" }).max(300),
+});

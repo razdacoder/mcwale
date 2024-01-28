@@ -1,11 +1,16 @@
+import Link from "next/link";
 import AppointmentForm from "./appointment-form";
 
 export default function AppointmentPage() {
   return (
-    <main className="my-12">
-      <h2 className="block scroll-m-20 my-12 pb-2 uppercase text-center tracking-wider text-2xl font-light ">
-        appointment
-      </h2>
+    <>
+      <div className="lg:mb-6 flex flex-col lg:gap-y-6">
+        <span className="inline-flex text-muted-foreground text-sm  gap-x-3">
+          <Link href="/">Home</Link>|<Link href="/info">Info</Link>|
+          <span className="font-medium text-primary">Appointment</span>
+        </span>
+      </div>
+
       <section className="container h-[78vh] px-8 py-3 md:pl-6 md:pr-0 xl:px-16 flex ">
         <div className="w-full md:w-2/4 flex items-center">
           <AppointmentForm />
@@ -26,6 +31,6 @@ export default function AppointmentPage() {
           </div>
         </div>
       </section>
-    </main>
+    </>
   );
 }

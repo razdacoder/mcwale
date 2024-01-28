@@ -4,6 +4,7 @@ import { formatPriceToNaira } from "@/lib/utils";
 import Link from "next/link";
 import AddToCart from "./_components/add-to-cart";
 import ProductCarousel from "./_components/product-carousel";
+import ProductColor from "./_components/product-color";
 import ProductQuantity from "./_components/product-quantity";
 import ProductSize from "./_components/product-size";
 import ReviewForm from "./_components/review-from";
@@ -12,7 +13,7 @@ import SizeChart from "./_components/size-chart";
 
 export default function ProductPage() {
   return (
-    <main>
+    <>
       <section className="container px-4 py-4">
         <span className="inline-flex text-muted-foreground text-sm  gap-x-3">
           <Link href="/">Home</Link>|<Link href="/shop">Shop</Link>|
@@ -24,7 +25,7 @@ export default function ProductPage() {
         </span>
       </section>
       <section className="lg:container lg:px-4 flex flex-col lg:flex-row gap-y-6 gap-x-3 xl:gap-x-12">
-        <div className="w-full lg:w-5/12">
+        <div className="w-full lg:w-5/12 px-4 lg:px-0">
           <ProductCarousel />
         </div>
         <div className="w-full container px-4 lg:w-6/12 py-3 lg:px-0">
@@ -50,10 +51,7 @@ export default function ProductPage() {
           </div>
           <div className="mt-6">
             <h4 className="text-lg tracking-wider font-medium">Color</h4>
-            <div className="flex gap-x-3 items-end">
-              <div className="w-6 h-6 bg-blue-500 rounded-full mt-1"></div>
-              <span className="text-xs">Sky Blue</span>
-            </div>
+            <ProductColor />
           </div>
           <div className="mt-6">
             <h4 className="text-lg tracking-wider font-medium">Quantity</h4>
@@ -80,9 +78,9 @@ export default function ProductPage() {
             May Also Like
           </h2>
         </div>
-        <div className=" grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-x-4 gap-y-6">
+        <div className=" grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-6">
           {[...Array(5)].map((_, index) => (
-            <ProductCard height="h-[200px] md:h-[350px]" key={index} />
+            <ProductCard height="h-[220px] md:h-[350px]" key={index} />
           ))}
         </div>
       </section>
@@ -141,6 +139,6 @@ export default function ProductPage() {
           </div>
         </div>
       </section>
-    </main>
+    </>
   );
 }

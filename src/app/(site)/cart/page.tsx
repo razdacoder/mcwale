@@ -8,7 +8,7 @@ import CartItem from "./cart-item";
 
 export default function CartPage() {
   return (
-    <main className="px-4 lg:container my-6 lg:my-24">
+    <div className="px-4 lg:container my-6 lg:my-24">
       <h2 className="scroll-m-20 text-lg uppercase font-medium tracking-wide first:mt-0">
         shopping cart
       </h2>
@@ -40,6 +40,6 @@ export default function CartPage() {
           </Link>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

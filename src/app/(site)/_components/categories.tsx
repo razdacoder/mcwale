@@ -1,14 +1,18 @@
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default function Category() {
   return (
-    <Link href="#">
-      <div className="h-[400px] relative">
-        <img src="/img2-min.jpg" alt="Image" className="w-full h-full" />
-        <div className="absolute w-full h-full top-0 left-0 flex items-end text-white p-12 uppercase font-light text-3xl">
-          <h3>Agbada Dress</h3>
-        </div>
+    <div className="h-[200px] bg-[url('/img1-min.jpg')] bg-no-repeat bg-cover bg-center flex justify-end items-center pr-8">
+      {/* <img src="/img1-min.jpg" alt="Image" className="w-full h-full" /> */}
+      <div className="flex justify-center flex-col">
+        <h3 className="text-white">McWale Agbada</h3>
+        <Button asChild>
+          <Link href="/shop/categories/agbada" className="">
+            Shop
+          </Link>
+        </Button>
       </div>
-    </Link>
+    </div>
   );
 }
