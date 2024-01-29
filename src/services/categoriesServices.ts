@@ -1,11 +1,11 @@
 import { TypedSupabaseClient } from "@/lib/types";
 
 export const getAllCategories = (client: TypedSupabaseClient) => {
-  return client.from("catgories").select("id, title, slug, image");
+  return client.from("categories").select("*");
 };
 
 export const getCategoryById = (client: TypedSupabaseClient, id: string) => {
-  return client.from("catgories").select("*").eq("id", id).single();
+  return client.from("categories").select("*").eq("id", id).single();
 };
 
 // TODO: Change Type Any
@@ -13,7 +13,7 @@ export const createCategories = (
   client: TypedSupabaseClient,
   category: any
 ) => {
-  return client.from("categories").insert(category);
+  return client.from("categories").insert(category).throwOnError();
 };
 
 export const updateCategory = (client: TypedSupabaseClient, category: any) => {
@@ -21,10 +21,11 @@ export const updateCategory = (client: TypedSupabaseClient, category: any) => {
     .from("categories")
     .update(category)
     .eq("id", category.id)
+    .throwOnError()
     .select()
     .single();
 };
 
 export const deleteCategory = (client: TypedSupabaseClient, id: string) => {
-  return client.from("categories").delete().eq("id", id);
+  return client.from("categories").delete().eq("id", id).throwOnError();
 };

@@ -4,7 +4,7 @@ import CarouselBanner from "./_components/carousel-banner";
 import Category from "./_components/categories";
 import FeaturedCarousel from "./_components/featured-carousel";
 
-export default function Home() {
+export default async function Home() {
   return (
     <>
       <CarouselBanner />
@@ -13,11 +13,7 @@ export default function Home() {
           Shop by Category
         </Heading>
 
-        <div className="mt-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-6">
-          {[...Array(4)].map((_, index) => (
-            <Category key={index} />
-          ))}
-        </div>
+        <Category />
       </section>
 
       <section className="pb-12 my-12 border-b">

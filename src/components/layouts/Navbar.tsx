@@ -46,7 +46,7 @@ export default function Navbar({ className }: NavbarProps) {
     },
   ];
   const shopLinks = [
-    { name: "Agbada", link: "/shop/categories/agbda" },
+    { name: "Agbada", link: "/shop/categories/agbada" },
     { name: "Kaftan", link: "/shop/categories/kaftan" },
     { name: "Senator Wears", link: "/shop/categories/senatot-wear" },
     { name: "Casuals", link: "/shop/categories/casuals" },
