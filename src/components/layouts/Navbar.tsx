@@ -82,7 +82,7 @@ export default function Navbar({ className }: NavbarProps) {
               </form>
               <div className="  text-sm flex flex-col gap-y-4 mt-6">
                 {navlinks.map((nav, index) => (
-                  <>
+                  <div key={index}>
                     {nav.link === "/shop" ? (
                       <Accordion type="single" collapsible>
                         <AccordionItem value="shop" className="border-none">
@@ -117,7 +117,7 @@ export default function Navbar({ className }: NavbarProps) {
                         {nav.name}
                       </Link>
                     )}
-                  </>
+                  </div>
                 ))}
               </div>
             </div>
@@ -190,9 +190,9 @@ export default function Navbar({ className }: NavbarProps) {
 
         <div className="hidden  lg:flex gap-x-6  text-sm">
           {navlinks.map((nav, index) => (
-            <>
+            <div key={index}>
               {nav.link === "/shop" ? (
-                <div className="relative">
+                <div key={nav.name} className="relative">
                   <span
                     className={cn(
                       "peer tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300 cursor-pointer",
@@ -228,7 +228,7 @@ export default function Navbar({ className }: NavbarProps) {
                   {nav.name}
                 </Link>
               )}
-            </>
+            </div>
           ))}
         </div>
       </div>

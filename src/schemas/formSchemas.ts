@@ -68,6 +68,6 @@ export const billingSchema = z.object({
   town: z.string().min(1),
   state: z.string().min(1),
   country: z.string().min(1),
-  postal_code: z.number(),
+  postal_code: z.string().min(3),
   order_note: z.string().min(1),
 });
