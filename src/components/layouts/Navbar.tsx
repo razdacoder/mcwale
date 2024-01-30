@@ -1,10 +1,12 @@
 "use client";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
+import { useCartStore } from "@/store/useCart";
 import { useCurrencyStore } from "@/store/useCurrency";
 import { Menu, Search } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { AiOutlineShopping } from "react-icons/ai";
 import Logo from "../ui/Logo";
 import {
@@ -55,6 +57,12 @@ export default function Navbar({ className }: NavbarProps) {
   ];
   const pathname = usePathname();
   const { currency, setCurrency } = useCurrencyStore();
+  const { cart } = useCartStore();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
   return (
     <header className="border-b py-3 sticky top-0 z-20 w-full bg-white">
       <nav className="w-full flex justify-between items-center lg:hidden px-4">
@@ -135,7 +143,7 @@ export default function Navbar({ className }: NavbarProps) {
           >
             <Link href="/cart">
               <AiOutlineShopping className="w-6 h-6 text-primary" />
-              <span className="text-primary">0</span>
+              <span className="text-primary">{isClient ? cart.length : 0}</span>
             </Link>
           </Button>
           <Select
@@ -171,7 +179,7 @@ export default function Navbar({ className }: NavbarProps) {
           >
             <Link href="/cart">
               <AiOutlineShopping className="w-6 h-6 text-primary" />
-              <span className="text-primary">0</span>
+              <span className="text-primary">{isClient ? cart.length : 0}</span>
             </Link>
           </Button>
           <Select
@@ -211,6 +219,7 @@ export default function Navbar({ className }: NavbarProps) {
                   <div className="hidden peer-hover:inline-flex absolute pb-3 -left-6 px-6 hover:inline-flex gap-y-2 flex-col w-[250px] py-1 pt-6 bg-white z-50 shadow-md border">
                     {shopLinks.map((nav, index) => (
                       <Link
+                        prefetch={false}
                         key={nav.name}
                         className={cn(
                           "inline-block w-max tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",

@@ -14,7 +14,7 @@ export const useRateStore = create<RateState>()(
       setRate: (value: { NGN: number; GBP: number }) => set({ rate: value }),
     }),
     {
-      name: "currency-store",
+      name: "rate-store",
     }
   )
 );

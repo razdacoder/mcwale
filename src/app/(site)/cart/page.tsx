@@ -2,11 +2,13 @@
 
 import { Button } from "@/components/ui/button";
 import { formatPriceToNaira } from "@/lib/utils";
+import { CartItem, useCartStore } from "@/store/useCart";
 import { Lock } from "lucide-react";
 import Link from "next/link";
-import CartItem from "./cart-item";
+import CartItemUI from "./cart-item";
 
 export default function CartPage() {
+  const { cart } = useCartStore();
   return (
     <div className="px-4 container my-6 lg:my-24">
       <h2 className="scroll-m-20 text-lg uppercase font-medium tracking-wide first:mt-0">
@@ -14,8 +16,8 @@ export default function CartPage() {
       </h2>
       <section className="flex flex-col lg:flex-row gap-y-6 lg:gap-x-12 my-6">
         <div className="w-full lg:w-8/12 flex flex-col gap-y-6">
-          {[...Array(3)].map((_, index) => (
-            <CartItem key={index} />
+          {cart.map((item: CartItem, index) => (
+            <CartItemUI item={item} key={index} />
           ))}
         </div>
 

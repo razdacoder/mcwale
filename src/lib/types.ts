@@ -16,6 +16,7 @@ export type Product = {
   name: string;
   slug: string;
   price: number;
+  description: string;
   discount_percentage: number;
   images: string[];
   is_featured: boolean;

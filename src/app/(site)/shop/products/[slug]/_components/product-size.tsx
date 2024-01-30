@@ -1,7 +1,11 @@
 "use client";
 import { Label } from "@/components/ui/label";
 
-export default function ProductSize() {
+interface ProductSizeProps {
+  setSize: (value: string) => void;
+}
+
+export default function ProductSize({ setSize }: ProductSizeProps) {
   return (
     <div className="mt-3 flex items-center flex-wrap  gap-3">
       <div>
@@ -10,7 +14,8 @@ export default function ProductSize() {
           type="radio"
           name="size"
           id="xs"
-          value="xs"
+          value="XS"
+          onChange={(e) => setSize(e.target.value)}
         />
         <Label
           className="uppercase cursor-pointer w-12 h-12 flex justify-center items-center font-light border  peer-checked:border-black"
@@ -25,7 +30,8 @@ export default function ProductSize() {
           type="radio"
           name="size"
           id="s"
-          value="s"
+          value="S"
+          onChange={(e) => setSize(e.target.value)}
         />
         <Label
           className="uppercase cursor-pointer w-12 h-12 flex justify-center items-center font-light border  peer-checked:border-black"
@@ -40,7 +46,8 @@ export default function ProductSize() {
           type="radio"
           name="size"
           id="m"
-          value="m"
+          value="M"
+          onChange={(e) => setSize(e.target.value)}
         />
         <Label
           className="uppercase cursor-pointer w-12 h-12 flex justify-center items-center font-light border  peer-checked:border-black"
@@ -55,7 +62,8 @@ export default function ProductSize() {
           type="radio"
           name="size"
           id="l"
-          value="l"
+          value="L"
+          onChange={(e) => setSize(e.target.value)}
         />
         <Label
           className="uppercase cursor-pointer w-12 h-12 flex justify-center items-center font-light border  peer-checked:border-black"
@@ -70,7 +78,8 @@ export default function ProductSize() {
           type="radio"
           name="size"
           id="xl"
-          value="xl"
+          value="XL"
+          onChange={(e) => setSize(e.target.value)}
         />
         <Label
           className="uppercase cursor-pointer w-12 h-12 flex justify-center items-center font-light border  peer-checked:border-black"
@@ -85,7 +94,8 @@ export default function ProductSize() {
           type="radio"
           name="size"
           id="xxl"
-          value="xxl"
+          value="XXL"
+          onChange={(e) => setSize(e.target.value)}
         />
         <Label
           className="uppercase cursor-pointer w-12 h-12 flex justify-center items-center font-light border  peer-checked:border-black"
@@ -100,7 +110,8 @@ export default function ProductSize() {
           type="radio"
           name="size"
           id="xxxl"
-          value="xxxl"
+          value="XXXL"
+          onChange={(e) => setSize(e.target.value)}
         />
         <Label
           className="uppercase cursor-pointer w-12 h-12 flex justify-center items-center font-light border  peer-checked:border-black"

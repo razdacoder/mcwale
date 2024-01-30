@@ -4,8 +4,7 @@ import {
   calculateDiscountPrice,
   cn,
   formatPriceToDollar,
-  formatPriceToGBP,
-  formatPriceToNaira,
+  getRatePrice,
 } from "@/lib/utils";
 import { useCurrencyStore } from "@/store/useCurrency";
 import { useRateStore } from "@/store/useRates";
@@ -27,56 +26,7 @@ export default function ProductCard({ height, product }: ProductCardProps) {
   }, []);
   const { currency } = useCurrencyStore();
   const { rate } = useRateStore();
-  const getDiscountPrices = () => {
-    if (currency === "USD")
-      return (
-        <span className="font-medium text-sm mb-3 tracking-wide">
-          {formatPriceToDollar(
-            calculateDiscountPrice(product.price, product.discount_percentage)
-          )}
-        </span>
-      );
-    if (currency === "GBP")
-      return (
-        <span className="font-medium text-sm mb-3 tracking-wide">
-          {formatPriceToGBP(
-            calculateDiscountPrice(
-              product.price * rate.GBP,
-              product.discount_percentage
-            )
-          )}
-        </span>
-      );
-    return (
-      <span className="font-medium text-sm mb-3 tracking-wide">
-        {formatPriceToNaira(
-          calculateDiscountPrice(
-            product.price * rate.NGN,
-            product.discount_percentage
-          )
-        )}
-      </span>
-    );
-  };
-  const getPrices = () => {
-    if (currency === "USD")
-      return (
-        <span className="font-medium text-sm mb-3 tracking-wide">
-          {formatPriceToDollar(product.price)}
-        </span>
-      );
-    if (currency === "GBP")
-      return (
-        <span className="font-medium text-sm mb-3 tracking-wide">
-          {formatPriceToGBP(product.price * rate.GBP)}
-        </span>
-      );
-    return (
-      <span className="font-medium text-sm mb-3 tracking-wide">
-        {formatPriceToNaira(product.price * rate.NGN)}
-      </span>
-    );
-  };
+
   return (
     <Link href={`/shop/products/${product.slug}`}>
       <div className="w-full">
@@ -105,14 +55,29 @@ export default function ProductCard({ height, product }: ProductCardProps) {
           </span>
           {isClient ? (
             <div className="flex gap-x-3">
-              {product.discount_percentage > 0 && getDiscountPrices()}
+              {product.discount_percentage > 0 && (
+                <span className="font-medium text-sm mb-3 tracking-wide">
+                  {getRatePrice(
+                    currency,
+                    calculateDiscountPrice(
+                      product.price,
+                      product.discount_percentage
+                    ),
+                    currency === "USD" ? null : rate[currency]
+                  )}
+                </span>
+              )}
               <span
                 className={cn(
                   "font-medium text-sm mb-3 tracking-wide",
                   product.discount_percentage > 0 && "line-through text-red-500"
                 )}
               >
-                {getPrices()}
+                {getRatePrice(
+                  currency,
+                  product.price,
+                  currency === "USD" ? null : rate[currency]
+                )}
               </span>
             </div>
           ) : (

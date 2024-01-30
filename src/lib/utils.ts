@@ -42,3 +42,13 @@ export function calculateDiscountPrice(
 ): number {
   return originalPrice - (originalPrice * discountPercentage) / 100;
 }
+
+export function getRatePrice(
+  currency: "NGN" | "USD" | "GBP",
+  price: number,
+  rate: number | null
+): string {
+  if (currency === "USD") return formatPriceToDollar(price);
+  if (currency === "GBP") return formatPriceToGBP(price * rate!);
+  return formatPriceToNaira(price * rate!);
+}

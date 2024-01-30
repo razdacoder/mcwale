@@ -2,10 +2,21 @@
 import { Button } from "@/components/ui/button";
 import { ShoppingCart } from "lucide-react";
 
-export default function AddToCart() {
+interface AddToCartProps {
+  addToCart: () => void;
+  size: string | undefined;
+  color: string | undefined;
+}
+
+export default function AddToCart({ size, color, addToCart }: AddToCartProps) {
   return (
-    <Button className="flex items-center gap-x-3 py-6 uppercase">
-      <ShoppingCart className="w-6 h-6 text-white" />
+    <Button
+      onClick={addToCart}
+      disabled={!size || !color}
+      size="lg"
+      className="flex items-center gap-x-3 py-5 capatalize"
+    >
+      <ShoppingCart className="w-4 h-4 text-white" />
       Add to cart
     </Button>
   );

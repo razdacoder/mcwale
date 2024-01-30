@@ -1,4 +1,5 @@
 import useSupabaseServer from "@/lib/supabase-server";
+import { getCategoryBySlug } from "@/services/categoriesServices";
 import { getProductsByCategory } from "@/services/productServices";
 import { prefetchQuery } from "@supabase-cache-helpers/postgrest-react-query";
 import {
@@ -17,6 +18,8 @@ export default async function ShopCategoryPage({
   const queryClient = new QueryClient();
   const cookieStore = cookies();
   const supabase = useSupabaseServer(cookieStore);
+
+  await prefetchQuery(queryClient, getCategoryBySlug(supabase, params.slug));
   await prefetchQuery(
     queryClient,
     getProductsByCategory(supabase, params.slug)

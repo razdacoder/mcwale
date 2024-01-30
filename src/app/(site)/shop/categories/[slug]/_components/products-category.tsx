@@ -2,6 +2,7 @@
 import ProductCard from "@/components/layouts/ProductCard";
 import useSupabaseBrowser from "@/lib/supabase-client";
 import { Product } from "@/lib/types";
+import { getCategoryBySlug } from "@/services/categoriesServices";
 import { getProductsByCategory } from "@/services/productServices";
 import { useQuery } from "@supabase-cache-helpers/postgrest-react-query";
 import Link from "next/link";
@@ -10,6 +11,7 @@ import SortBy from "./sort";
 export default function CategoryProducts({ slug }: { slug: string }) {
   const supabase = useSupabaseBrowser();
   const { data: products } = useQuery(getProductsByCategory(supabase, slug));
+  const { data: category } = useQuery(getCategoryBySlug(supabase, slug));
 
   return (
     <main className="relative">
@@ -18,38 +20,49 @@ export default function CategoryProducts({ slug }: { slug: string }) {
           <span className="inline-flex text-muted-foreground text-sm  gap-x-3">
             <Link href="/">Home</Link>|<Link href="/shop">Shop</Link>|
             <span className="font-meidum text-primary capitalize">
-              {products?.at(0).category.title}
+              {category?.title}
             </span>
           </span>
           <h2 className="block gap-x-3 scroll-m-20 capitalize font-medium tracking-wider text-lg ">
-            {products?.at(0).category.title}
+            {category?.title}
           </h2>
         </div>
       </section>
-      <section className="bg-white py-3">
-        <div className="px-4 container flex justify-between items-center">
-          <span className="hidden lg:block text-sm lg:text-lg font-medium text-primary tracking-wider">
-            ({products?.length} items)
-          </span>
 
-          <div className="flex items-center justify-end gap-x-3">
-            <MobileDrawer />
-            <SortBy />
-          </div>
-        </div>
-      </section>
-      <br />
-      <section className="px-4 container py-3">
-        <div className=" grid grid-cols-2 lg:grid-cols-3 gap-2 md:gap-6">
-          {products?.map((product: Product, index) => (
-            <ProductCard
-              product={product}
-              height="h-[250px] md:h-[450px] lg:h-[550px]"
-              key={product.id}
-            />
-          ))}
-        </div>
-      </section>
+      {products?.length == 0 ? (
+        <section className="px-4 py-6 container grid place-items-center">
+          <span className="capitalize">
+            No Products For {category?.title} Found
+          </span>
+        </section>
+      ) : (
+        <>
+          <section className="bg-white py-3">
+            <div className="px-4 container flex justify-between items-center">
+              <span className="hidden lg:block text-sm lg:text-lg font-medium text-primary tracking-wider">
+                ({products?.length} items)
+              </span>
+
+              <div className="flex items-center justify-end gap-x-3">
+                <MobileDrawer />
+                <SortBy />
+              </div>
+            </div>
+          </section>
+          <br />
+          <section className="px-4 container py-3">
+            <div className=" grid grid-cols-2 lg:grid-cols-3 gap-2 md:gap-6">
+              {products?.map((product: Product, index) => (
+                <ProductCard
+                  product={product}
+                  height="h-[250px] md:h-[450px] lg:h-[550px]"
+                  key={product.id}
+                />
+              ))}
+            </div>
+          </section>
+        </>
+      )}
     </main>
   );
 }

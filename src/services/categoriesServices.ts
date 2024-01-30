@@ -4,8 +4,16 @@ export const getAllCategories = (client: TypedSupabaseClient) => {
   return client.from("categories").select("*");
 };
 
-export const getCategoryById = (client: TypedSupabaseClient, id: string) => {
-  return client.from("categories").select("*").eq("id", id).single();
+export const getCategoryBySlug = (
+  client: TypedSupabaseClient,
+  slug: string
+) => {
+  return client
+    .from("categories")
+    .select("*")
+    .eq("slug", slug)
+    .throwOnError()
+    .single();
 };
 
 // TODO: Change Type Any

@@ -6,7 +6,16 @@ export const getProductsByCategory = (
 ) => {
   return client
     .from("products")
-    .select("*, category(*)")
+    .select("*, category!inner(*)")
     .eq("category.slug", slug)
     .throwOnError();
+};
+
+export const getProductBySlug = (client: TypedSupabaseClient, slug: string) => {
+  return client
+    .from("products")
+    .select("*, category!inner(*)")
+    .eq("slug", slug)
+    .throwOnError()
+    .single();
 };
