@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import {
   calculateDiscountPrice,
   formatPriceToDollar,
-  formatPriceToNaira,
   getRatePrice,
 } from "@/lib/utils";
 import { CartItem } from "@/store/useCart";
@@ -80,7 +79,25 @@ export default function CartItemUI({ item }: CartItemProps) {
           <span className="text-sm font-medium tracking-wider">TOTAL:</span>
 
           <span className="  tracking-wider text-primary/90">
-            {formatPriceToNaira(90000)}
+            {isClient
+              ? getRatePrice(
+                  currency,
+                  item.product.discount_percentage == 0
+                    ? item.product.price * item.quantity
+                    : calculateDiscountPrice(
+                        item.product.price,
+                        item.product.discount_percentage
+                      ) * item.quantity,
+                  currency === "USD" ? null : rate[currency]
+                )
+              : formatPriceToDollar(
+                  item.product.discount_percentage == 0
+                    ? item.product.price
+                    : calculateDiscountPrice(
+                        item.product.price,
+                        item.product.discount_percentage
+                      ) * item.quantity
+                )}
           </span>
         </div>
       </div>

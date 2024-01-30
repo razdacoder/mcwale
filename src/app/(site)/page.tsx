@@ -1,4 +1,3 @@
-import ProductCard from "@/components/layouts/ProductCard";
 import Heading from "@/components/ui/Heading";
 import CarouselBanner from "./_components/carousel-banner";
 import Category from "./_components/categories";
@@ -33,7 +32,7 @@ export default async function Home() {
 
         <div className="mt-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-6">
           {[...Array(4)].map((_, index) => (
-            <ProductCard key={index} />
+            <span key={index}>Comming Soon</span>
           ))}
         </div>
       </section>
