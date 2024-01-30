@@ -4,10 +4,14 @@ import {
   calculateDiscountPrice,
   cn,
   formatPriceToDollar,
+  formatPriceToGBP,
   formatPriceToNaira,
 } from "@/lib/utils";
+import { useCurrencyStore } from "@/store/useCurrency";
+import { useRateStore } from "@/store/useRates";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 
 type ProductCardProps = {
@@ -16,6 +20,63 @@ type ProductCardProps = {
 };
 
 export default function ProductCard({ height, product }: ProductCardProps) {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+  const { currency } = useCurrencyStore();
+  const { rate } = useRateStore();
+  const getDiscountPrices = () => {
+    if (currency === "USD")
+      return (
+        <span className="font-medium text-sm mb-3 tracking-wide">
+          {formatPriceToDollar(
+            calculateDiscountPrice(product.price, product.discount_percentage)
+          )}
+        </span>
+      );
+    if (currency === "GBP")
+      return (
+        <span className="font-medium text-sm mb-3 tracking-wide">
+          {formatPriceToGBP(
+            calculateDiscountPrice(
+              product.price * rate.GBP,
+              product.discount_percentage
+            )
+          )}
+        </span>
+      );
+    return (
+      <span className="font-medium text-sm mb-3 tracking-wide">
+        {formatPriceToNaira(
+          calculateDiscountPrice(
+            product.price * rate.NGN,
+            product.discount_percentage
+          )
+        )}
+      </span>
+    );
+  };
+  const getPrices = () => {
+    if (currency === "USD")
+      return (
+        <span className="font-medium text-sm mb-3 tracking-wide">
+          {formatPriceToDollar(product.price)}
+        </span>
+      );
+    if (currency === "GBP")
+      return (
+        <span className="font-medium text-sm mb-3 tracking-wide">
+          {formatPriceToGBP(product.price * rate.GBP)}
+        </span>
+      );
+    return (
+      <span className="font-medium text-sm mb-3 tracking-wide">
+        {formatPriceToNaira(product.price * rate.NGN)}
+      </span>
+    );
+  };
   return (
     <Link href={`/shop/products/${product.slug}`}>
       <div className="w-full">
@@ -39,29 +100,45 @@ export default function ProductCard({ height, product }: ProductCardProps) {
         </div>
 
         <div className="w-full flex flex-col gap-y-2 mt-4">
-          <span className="font-medium w-full capitalize tracking-wider">
+          <span className="text-sm truncate lg:text-base font-medium w-full capitalize tracking-wider">
             {product.name}
           </span>
-          <div className="flex gap-x-3">
-            {product.discount_percentage > 0 && (
-              <span className="font-medium text-sm mb-3 tracking-wide">
-                {formatPriceToDollar(
-                  calculateDiscountPrice(
-                    product.price,
-                    product.discount_percentage
-                  )
+          {isClient ? (
+            <div className="flex gap-x-3">
+              {product.discount_percentage > 0 && getDiscountPrices()}
+              <span
+                className={cn(
+                  "font-medium text-sm mb-3 tracking-wide",
+                  product.discount_percentage > 0 && "line-through text-red-500"
                 )}
+              >
+                {getPrices()}
               </span>
-            )}
-            <span
-              className={cn(
-                "font-medium text-sm mb-3 tracking-wide",
-                product.discount_percentage > 0 && "line-through text-red-500"
+            </div>
+          ) : (
+            <div className="flex gap-x-3">
+              {product.discount_percentage > 0 && (
+                <span className="font-medium text-sm mb-3 tracking-wide">
+                  {formatPriceToDollar(
+                    calculateDiscountPrice(
+                      product.price,
+                      product.discount_percentage
+                    )
+                  )}
+                </span>
               )}
-            >
-              {formatPriceToNaira(product.price)}
-            </span>
-          </div>
+              <span
+                className={cn(
+                  "font-medium text-sm mb-3 tracking-wide",
+                  product.discount_percentage > 0 && "line-through text-red-500"
+                )}
+              >
+                <span className="font-medium text-sm mb-3 tracking-wide">
+                  {formatPriceToDollar(product.price)}
+                </span>
+              </span>
+            </div>
+          )}
         </div>
       </div>
     </Link>

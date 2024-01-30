@@ -1,6 +1,7 @@
 "use client";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
+import { useCurrencyStore } from "@/store/useCurrency";
 import { Menu, Search } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -53,7 +54,7 @@ export default function Navbar({ className }: NavbarProps) {
     { name: "Accesssories", link: "/shop/categories/accessories" },
   ];
   const pathname = usePathname();
-
+  const { currency, setCurrency } = useCurrencyStore();
   return (
     <header className="border-b py-3 sticky top-0 z-20 w-full bg-white">
       <nav className="w-full flex justify-between items-center lg:hidden px-4">
@@ -123,10 +124,10 @@ export default function Navbar({ className }: NavbarProps) {
             </div>
           </SheetContent>
         </Sheet>
-        <div className="lg:hidden flex-1 flex justify-center">
+        <div className="lg:hidden">
           <Logo />
         </div>
-        <div className="flex gap-x-3 items-center">
+        <div className="flex gap-x-3 items-center w-4/12">
           <Button
             size="icon"
             className="bg-transparent p-0 hover:bg-transparent flex gap-1"
@@ -137,9 +138,12 @@ export default function Navbar({ className }: NavbarProps) {
               <span className="text-primary">0</span>
             </Link>
           </Button>
-          <Select defaultValue="NGN">
-            <SelectTrigger className="w-full px-1 outline-none border-none focus-within:ring-0">
-              <SelectValue defaultValue="NGN" placeholder="Select period" />
+          <Select
+            onValueChange={(value: "NGN" | "USD" | "GBP") => setCurrency(value)}
+            defaultValue={currency}
+          >
+            <SelectTrigger className="w-full px-1 outline-none border-none focus:ring-0 focus:ring-offset-0">
+              <SelectValue defaultValue={currency} />
             </SelectTrigger>
 
             <SelectContent>
@@ -170,9 +174,12 @@ export default function Navbar({ className }: NavbarProps) {
               <span className="text-primary">0</span>
             </Link>
           </Button>
-          <Select defaultValue="NGN">
-            <SelectTrigger className="w-full px-1 outline-none border-none focus-within:ring-0">
-              <SelectValue defaultValue="NGN" placeholder="Select period" />
+          <Select
+            onValueChange={(value: "NGN" | "USD" | "GBP") => setCurrency(value)}
+            defaultValue={currency}
+          >
+            <SelectTrigger className="w-full px-1 outline-none border-none focus:ring-0 focus:ring-offset-0">
+              <SelectValue defaultValue={currency} />
             </SelectTrigger>
 
             <SelectContent>
