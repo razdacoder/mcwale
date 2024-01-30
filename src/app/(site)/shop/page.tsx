@@ -1,4 +1,3 @@
-import ProductCard from "@/components/layouts/ProductCard";
 import Link from "next/link";
 import ShopFilters from "./filters";
 import Paginator from "./paginator";
@@ -22,10 +21,7 @@ export default function ShopPage() {
       <section className="px-4 container py-3">
         <div className=" grid grid-cols-2 lg:grid-cols-3 gap-2 md:gap-6">
           {[...Array(20)].map((_, index) => (
-            <ProductCard
-              height="h-[250px] md:h-[450px] lg:h-[550px]"
-              key={index}
-            />
+            <span key={index}>Coming Soon</span>
           ))}
         </div>
 
