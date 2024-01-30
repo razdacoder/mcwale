@@ -251,7 +251,10 @@ export default function CheckoutForm() {
             <span>Total</span>
           </div>
           {cart.map((item, index) => (
-            <div className="grid grid-cols-5 text-sm py-3">
+            <div
+              key={item.product.id}
+              className="grid grid-cols-5 text-sm py-3"
+            >
               <span className="truncate">{item.product.name}</span>
               <span>{item.size}</span>
               <span>{item.color}</span>
