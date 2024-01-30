@@ -66,7 +66,7 @@ export default function ProductPage({ slug }: { slug: string }) {
       {/*  -- */}
       <section className="container px-4 flex flex-col lg:flex-row gap-y-6 gap-x-3 xl:gap-x-12">
         <div className="w-full lg:w-5/12">
-          <ProductCarousel images={product.images} />
+          <ProductCarousel images={product?.images} />
         </div>
         <div className="w-full lg:w-6/12 py-3">
           <h3 className="uppercase tracking-wider text-xl font-medium">
@@ -156,7 +156,12 @@ export default function ProductPage({ slug }: { slug: string }) {
               />
             </div>
             <div className="mt-5 flex gap-x-3 items-center">
-              <AddToCart size={size} color={color} addToCart={addToCart} />
+              <AddToCart
+                productId={product.id}
+                size={size}
+                color={color}
+                addToCart={addToCart}
+              />
             </div>
           </div>
 

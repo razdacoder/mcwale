@@ -11,10 +11,19 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { formatPriceToNaira } from "@/lib/utils";
+import {
+  calTotal,
+  formatPriceToDollar,
+  getPrice,
+  getRatePrice,
+} from "@/lib/utils";
 import { billingSchema } from "@/schemas/formSchemas";
+import { useCartStore } from "@/store/useCart";
+import { useCurrencyStore } from "@/store/useCurrency";
+import { useRateStore } from "@/store/useRates";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { closePaymentModal, useFlutterwave } from "flutterwave-react-v3";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
@@ -65,13 +74,20 @@ export default function CheckoutForm() {
       onClose: () => {},
     });
   }
+  const { cart } = useCartStore();
+  const [isClient, setIsClient] = useState(false);
+  const { currency } = useCurrencyStore();
+  const { rate } = useRateStore();
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col lg:flex-row gap-6"
+        className="flex flex-col lg:flex-row gap-12"
       >
-        <div className="space-y-4 lg:w-2/3">
+        <div className="space-y-4 lg:w-3/6">
           <FormField
             control={form.control}
             name="first_name"
@@ -223,9 +239,9 @@ export default function CheckoutForm() {
             )}
           />
         </div>
-        <div className="lg:w-1/3">
+        <div className="lg:w-3/6">
           <Heading className="text-left text-lg normal-case">
-            Your Order <span className="text-sm">(1 item)</span>
+            Your Order <span className="text-sm">({cart.length} item)</span>
           </Heading>
           <div className="grid grid-cols-5 text-sm font-medium py-3">
             <span>Product</span>
@@ -234,33 +250,66 @@ export default function CheckoutForm() {
             <span>Quantity</span>
             <span>Total</span>
           </div>
-          <div className="grid grid-cols-5 text-xs font-light py-3">
-            <span>Agbada Dress</span>
-            <span>XL</span>
-            <span>White</span>
-            <span>x 2</span>
-            <span className="text-xs">{formatPriceToNaira(150000)}</span>
-          </div>
+          {cart.map((item, index) => (
+            <div className="grid grid-cols-5 text-sm py-3">
+              <span className="truncate">{item.product.name}</span>
+              <span>{item.size}</span>
+              <span>{item.color}</span>
+              <span>x {item.quantity}</span>
+              <span className="">
+                {isClient
+                  ? getRatePrice(
+                      currency,
+                      getPrice(item.product) * item.quantity,
+                      currency === "USD" ? null : rate[currency]
+                    )
+                  : formatPriceToDollar(getPrice(item.product) * item.quantity)}
+              </span>
+            </div>
+          ))}
+
           <div className="grid grid-cols-5 text-sm font-medium border-t py-3">
             <span>Subtotal</span>
             <span></span>
             <span></span>
             <span></span>
-            <span className="text-xs">{formatPriceToNaira(150000)}</span>
+            <span className="">
+              {isClient
+                ? getRatePrice(
+                    currency,
+                    calTotal(cart),
+                    currency === "USD" ? null : rate[currency]
+                  )
+                : formatPriceToDollar(0)}
+            </span>
           </div>
-          <div className="grid grid-cols-5 text-xs font-medium border-t py-3">
+          <div className="grid grid-cols-5 text-sm font-medium border-t py-3">
             <span>Shipping</span>
             <span></span>
             <span></span>
             <span></span>
-            <span className="text-xs">{formatPriceToNaira(2000)}</span>
+            <span className="">
+              {getRatePrice(
+                currency,
+                2,
+                currency === "USD" ? null : rate[currency]
+              )}
+            </span>
           </div>
           <div className="grid grid-cols-5 text-sm font-medium border-t py-3">
             <span>Total</span>
             <span></span>
             <span></span>
             <span></span>
-            <span className="text-xs">{formatPriceToNaira(152000)}</span>
+            <span className="">
+              {isClient
+                ? getRatePrice(
+                    currency,
+                    calTotal(cart) + 2,
+                    currency === "USD" ? null : rate[currency]
+                  )
+                : formatPriceToDollar(0)}
+            </span>
           </div>
 
           <div className="mt-4 w-full">
