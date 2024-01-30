@@ -15,7 +15,7 @@ export default function Category() {
     { name: "Casuals", link: "/shop/categories/casuals", image: "/casual.jpg" },
   ];
   return (
-    <div className="mt-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="mt-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
       {categories?.map((category, index) => (
         <div
           key={category.name}

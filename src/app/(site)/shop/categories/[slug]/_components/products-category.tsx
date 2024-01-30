@@ -51,7 +51,7 @@ export default function CategoryProducts({ slug }: { slug: string }) {
           </section>
           <br />
           <section className="px-4 container py-3">
-            <div className=" grid grid-cols-2 lg:grid-cols-3 gap-2 md:gap-6">
+            <div className=" grid grid-cols-2 lg:grid-cols-3 gap-6 md:gap-12">
               {products?.map((product: Product, index) => (
                 <ProductCard
                   product={product}

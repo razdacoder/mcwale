@@ -63,11 +63,12 @@ export default function ProductPage({ slug }: { slug: string }) {
           </span>
         </span>
       </section>
+      {/*  -- */}
       <section className="container px-4 flex flex-col lg:flex-row gap-y-6 gap-x-3 xl:gap-x-12">
-        <div className="w-full lg:w-5/12 px-4 lg:px-0">
-          <ProductCarousel images={product?.images} />
+        <div className="w-full lg:w-5/12">
+          <ProductCarousel images={product.images} />
         </div>
-        <div className="w-full container px-4 lg:w-6/12 py-3 lg:px-0">
+        <div className="w-full lg:w-6/12 py-3">
           <h3 className="uppercase tracking-wider text-xl font-medium">
             {product.name}
           </h3>

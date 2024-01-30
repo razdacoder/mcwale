@@ -135,7 +135,7 @@ export default function Navbar({ className }: NavbarProps) {
         <div className="lg:hidden">
           <Logo />
         </div>
-        <div className="flex gap-x-3 items-center w-4/12">
+        <div className="flex gap-x-3 items-center w-32">
           <Button
             size="icon"
             className="bg-transparent p-0 hover:bg-transparent flex gap-1"

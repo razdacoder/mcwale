@@ -6,7 +6,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import Image from "next/image";
 
 interface ProductCarouselProps {
   images: string[];
@@ -22,13 +21,8 @@ export default function ProductCarousel({ images }: ProductCarouselProps) {
       <CarouselContent className="xl:h-[90vh] -ml-0 w-full">
         {images.map((image, index) => (
           <CarouselItem key={index} className="pl-0">
-            <div className="relative h-full w-full flex items-center">
-              <Image
-                src={image}
-                className="absolute"
-                fill
-                alt="Product Image"
-              />
+            <div className="relative flex items-center">
+              <img src={image} className=" w-full h-full" alt="Product Image" />
             </div>
           </CarouselItem>
         ))}
