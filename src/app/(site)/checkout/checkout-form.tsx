@@ -20,6 +20,7 @@ import {
 import { billingSchema } from "@/schemas/formSchemas";
 import { getPaymentLink } from "@/services/paymentServices";
 import { useCartStore } from "@/store/useCart";
+import { useFlutterwave, closePaymentModal } from 'flutterwave-react-v3';
 import { useCurrencyStore } from "@/store/useCurrency";
 import { useRateStore } from "@/store/useRates";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -28,6 +29,7 @@ import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { v4 as uuidv4 } from "uuid";
 
 export default function CheckoutForm() {
   const { currency } = useCurrencyStore();
@@ -54,17 +56,39 @@ export default function CheckoutForm() {
     },
   });
 
+  const config = {
+    public_key: process.env.NEXT_PUBLIC_FLW_PUBLIC_KEY!,
+    tx_ref: "",
+    amount: 30000, //(calTotal(cart) + 2) * (currency === "USD" ? 1 : rate[currency]),
+    currency: currency,
+    payment_options: 'card,mobilemoney,ussd',
+    customer: {
+      email: "",
+       phone_number: "",
+      name: "",
+    },
+    customizations: {
+      title: "McWale Checkout",
+      description: 'Payment for items in cart',
+      logo: "https://bucafededczesdbjtygt.supabase.co/storage/v1/object/public/images/mcwale%20logo.svg",
+    },
+  };
+
+  const handleFlutterPayment = useFlutterwave(config);
   const { isSubmitting } = form.formState;
 
-  async function onSubmit(values: z.infer<typeof billingSchema>) {
-    const data = await getPaymentLink(
-      30000,
-      currency,
-      `${values.first_name} ${values.last_name}`,
-      values.email,
-      values.phoneNumber
-    );
-    return redirect(data.data.link);
+  function onSubmit(values: z.infer<typeof billingSchema>) {
+    config.tx_ref = uuidv4()
+    config.customer.email = values.email
+    config.customer.name = `${values.first_name} ${values.last_name}`
+    config.customer.phone_number = values.phoneNumber
+    handleFlutterPayment({
+      callback: (response) => {
+         console.log(response);
+          closePaymentModal() // this will close the modal programmatically
+      },
+      onClose: () => {},
+    });
   }
 
   return (
