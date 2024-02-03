@@ -28,7 +28,6 @@ export default async function Home() {
   return (
     <>
       <CarouselBanner />
-
       <HydrationBoundary state={dehydrate(queryClient)}>
         <Category />
         <FeaturedProducts />

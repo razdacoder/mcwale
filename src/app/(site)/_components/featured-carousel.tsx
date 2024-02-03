@@ -17,14 +17,14 @@ interface FeaturedCarouselProps {
 export default function FeaturedCarousel({ products }: FeaturedCarouselProps) {
   return (
     <Carousel className="w-full relative">
-      <CarouselContent className="-ml-2 ">
+      <CarouselContent className="-ml-6 ">
         {products.map((product, index) => (
           <CarouselItem
             key={product.id}
-            className="pl-2 basis-2/3 md:basis-1/3 lg:basis-1/5"
+            className="pl-6 basis-full md:basis-1/2 lg:basis-1/4"
           >
-            <Link href="#" className="w-full h-[300px] md:h-[350px]">
-              <div className=" relative h-[280px] md:h-[330px] w-full">
+            <Link href="#" className="w-full h-[450]">
+              <div className=" relative h-[450px] w-full">
                 <Image src={product.images[0]} fill alt={product.name} />
               </div>
               <span className="block font-medium capitalize mt-3 text-primary text-sm">

@@ -52,13 +52,7 @@ export default function Navbar({ className }: NavbarProps) {
       link: "/info/appointment",
     },
   ];
-  const shopLinks = [
-    { name: "Agbada", link: "/shop/categories/agbada" },
-    { name: "Kaftan", link: "/shop/categories/kaftan" },
-    { name: "Senator Wears", link: "/shop/categories/senatot-wear" },
-    { name: "Casuals", link: "/shop/categories/casuals" },
-    { name: "Accesssories", link: "/shop/categories/accessories" },
-  ];
+
   const pathname = usePathname();
   const { currency, setCurrency } = useCurrencyStore();
   const { cart } = useCartStore();
@@ -71,105 +65,111 @@ export default function Navbar({ className }: NavbarProps) {
   const { data: categories } = useQuery(getAllCategories(supabase));
   return (
     <header className="border-b py-3 sticky top-0 z-20 w-full bg-white">
-      <nav className="w-full flex justify-between items-center lg:hidden px-4">
-        <Sheet>
-          <SheetTrigger className="px-0" asChild>
-            <Menu
-              strokeWidth={1.5}
-              className="w-8 h-8 text-primary cursor-pointer"
-            />
-          </SheetTrigger>
-          <SheetContent
-            side="left"
-            className="flex flex-col justify-between gap-y-6"
-          >
-            <div className="mt-6 overflow-y-scroll">
-              <form
-                autoFocus={false}
-                className="flex gap-x-2 items-center border-b border-primary"
-              >
-                <Input
+      <nav className="w-full flex items-center lg:hidden px-4">
+        <div className="w-1/2 flex justify-start">
+          <Sheet>
+            <SheetTrigger className="px-0" asChild>
+              <Menu
+                strokeWidth={1.5}
+                className="w-8 h-8 text-primary cursor-pointer"
+              />
+            </SheetTrigger>
+            <SheetContent
+              side="left"
+              className="flex flex-col justify-between gap-y-6"
+            >
+              <div className="mt-6 overflow-y-scroll">
+                <form
                   autoFocus={false}
-                  className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-                  placeholder="Search..."
-                />
-                <Search strokeWidth={1.5} />
-              </form>
-              <div className="  text-sm flex flex-col gap-y-4 mt-6">
-                {navlinks.map((nav, index) => (
-                  <div key={index}>
-                    {nav.link === "/shop" ? (
-                      <Accordion type="single" collapsible>
-                        <AccordionItem value="shop" className="border-none">
-                          <AccordionTrigger className=" flex justify-between hover:no-underline  tracking-widest py-0">
-                            Shop
-                          </AccordionTrigger>
-                          <AccordionContent className="inline-flex flex-col gap-y-2 ml-1 mt-3">
-                            {categories?.map((category: Category, index) => (
-                              <Link
-                                key={category.id}
-                                className={cn(
-                                  "w-max capitalize tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
-                                  pathname ===
-                                    `/shop/categories/${category.slug}` &&
-                                    "after:w-full"
-                                )}
-                                href={`/shop/categories/${category.slug}`}
-                              >
-                                {category.title}
-                              </Link>
-                            ))}
-                          </AccordionContent>
-                        </AccordionItem>
-                      </Accordion>
-                    ) : (
-                      <Link
-                        key={index}
-                        className={cn(
-                          "tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
-                          pathname === nav.link && "before:w-full"
-                        )}
-                        href={nav.link}
-                      >
-                        {nav.name}
-                      </Link>
-                    )}
-                  </div>
-                ))}
+                  className="flex gap-x-2 items-center border-b border-primary"
+                >
+                  <Input
+                    autoFocus={false}
+                    className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                    placeholder="Search..."
+                  />
+                  <Search strokeWidth={1.5} />
+                </form>
+                <div className="  text-sm flex flex-col gap-y-4 mt-6">
+                  {navlinks.map((nav, index) => (
+                    <div key={index}>
+                      {nav.link === "/shop" ? (
+                        <Accordion type="single" collapsible>
+                          <AccordionItem value="shop" className="border-none">
+                            <AccordionTrigger className=" flex justify-between hover:no-underline  tracking-widest py-0">
+                              Shop
+                            </AccordionTrigger>
+                            <AccordionContent className="inline-flex flex-col gap-y-2 ml-1 mt-3">
+                              {categories?.map((category: Category, index) => (
+                                <Link
+                                  key={category.id}
+                                  className={cn(
+                                    "w-max capitalize tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
+                                    pathname ===
+                                      `/shop/categories/${category.slug}` &&
+                                      "after:w-full"
+                                  )}
+                                  href={`/shop/categories/${category.slug}`}
+                                >
+                                  {category.title}
+                                </Link>
+                              ))}
+                            </AccordionContent>
+                          </AccordionItem>
+                        </Accordion>
+                      ) : (
+                        <Link
+                          key={index}
+                          className={cn(
+                            "tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
+                            pathname === nav.link && "before:w-full"
+                          )}
+                          href={nav.link}
+                        >
+                          {nav.name}
+                        </Link>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          </SheetContent>
-        </Sheet>
+            </SheetContent>
+          </Sheet>
+        </div>
         <div className="lg:hidden">
           <Logo />
         </div>
-        <div className="flex gap-x-3 items-center w-32">
-          <Button
-            size="icon"
-            className="bg-transparent p-0 hover:bg-transparent flex gap-1"
-            asChild
-          >
-            <Link href="/cart">
-              <AiOutlineShopping className="w-6 h-6 text-primary" />
-              {isClient ? (
-                <span className="text-primary">{cart.length}</span>
-              ) : null}
-            </Link>
-          </Button>
-          <Select
-            onValueChange={(value: "NGN" | "USD" | "GBP") => setCurrency(value)}
-            defaultValue={currency}
-          >
-            <SelectTrigger className="w-full px-1 outline-none border-none focus:ring-0 focus:ring-offset-0">
-              <SelectValue defaultValue={currency} />
-            </SelectTrigger>
+        <div className="w-1/2 flex justify-end">
+          <div className="flex gap-x-3 items-center w-32">
+            <Button
+              size="icon"
+              className="bg-transparent p-0 hover:bg-transparent flex gap-1"
+              asChild
+            >
+              <Link href="/cart" className="flex items-center">
+                <AiOutlineShopping className="w-6 h-6 text-primary" />
+                {isClient ? (
+                  <span className="text-primary">{cart.length}</span>
+                ) : null}
+              </Link>
+            </Button>
+            <Select
+              onValueChange={(value: "NGN" | "USD" | "GBP") =>
+                setCurrency(value)
+              }
+              defaultValue={currency}
+            >
+              <SelectTrigger className="w-full px-1 outline-none border-none focus:ring-0 focus:ring-offset-0">
+                <SelectValue defaultValue={currency} />
+              </SelectTrigger>
 
-            <SelectContent>
-              <SelectItem value="NGN">🇳🇬 NGN</SelectItem>
-              <SelectItem value="GBP">🇬🇧 GBP</SelectItem>
-              <SelectItem value="USD">🇺🇸 USD</SelectItem>
-            </SelectContent>
-          </Select>
+              <SelectContent>
+                <SelectItem value="NGN">🇳🇬 NGN</SelectItem>
+                <SelectItem value="GBP">🇬🇧 GBP</SelectItem>
+                <SelectItem value="USD">🇺🇸 USD</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       </nav>
 
@@ -181,13 +181,13 @@ export default function Navbar({ className }: NavbarProps) {
           />
           <Search strokeWidth={1.5} />
         </form>
-        <div className="flex gap-x-3 items-center">
+        <div className="flex gap-x-2 items-center">
           <Button
             size="icon"
             className="bg-transparent p-0 hover:bg-transparent flex gap-1"
             asChild
           >
-            <Link href="/cart">
+            <Link href="/cart" className="flex items-center">
               <AiOutlineShopping className="w-6 h-6 text-primary" />
               {isClient ? (
                 <span className="text-primary">{cart.length}</span>

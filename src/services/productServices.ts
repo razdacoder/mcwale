@@ -25,7 +25,7 @@ export const getNewArrivals = (client: TypedSupabaseClient) => {
     .from("products")
     .select("*")
     .order("created_at", { ascending: false })
-    .limit(6);
+    .limit(4);
 };
 
 export const getFeaturedProducts = (client: TypedSupabaseClient) => {

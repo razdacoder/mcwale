@@ -10,8 +10,8 @@ export default function FeaturedProducts() {
   const supabase = useSupabaseBrowser();
   const { data: products } = useQuery(getFeaturedProducts(supabase));
   return (
-    <section className="pb-12 px-4 container my-12 border-b">
-      <div className="">
+    <section className="pb-12 px-4 container my-12">
+      <div className="mb-3">
         <Heading className="text-xl text-left normal-case block">
           Top Featured
         </Heading>

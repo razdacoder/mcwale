@@ -32,9 +32,9 @@ export default function CartItemUI({ item }: CartItemProps) {
     updateQuantity(item.product.id, item.quantity);
   };
   return (
-    <div className=" flex border p-4 h-[200px] md:h-[300px] ">
+    <div className=" flex border p-4 h-[200px] md:h-[250px] lg:h-[300px] ">
       <div className="flex flex-1 gap-x-6">
-        <div className="w-1/2 md:w-3/12 relative">
+        <div className="w-1/2 md:w-4/12 relative">
           <Image
             src={item.product.images[0]}
             fill
