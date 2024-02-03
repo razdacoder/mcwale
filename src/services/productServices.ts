@@ -1,4 +1,4 @@
-import { TypedSupabaseClient } from "@/lib/types";
+import { Product, TypedSupabaseClient } from "@/lib/types";
 
 export const getProductsByCategory = (
   client: TypedSupabaseClient,
@@ -54,4 +54,17 @@ export const createProductReview = (
   }
 ) => {
   return client.from("reviews").insert([data]);
+};
+
+export const getRelatedProducts = (
+  client: TypedSupabaseClient,
+  product: Product
+) => {
+  return client
+    .from("products")
+    .select("*, category!inner(*)")
+    .eq("category.slug", product.category.slug)
+    .neq("id", product.id)
+    .limit(6)
+    .throwOnError();
 };

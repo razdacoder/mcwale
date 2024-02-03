@@ -9,7 +9,11 @@ import {
   getRatePrice,
   getTotalRating,
 } from "@/lib/utils";
-import { getProductBySlug, getProductReviews } from "@/services/productServices";
+import {
+  getProductBySlug,
+  getProductReviews,
+  getRelatedProducts,
+} from "@/services/productServices";
 import { useCartStore } from "@/store/useCart";
 import { useCurrencyStore } from "@/store/useCurrency";
 import { useRateStore } from "@/store/useRates";
@@ -24,15 +28,22 @@ import ProductSize from "./product-size";
 import ReviewForm from "./review-from";
 import ReviewsList from "./review-list";
 import SizeChart from "./size-chart";
+import ProductCard from "@/components/layouts/ProductCard";
 
 export default function ProductPage({ slug }: { slug: string }) {
   const supabase = useSupabaseBrowser();
   const { data: productsData } = useQuery(getProductBySlug(supabase, slug));
-  const {data: reviewData} = useQuery(getProductReviews(supabase, slug))
+  const { data: reviewData } = useQuery(getProductReviews(supabase, slug));
   const { currency } = useCurrencyStore();
   const { rate } = useRateStore();
   const product: Product = productsData;
   const reviews = reviewData as Review[];
+  const {
+    data: relatedProductsData,
+    isLoading: relatedLoading,
+    isError: relatedError,
+  } = useQuery(getRelatedProducts(supabase, product));
+  const relatedProducts = relatedProductsData as Product[];
 
   const { addItem } = useCartStore();
 
@@ -77,9 +88,15 @@ export default function ProductPage({ slug }: { slug: string }) {
             {product.name}
           </h3>
           <div className="flex gap-x-3 items-center mt-4">
-            {isClient ? <ReviewStars rating={getTotalRating(reviews)} /> : <ReviewStars rating={0} /> }
-            
-            <span className="text-sm text-muted-foreground">{reviews.length} reviews</span>
+            {isClient ? (
+              <ReviewStars rating={getTotalRating(reviews)} />
+            ) : (
+              <ReviewStars rating={0} />
+            )}
+
+            <span className="text-sm text-muted-foreground">
+              {reviews.length} reviews
+            </span>
           </div>
           {isClient ? (
             <div className="mt-4 flex items-center gap-x-3">
@@ -183,12 +200,20 @@ export default function ProductPage({ slug }: { slug: string }) {
             May Also Like
           </h2>
         </div>
-        <div className=" grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-6">
-          {[...Array(5)].map((_, index) => (
-            // <ProductCard height="h-[220px] md:h-[300px]" key={index} />
-            <span key={index}>Hi</span>
-          ))}
-        </div>
+        {relatedLoading && <p>Loading...</p>}
+        {relatedError && <p>Error</p>}
+        {relatedProducts && (
+          <div className=" grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-6">
+            {relatedProducts.map((relatedProduct, index) => (
+              <ProductCard
+                product={relatedProduct}
+                height="h-[220px] md:h-[350px]"
+                key={relatedProduct.id}
+              />
+              // <span key={index}>Hi</span>
+            ))}
+          </div>
+        )}
       </section>
       <section className="px-4 container my-12">
         <div className=" mb-4">
@@ -197,8 +222,6 @@ export default function ProductPage({ slug }: { slug: string }) {
           </h2>
         </div>
         <div className="flex lg:gap-x-6 py-6 flex-col lg:flex-row gap-y-3 lg:gap-y-0">
-          
-
           <div className="w-full flex flex-col gap-y-6 font-medium text-sm ">
             <div className="flex justify-end">
               <ReviewForm product={product.id} />
