@@ -1,8 +1,12 @@
 "use client";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import useSupabaseBrowser from "@/lib/supabase-client";
+import { Category } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { getAllCategories } from "@/services/categoriesServices";
 import { useCartStore } from "@/store/useCart";
 import { useCurrencyStore } from "@/store/useCurrency";
+import { useQuery } from "@supabase-cache-helpers/postgrest-react-query";
 import { Menu, Search } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -63,6 +67,8 @@ export default function Navbar({ className }: NavbarProps) {
   useEffect(() => {
     setIsClient(true);
   }, []);
+  const supabase = useSupabaseBrowser();
+  const { data: categories } = useQuery(getAllCategories(supabase));
   return (
     <header className="border-b py-3 sticky top-0 z-20 w-full bg-white">
       <nav className="w-full flex justify-between items-center lg:hidden px-4">
@@ -99,16 +105,18 @@ export default function Navbar({ className }: NavbarProps) {
                             Shop
                           </AccordionTrigger>
                           <AccordionContent className="inline-flex flex-col gap-y-2 ml-1 mt-3">
-                            {shopLinks.map((nav, index) => (
+                            {categories?.map((category: Category, index) => (
                               <Link
-                                key={nav.name}
+                                key={category.id}
                                 className={cn(
-                                  "w-max tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
-                                  pathname === nav.link && "after:w-full"
+                                  "w-max capitalize tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
+                                  pathname ===
+                                    `/shop/categories/${category.slug}` &&
+                                    "after:w-full"
                                 )}
-                                href={nav.link}
+                                href={`/shop/categories/${category.slug}`}
                               >
-                                {nav.name}
+                                {category.title}
                               </Link>
                             ))}
                           </AccordionContent>
@@ -143,7 +151,9 @@ export default function Navbar({ className }: NavbarProps) {
           >
             <Link href="/cart">
               <AiOutlineShopping className="w-6 h-6 text-primary" />
-              <span className="text-primary">{isClient ? cart.length : 0}</span>
+              {isClient ? (
+                <span className="text-primary">{cart.length}</span>
+              ) : null}
             </Link>
           </Button>
           <Select
@@ -179,7 +189,9 @@ export default function Navbar({ className }: NavbarProps) {
           >
             <Link href="/cart">
               <AiOutlineShopping className="w-6 h-6 text-primary" />
-              <span className="text-primary">{isClient ? cart.length : 0}</span>
+              {isClient ? (
+                <span className="text-primary">{cart.length}</span>
+              ) : null}
             </Link>
           </Button>
           <Select
@@ -217,17 +229,18 @@ export default function Navbar({ className }: NavbarProps) {
                     Shop
                   </span>
                   <div className="hidden peer-hover:inline-flex absolute pb-3 -left-6 px-6 hover:inline-flex gap-y-2 flex-col w-[250px] py-1 pt-6 bg-white z-50 shadow-md border">
-                    {shopLinks.map((nav, index) => (
+                    {categories?.map((category: Category, index) => (
                       <Link
                         prefetch={false}
-                        key={nav.name}
+                        key={category.title}
                         className={cn(
-                          "inline-block w-max tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
-                          pathname === nav.link && "after:w-full"
+                          "inline-block capitalize w-max tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
+                          pathname === `/shop/categories/${category.slug}` &&
+                            "after:w-full"
                         )}
-                        href={nav.link}
+                        href={`/shop/categories/${category.slug}`}
                       >
-                        {nav.name}
+                        {category.title}
                       </Link>
                     ))}
                   </div>

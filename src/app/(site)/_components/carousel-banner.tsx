@@ -20,9 +20,9 @@ export default function CarouselBanner() {
       onMouseLeave={plugin.current.reset}
       className="relative"
     >
-      <CarouselPrevious className="absolute top-[50%] left-2 z-10 rounded-none" />
+      <CarouselPrevious className="hidden lg:block absolute top-[50%] left-2 z-10 rounded-none" />
 
-      <CarouselNext className="absolute top-[50%] right-2 z-10 rounded-none" />
+      <CarouselNext className="hidden lg:block absolute top-[50%] right-2 z-10 rounded-none" />
       <CarouselContent className="h-[70vh] md:h-[90vh] lg:h-[100vh] gap-x-0">
         <CarouselItem>
           <div className="h-full bg-[url('/senator.jpg')] bg-no-repeat bg-cover bg-top flex items-end md:items-center px-8 lg:px-32">
@@ -42,8 +42,8 @@ export default function CarouselBanner() {
           </div>
         </CarouselItem>
         <CarouselItem>
-          <div className="h-full bg-[url('/casual.jpg')] bg-no-repeat bg-cover bg-top flex items-end md:items-center px-8 lg:px-32">
-            <div className="flex flex-col gap-y-6 mb-24 md:mb-0">
+          <div className="h-full bg-[url('/casual.jpg')] bg-no-repeat bg-cover bg-top flex items-end px-8 lg:px-32">
+            <div className="flex flex-col gap-y-6 mb-24">
               <h1 className="scroll-m-20 text-5xl font-extrabold tracking-tight lg:text-7xl text-white">
                 McWale Acceesories
               </h1>

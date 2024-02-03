@@ -1,41 +1,39 @@
-import Heading from "@/components/ui/Heading";
+import useSupabaseServer from "@/lib/supabase-server";
+import { cookies } from "next/headers";
 import CarouselBanner from "./_components/carousel-banner";
 import Category from "./_components/categories";
-import FeaturedCarousel from "./_components/featured-carousel";
+
+import { getAllCategories } from "@/services/categoriesServices";
+import {
+  getFeaturedProducts,
+  getNewArrivals,
+} from "@/services/productServices";
+import { prefetchQuery } from "@supabase-cache-helpers/postgrest-react-query";
+import {
+  HydrationBoundary,
+  QueryClient,
+  dehydrate,
+} from "@tanstack/react-query";
+import FeaturedProducts from "./_components/featured";
+import NewArrivals from "./_components/new-arrivals";
 
 export default async function Home() {
+  const queryClient = new QueryClient();
+  const cookieStore = cookies();
+  const supabase = useSupabaseServer(cookieStore);
+  await prefetchQuery(queryClient, getNewArrivals(supabase));
+  await prefetchQuery(queryClient, getFeaturedProducts(supabase));
+  await prefetchQuery(queryClient, getAllCategories(supabase));
+
   return (
     <>
       <CarouselBanner />
-      <section className="py-12 px-4 border-b">
-        <Heading className="text-xl normal-case text-left block">
-          Shop by Category
-        </Heading>
 
+      <HydrationBoundary state={dehydrate(queryClient)}>
         <Category />
-      </section>
-
-      <section className="pb-12 my-12 border-b">
-        <div className="px-4">
-          <Heading className="text-xl text-left normal-case block">
-            Top Featured
-          </Heading>
-        </div>
-
-        <FeaturedCarousel />
-      </section>
-
-      <section className="py-12 px-4 border-b">
-        <Heading className="text-xl normal-case text-left block">
-          New Arrivals
-        </Heading>
-
-        <div className="mt-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-6">
-          {[...Array(4)].map((_, index) => (
-            <span key={index}>Comming Soon</span>
-          ))}
-        </div>
-      </section>
+        <FeaturedProducts />
+        <NewArrivals />
+      </HydrationBoundary>
     </>
   );
 }

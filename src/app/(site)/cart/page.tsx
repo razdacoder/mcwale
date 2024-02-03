@@ -41,7 +41,7 @@ export default function CartPage() {
               : null}
           </div>
 
-          <div className="w-full lg:w-4/12 flex flex-col gap-y-3">
+          <div className="w-full lg:w-4/12 flex flex-col gap-y-3 mt-6 lg:mt-0">
             <div className="uppercase font-medium flex justify-between">
               <span>Subtotal</span>
               <span>

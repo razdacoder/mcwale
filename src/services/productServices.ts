@@ -19,3 +19,15 @@ export const getProductBySlug = (client: TypedSupabaseClient, slug: string) => {
     .throwOnError()
     .single();
 };
+
+export const getNewArrivals = (client: TypedSupabaseClient) => {
+  return client
+    .from("products")
+    .select("*")
+    .order("created_at", { ascending: false })
+    .limit(6);
+};
+
+export const getFeaturedProducts = (client: TypedSupabaseClient) => {
+  return client.from("products").select("*").eq("is_featured", true).limit(12);
+};

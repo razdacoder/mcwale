@@ -7,6 +7,7 @@ export type Category = {
   id: string;
   title: string;
   slug: string;
+  image: string;
   created_at: Date;
   styles: string[];
 };

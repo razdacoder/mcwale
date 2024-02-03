@@ -18,16 +18,25 @@ import {
   getRatePrice,
 } from "@/lib/utils";
 import { billingSchema } from "@/schemas/formSchemas";
+import { getPaymentLink } from "@/services/paymentServices";
 import { useCartStore } from "@/store/useCart";
 import { useCurrencyStore } from "@/store/useCurrency";
 import { useRateStore } from "@/store/useRates";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { closePaymentModal, useFlutterwave } from "flutterwave-react-v3";
+import { Loader2 } from "lucide-react";
+import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 export default function CheckoutForm() {
+  const { currency } = useCurrencyStore();
+  const { cart } = useCartStore();
+  const [isClient, setIsClient] = useState(false);
+  const { rate } = useRateStore();
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
   const form = useForm<z.infer<typeof billingSchema>>({
     resolver: zodResolver(billingSchema),
     defaultValues: {
@@ -44,43 +53,20 @@ export default function CheckoutForm() {
       order_note: "",
     },
   });
-  const config = {
-    public_key: process.env.NEXT_PUBLIC_FLW_PUBLIC_KEY!,
-    tx_ref: Date.now().toString(),
-    amount: 100,
-    currency: "NGN",
-    payment_options: "card,banktransfer,ussd",
-    customer: {
-      email: "john@gmail.com",
-      phone_number: "08024283327",
-      name: "Ramon Rasheed",
-    },
-    customizations: {
-      title: "McWale Checkout",
-      description: "Payment for items in cart",
-      logo: "https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg",
-    },
-  };
-  const handleFlutterPayment = useFlutterwave(config);
-  function onSubmit(values: z.infer<typeof billingSchema>) {
-    config.customer.email = values.email;
-    config.customer.phone_number = values.phoneNumber;
-    config.customer.name = `${values.first_name} ${values.last_name}`;
-    handleFlutterPayment({
-      callback: (response) => {
-        console.log(response);
-        closePaymentModal(); // this will close the modal programmatically
-      },
-      onClose: () => {},
-    });
+
+  const { isSubmitting } = form.formState;
+
+  async function onSubmit(values: z.infer<typeof billingSchema>) {
+    const data = await getPaymentLink(
+      30000,
+      currency,
+      `${values.first_name} ${values.last_name}`,
+      values.email,
+      values.phoneNumber
+    );
+    return redirect(data.data.link);
   }
-  const { cart } = useCartStore();
-  const [isClient, setIsClient] = useState(false);
-  const { currency } = useCurrencyStore();
-  const { rate } = useRateStore();
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+
   return (
     <Form {...form}>
       <form
@@ -240,84 +226,92 @@ export default function CheckoutForm() {
           />
         </div>
         <div className="lg:w-3/6">
-          <Heading className="text-left text-lg normal-case">
-            Your Order <span className="text-sm">({cart.length} item)</span>
-          </Heading>
-          <div className="grid grid-cols-5 text-sm font-medium py-3">
-            <span>Product</span>
-            <span>Size</span>
-            <span>Color</span>
-            <span>Quantity</span>
-            <span>Total</span>
-          </div>
-          {cart.map((item, index) => (
-            <div
-              key={item.product.id}
-              className="grid grid-cols-5 text-sm py-3"
-            >
-              <span className="truncate">{item.product.name}</span>
-              <span>{item.size}</span>
-              <span>{item.color}</span>
-              <span>x {item.quantity}</span>
-              <span className="">
-                {isClient
-                  ? getRatePrice(
-                      currency,
-                      getPrice(item.product) * item.quantity,
-                      currency === "USD" ? null : rate[currency]
-                    )
-                  : formatPriceToDollar(getPrice(item.product) * item.quantity)}
-              </span>
-            </div>
-          ))}
-
-          <div className="grid grid-cols-5 text-sm font-medium border-t py-3">
-            <span>Subtotal</span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span className="">
-              {isClient
-                ? getRatePrice(
+          {isClient ? (
+            <>
+              <Heading className="text-left text-lg normal-case">
+                Your Order{" "}
+                <span className="text-sm">
+                  ({isClient ? cart.length : 0} item)
+                </span>
+              </Heading>
+              <div className="grid grid-cols-5 text-sm uppercase font-medium py-3 gap-x-3">
+                <span>Product</span>
+                <span>Size</span>
+                <span>Color</span>
+                <span>Quantity</span>
+                <span className="text-right">Total</span>
+              </div>
+              {cart.map((item, index) => (
+                <div
+                  key={item.product.id}
+                  className="grid grid-cols-5 text-sm py-3 gap-x-3"
+                >
+                  <span className="truncate">{item.product.name}</span>
+                  <span>{item.size}</span>
+                  <span>{item.color}</span>
+                  <span>x {item.quantity}</span>
+                  <span className="text-right">
+                    {isClient
+                      ? getRatePrice(
+                          currency,
+                          getPrice(item.product) * item.quantity,
+                          currency === "USD" ? null : rate[currency]
+                        )
+                      : formatPriceToDollar(
+                          getPrice(item.product) * item.quantity
+                        )}
+                  </span>
+                </div>
+              ))}
+              <div className="grid grid-cols-5 text-sm uppercase font-medium border-t py-3">
+                <span>Subtotal</span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span className="text-right">
+                  {isClient
+                    ? getRatePrice(
+                        currency,
+                        calTotal(cart),
+                        currency === "USD" ? null : rate[currency]
+                      )
+                    : formatPriceToDollar(0)}
+                </span>
+              </div>
+              <div className="grid grid-cols-5 text-sm uppercase font-medium border-t py-3">
+                <span>Shipping</span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span className="text-right">
+                  {getRatePrice(
                     currency,
-                    calTotal(cart),
+                    2,
                     currency === "USD" ? null : rate[currency]
-                  )
-                : formatPriceToDollar(0)}
-            </span>
-          </div>
-          <div className="grid grid-cols-5 text-sm font-medium border-t py-3">
-            <span>Shipping</span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span className="">
-              {getRatePrice(
-                currency,
-                2,
-                currency === "USD" ? null : rate[currency]
-              )}
-            </span>
-          </div>
-          <div className="grid grid-cols-5 text-sm font-medium border-t py-3">
-            <span>Total</span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span className="">
-              {isClient
-                ? getRatePrice(
-                    currency,
-                    calTotal(cart) + 2,
-                    currency === "USD" ? null : rate[currency]
-                  )
-                : formatPriceToDollar(0)}
-            </span>
-          </div>
+                  )}
+                </span>
+              </div>
+              <div className="grid grid-cols-5 text-sm uppercase font-medium border-t py-3">
+                <span>Total</span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span className="text-right">
+                  {isClient
+                    ? getRatePrice(
+                        currency,
+                        calTotal(cart) + 2,
+                        currency === "USD" ? null : rate[currency]
+                      )
+                    : formatPriceToDollar(0)}
+                </span>
+              </div>
+            </>
+          ) : null}
 
           <div className="mt-4 w-full">
-            <Button size="lg" className="w-full">
-              Pay
+            <Button size="lg" className="w-full flex gap-x-3 items-center">
+              Pay {isSubmitting && <Loader2 className="w-4 h-4 animate-spin" />}
             </Button>
           </div>
         </div>
