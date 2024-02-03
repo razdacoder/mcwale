@@ -18,14 +18,25 @@ import {
 } from "@/components/ui/select";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Textarea } from "@/components/ui/textarea";
+import useSupabaseBrowser from "@/lib/supabase-client";
 import { reviewSchema } from "@/schemas/formSchemas";
+import { createProductReview } from "@/services/productServices";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { AiOutlineEdit } from "react-icons/ai";
+import { useRouter } from "next/navigation";
 import { MdStar } from "react-icons/md";
 import * as z from "zod";
 
-export default function ReviewForm() {
+interface ReviewFormProps {
+  product: string;
+}
+
+export default function ReviewForm({ product }: ReviewFormProps) {
+  const supabase = useSupabaseBrowser();
+  const router = useRouter()
   const form = useForm<z.infer<typeof reviewSchema>>({
     resolver: zodResolver(reviewSchema),
     defaultValues: {
@@ -33,13 +44,41 @@ export default function ReviewForm() {
       review: "",
       first_name: "",
       last_name: "",
-      image: "",
     },
   });
+  const { isSubmitting, isValid } = form.formState;
+  const [err, setErr] = useState<string | null>(null)
+  const [open, setOpen] = useState(false)
+  async function onSumbit(values: z.infer<typeof reviewSchema>) {
+    if (isValid) {
+      const {data, error} = await createProductReview(supabase, {
+        first_name: values.first_name,
+        last_name: values.last_name,
+        review: values.review,
+        product,
+        stars: parseInt(values.stars),
+      });
+
+      if (error) {
+        setErr(error.message)
+        return
+      }
+
+      form.reset()
+      setOpen(false)
+      router.refresh()
+
+    }
+  }
+  // open={open} onOpenChange={() => setOpen(prev => !prev)}
+  const onOpenChange = (value: boolean) => {
+    form.reset()
+    setOpen(value)
+  }
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetTrigger asChild>
-        <Button size="lg" className="flex gap-x-3 items-center">
+        <Button onClick={() => setOpen(true)} size="lg" className="flex gap-x-3 items-center">
           <AiOutlineEdit className="w-4 h-4" />
           Add review
         </Button>
@@ -47,13 +86,14 @@ export default function ReviewForm() {
       <SheetContent side="right">
         <h4 className="font-light uppercase font-sm">Add Review</h4>
         <Form {...form}>
-          <form className="mt-6 space-y-6">
+          <form onSubmit={form.handleSubmit(onSumbit)} className="mt-6 space-y-6">
+           {err && <p className="text-red-500 capitalize">{err}</p>}
             <FormField
               control={form.control}
               name="first_name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Firstname</FormLabel>
+                  <FormLabel>First Name</FormLabel>
                   <FormControl>
                     <Input placeholder="Enter your firstname" {...field} />
                   </FormControl>
@@ -66,7 +106,7 @@ export default function ReviewForm() {
               name="last_name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Lastname</FormLabel>
+                  <FormLabel>Last Name</FormLabel>
                   <FormControl>
                     <Input placeholder="Enter your lastname" {...field} />
                   </FormControl>
@@ -98,7 +138,7 @@ export default function ReviewForm() {
                           <span>1 star</span>
                         </div>
                       </SelectItem>
-                      <SelectItem value="1">
+                      <SelectItem value="2">
                         <div className="flex flex-row gap-x-3 items-center">
                           <div className="flex gap-x-1">
                             <MdStar className="w-4 h-4" />
@@ -107,7 +147,7 @@ export default function ReviewForm() {
                           <span>2 star</span>
                         </div>
                       </SelectItem>
-                      <SelectItem value="1">
+                      <SelectItem value="3">
                         <div className="flex gap-x-3 items-center">
                           <div className="flex gap-x-1">
                             <MdStar className="w-4 h-4" />
@@ -117,7 +157,7 @@ export default function ReviewForm() {
                           <span>3 star</span>
                         </div>
                       </SelectItem>
-                      <SelectItem value="1">
+                      <SelectItem value="4">
                         <div className="flex gap-x-3 items-center">
                           <div className="flex gap-x-1">
                             <MdStar className="w-4 h-4" />
@@ -155,20 +195,7 @@ export default function ReviewForm() {
                 <FormItem>
                   <FormLabel>Review</FormLabel>
                   <FormControl>
-                    <Textarea className="resize-none"></Textarea>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="image"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Image</FormLabel>
-                  <FormControl>
-                    <Input type="file" accept="image/*" {...field} />
+                    <Textarea {...field} className="resize-none"></Textarea>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -176,7 +203,10 @@ export default function ReviewForm() {
             />
 
             <div className="flex justify-end">
-              <Button type="submit">Submit</Button>
+              <Button className="flex items-center gap-x-3" disabled={!isValid || isSubmitting} type="submit">
+                Submit{" "}
+                {isSubmitting && <Loader2 className="w-4 h-4 animate-spin" />}
+              </Button>
             </div>
           </form>
         </Form>

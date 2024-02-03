@@ -23,7 +23,6 @@ export const reviewSchema = z.object({
     .string()
     .min(2, { message: "Name must be at least 2 characters" }),
   review: z.string().min(1),
-  image: z.string(),
 });
 
 export const appointmentSchema = z.object({

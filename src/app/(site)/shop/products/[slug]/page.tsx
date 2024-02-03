@@ -1,5 +1,5 @@
 import useSupabaseServer from "@/lib/supabase-server";
-import { getProductBySlug } from "@/services/productServices";
+import { getProductBySlug, getProductReviews } from "@/services/productServices";
 import { prefetchQuery } from "@supabase-cache-helpers/postgrest-react-query";
 import {
   dehydrate,
@@ -18,6 +18,7 @@ export default async function ProductPageView({
   const cookieStore = cookies();
   const supabase = useSupabaseServer(cookieStore);
   await prefetchQuery(queryClient, getProductBySlug(supabase, params.slug));
+  await prefetchQuery(queryClient, getProductReviews(supabase, params.slug))
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

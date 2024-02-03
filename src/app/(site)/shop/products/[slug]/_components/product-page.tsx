@@ -1,14 +1,15 @@
 "use client";
 import ReviewStars from "@/components/ui/review-stars";
 import useSupabaseBrowser from "@/lib/supabase-client";
-import { Product } from "@/lib/types";
+import { Product, Review } from "@/lib/types";
 import {
   calculateDiscountPrice,
   cn,
   formatPriceToDollar,
   getRatePrice,
+  getTotalRating,
 } from "@/lib/utils";
-import { getProductBySlug } from "@/services/productServices";
+import { getProductBySlug, getProductReviews } from "@/services/productServices";
 import { useCartStore } from "@/store/useCart";
 import { useCurrencyStore } from "@/store/useCurrency";
 import { useRateStore } from "@/store/useRates";
@@ -26,10 +27,13 @@ import SizeChart from "./size-chart";
 
 export default function ProductPage({ slug }: { slug: string }) {
   const supabase = useSupabaseBrowser();
-  const { data } = useQuery(getProductBySlug(supabase, slug));
+  const { data: productsData } = useQuery(getProductBySlug(supabase, slug));
+  const {data: reviewData} = useQuery(getProductReviews(supabase, slug))
   const { currency } = useCurrencyStore();
   const { rate } = useRateStore();
-  const product: Product = data;
+  const product: Product = productsData;
+  const reviews = reviewData as Review[];
+
   const { addItem } = useCartStore();
 
   const [isClient, setIsClient] = useState(false);
@@ -73,8 +77,9 @@ export default function ProductPage({ slug }: { slug: string }) {
             {product.name}
           </h3>
           <div className="flex gap-x-3 items-center mt-4">
-            <ReviewStars rating={4} />
-            <span className="text-sm text-muted-foreground">10 reviews</span>
+            {isClient ? <ReviewStars rating={getTotalRating(reviews)} /> : <ReviewStars rating={0} /> }
+            
+            <span className="text-sm text-muted-foreground">{reviews.length} reviews</span>
           </div>
           {isClient ? (
             <div className="mt-4 flex items-center gap-x-3">
@@ -192,51 +197,14 @@ export default function ProductPage({ slug }: { slug: string }) {
           </h2>
         </div>
         <div className="flex lg:gap-x-6 py-6 flex-col lg:flex-row gap-y-3 lg:gap-y-0">
-          <div className="px-6 lg:w-4/12 shadow-md py-4 border">
-            <div className="flex justify-between lg:gap-x-3 items-center">
-              <div className="flex items-end gap-x-3">
-                <span className="font-bold text-2xl text-primary/90">5.0</span>
-                <ReviewStars className="w-4 h-4" rating={5.0} />
-              </div>
-              <span className="text-xs text-muted-foreground">
-                1 <br /> Reviews
-              </span>
-            </div>
-            <div className="mt-4 flex flex-col gap-y-2">
-              <div className="flex items-center gap-x-2 text-sm">
-                <span>5</span>
-                <div className="flex-1 bg-black/90 h-2 w-full rounded"></div>
-                <span>1</span>
-              </div>
-              <div className="flex items-center gap-x-2 text-sm">
-                <span>4</span>
-                <div className="flex-1 bg-slate-200 h-2 w-full rounded"></div>
-                <span>0</span>
-              </div>
-              <div className="flex items-center gap-x-2 text-sm">
-                <span>3</span>
-                <div className="flex-1 bg-slate-200 h-2 w-full rounded"></div>
-                <span>0</span>
-              </div>
-              <div className="flex items-center gap-x-2 text-sm">
-                <span>2</span>
-                <div className="flex-1 bg-slate-200 h-2 w-full rounded"></div>
-                <span>0</span>
-              </div>
-              <div className="flex items-center gap-x-2 text-sm">
-                <span>1</span>
-                <div className="flex-1 bg-slate-200 h-2 w-full rounded"></div>
-                <span>0</span>
-              </div>
-            </div>
-          </div>
+          
 
-          <div className="lg:w-8/12 flex flex-col gap-y-6 font-medium text-sm ">
+          <div className="w-full flex flex-col gap-y-6 font-medium text-sm ">
             <div className="flex justify-end">
-              <ReviewForm />
+              <ReviewForm product={product.id} />
             </div>
 
-            <ReviewsList />
+            <ReviewsList reviews={reviews} />
           </div>
         </div>
       </section>

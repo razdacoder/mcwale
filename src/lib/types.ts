@@ -25,3 +25,16 @@ export type Product = {
   category: Category;
   created_at: Date;
 };
+
+
+export type Review = {
+  id: string
+  stars: number
+  review: string
+  created_at: Date
+  first_name: string
+  last_name: string
+  product: {
+    slug: string
+  }
+}

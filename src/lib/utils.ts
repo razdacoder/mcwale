@@ -1,10 +1,26 @@
 import { CartItem } from "@/store/useCart";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { Product } from "./types";
+import {format} from "date-fns"
+import { Product, Review } from "./types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
+}
+
+export function getTotalRating(reviews: Review[]): number {
+  if (reviews.length === 0) {
+    return 0;
+  }
+  const totalStars = reviews.reduce((accumulator, review) => {
+    return accumulator + review.stars;
+  }, 0);
+  const averageRating = totalStars / reviews.length;
+  return averageRating;
+}
+
+export function parseDate(date: Date): string {
+  return format(date, 'dd/MM/yyyy');
 }
 
 export function formatPriceToNaira(price: number): string {
