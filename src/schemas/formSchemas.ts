@@ -22,6 +22,7 @@ export const reviewSchema = z.object({
   last_name: z
     .string()
     .min(2, { message: "Name must be at least 2 characters" }),
+  email: z.string().email(),
   review: z.string().min(1),
 });
 

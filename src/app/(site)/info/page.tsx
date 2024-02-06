@@ -1,5 +1,5 @@
 import Heading from "@/components/ui/Heading";
-import { Calendar, Info, NotebookPen, Ruler } from "lucide-react";
+import { Calendar, ChevronRight, Info, NotebookPen, Ruler } from "lucide-react";
 import Link from "next/link";
 
 export default function InfoPage() {
@@ -7,7 +7,7 @@ export default function InfoPage() {
     <main className="px-4 container py-12">
       <div className="lg:mb-6 flex flex-col lg:gap-y-6">
         <span className="inline-flex text-muted-foreground text-sm  gap-x-3">
-          <Link href="/">Home</Link>|
+          <Link href="/">Home</Link><ChevronRight className="w-4 h-4 "/>
           <span className="font-medium text-primary">Info</span>
         </span>
       </div>

@@ -66,7 +66,7 @@ export default function Navbar({ className }: NavbarProps) {
   return (
     <header className="border-b py-3 sticky top-0 z-20 w-full bg-white">
       <nav className="w-full flex items-center lg:hidden px-4">
-        <div className="w-1/2 flex justify-start">
+        <div className="md:w-1/2 flex justify-start">
           <Sheet>
             <SheetTrigger className="px-0" asChild>
               <Menu
@@ -136,10 +136,10 @@ export default function Navbar({ className }: NavbarProps) {
             </SheetContent>
           </Sheet>
         </div>
-        <div className="lg:hidden">
+        <div className="flex-1 ml-3 md:flex-none lg:hidden">
           <Logo />
         </div>
-        <div className="w-1/2 flex justify-end">
+        <div className="md:w-1/2 flex md:justify-end ">
           <div className="flex gap-x-3 items-center w-32">
             <Button
               size="icon"

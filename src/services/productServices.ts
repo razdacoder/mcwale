@@ -32,29 +32,10 @@ export const getFeaturedProducts = (client: TypedSupabaseClient) => {
   return client.from("products").select("*").eq("is_featured", true).limit(12);
 };
 
-export const getProductReviews = (
-  client: TypedSupabaseClient,
-  slug: string
-) => {
-  return client
-    .from("reviews")
-    .select("*, product!inner(slug)")
-    .eq("product.slug", slug)
-    .throwOnError();
-};
 
-export const createProductReview = (
-  client: TypedSupabaseClient,
-  data: {
-    first_name: string;
-    last_name: string;
-    stars: number;
-    product: string;
-    review: string;
-  }
-) => {
-  return client.from("reviews").insert([data]);
-};
+
+
+// Your Orders -> 
 
 export const getRelatedProducts = (
   client: TypedSupabaseClient,

@@ -1,17 +1,16 @@
 "use client";
-import ReviewStars from "@/components/ui/review-stars";
 import useSupabaseBrowser from "@/lib/supabase-client";
-import { Product, Review } from "@/lib/types";
+import { Product } from "@/lib/types";
 import {
   calculateDiscountPrice,
   cn,
   formatPriceToDollar,
   getRatePrice,
-  getTotalRating,
+
 } from "@/lib/utils";
 import {
   getProductBySlug,
-  getProductReviews,
+
   getRelatedProducts,
 } from "@/services/productServices";
 import { useCartStore } from "@/store/useCart";
@@ -25,19 +24,18 @@ import ProductCarousel from "./product-carousel";
 import ProductColor from "./product-color";
 import ProductQuantity from "./product-quantity";
 import ProductSize from "./product-size";
-import ReviewForm from "./review-from";
-import ReviewsList from "./review-list";
 import SizeChart from "./size-chart";
 import ProductCard from "@/components/layouts/ProductCard";
+import { ChevronRight } from "lucide-react";
 
 export default function ProductPage({ slug }: { slug: string }) {
   const supabase = useSupabaseBrowser();
   const { data: productsData } = useQuery(getProductBySlug(supabase, slug));
-  const { data: reviewData } = useQuery(getProductReviews(supabase, slug));
+
   const { currency } = useCurrencyStore();
   const { rate } = useRateStore();
   const product: Product = productsData;
-  const reviews = reviewData as Review[];
+
   const {
     data: relatedProductsData,
     isLoading: relatedLoading,
@@ -65,14 +63,14 @@ export default function ProductPage({ slug }: { slug: string }) {
     <main>
       <section className="container px-4 py-4">
         <span className="inline-flex text-muted-foreground text-sm  gap-x-3">
-          <Link href="/">Home</Link>|<Link href="/shop">Shop</Link>|
+          <Link href="/">Home</Link><ChevronRight className="w-4 h-4 "/><Link href="/shop">Shop</Link><ChevronRight className="w-4 h-4 "/>
           <Link
             href={`/shop/categories/${product?.category.slug}`}
             className="capitalize"
           >
             {product?.category.title}
           </Link>
-          <span className="hidden md:inline">|</span>
+          <span className="hidden md:inline"><ChevronRight className="w-4 h-4 "/></span>
           <span className="hidden md:inline font-meidum text-primary truncate capitalize">
             {product?.name}
           </span>
@@ -87,17 +85,7 @@ export default function ProductPage({ slug }: { slug: string }) {
           <h3 className="uppercase tracking-wider text-xl font-medium">
             {product.name}
           </h3>
-          <div className="flex gap-x-3 items-center mt-4">
-            {isClient ? (
-              <ReviewStars rating={getTotalRating(reviews)} />
-            ) : (
-              <ReviewStars rating={0} />
-            )}
-
-            <span className="text-sm text-muted-foreground">
-              {reviews.length} reviews
-            </span>
-          </div>
+         
           {isClient ? (
             <div className="mt-4 flex items-center gap-x-3">
               {product?.discount_percentage > 0 && (
@@ -210,27 +198,12 @@ export default function ProductPage({ slug }: { slug: string }) {
                 height="h-[220px] md:h-[350px]"
                 key={relatedProduct.id}
               />
-              // <span key={index}>Hi</span>
+           
             ))}
           </div>
         )}
       </section>
-      <section className="px-4 container my-12">
-        <div className=" mb-4">
-          <h2 className="inline-block scroll-m-20 pb-2 text-center tracking-wider relative text-xl font-medium ">
-            Reviews
-          </h2>
-        </div>
-        <div className="flex lg:gap-x-6 py-6 flex-col lg:flex-row gap-y-3 lg:gap-y-0">
-          <div className="w-full flex flex-col gap-y-6 font-medium text-sm ">
-            <div className="flex justify-end">
-              <ReviewForm product={product.id} />
-            </div>
-
-            <ReviewsList reviews={reviews} />
-          </div>
-        </div>
-      </section>
+      
     </main>
   );
 }

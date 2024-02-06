@@ -1,5 +1,6 @@
 import Link from "next/link";
 import AppointmentForm from "./appointment-form";
+import { ChevronRight } from "lucide-react";
 
 export default function AppointmentPage() {
   return (
@@ -7,7 +8,10 @@ export default function AppointmentPage() {
       <section className="px-4 container my-4">
         <div className="lg:mb-6 flex flex-col lg:gap-y-6">
           <span className="inline-flex text-muted-foreground text-sm  gap-x-3">
-            <Link href="/">Home</Link>|<Link href="/info">Info</Link>|
+            <Link href="/">Home</Link>
+            <ChevronRight className="w-4 h-4 " />
+            <Link href="/info">Info</Link>
+            <ChevronRight className="w-4 h-4 " />
             <span className="font-medium text-primary">Appointment</span>
           </span>
         </div>

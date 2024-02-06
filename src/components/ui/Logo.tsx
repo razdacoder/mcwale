@@ -9,8 +9,9 @@ export default function Logo({ className }: LogoProps) {
     <Image
       src="/mcwale logo.svg"
       alt="Logo"
-      width={70}
-      height={30}
+      width={60}
+      height={20}
+      
       className={cn(className)}
     />
   );

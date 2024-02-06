@@ -8,6 +8,7 @@ import { useQuery } from "@supabase-cache-helpers/postgrest-react-query";
 import Link from "next/link";
 import MobileDrawer from "./mobile-drawer";
 import SortBy from "./sort";
+import { ChevronRight } from "lucide-react";
 export default function CategoryProducts({ slug }: { slug: string }) {
   const supabase = useSupabaseBrowser();
   const { data: products } = useQuery(getProductsByCategory(supabase, slug));
@@ -18,7 +19,7 @@ export default function CategoryProducts({ slug }: { slug: string }) {
       <section className="px-4 container py-3 ">
         <div className="lg:mb-3 flex flex-col gap-y-6">
           <span className="inline-flex text-muted-foreground text-sm  gap-x-3">
-            <Link href="/">Home</Link>|<Link href="/shop">Shop</Link>|
+            <Link href="/">Home</Link><ChevronRight className="w-4 h-4 "/><Link href="/shop">Shop</Link><ChevronRight className="w-4 h-4 "/>
             <span className="font-meidum text-primary capitalize">
               {category?.title}
             </span>

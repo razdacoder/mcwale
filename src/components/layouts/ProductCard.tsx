@@ -50,7 +50,7 @@ export default function ProductCard({ height, product }: ProductCardProps) {
         </div>
 
         <div className="w-full flex flex-col gap-y-2 mt-4">
-          <span className="text-sm truncate lg:text-base font-medium w-full capitalize tracking-wider">
+          <span className="text-sm truncate lg:text-base font-medium text-gray-500 w-full capitalize tracking-wider">
             {product.name}
           </span>
           {isClient ? (
