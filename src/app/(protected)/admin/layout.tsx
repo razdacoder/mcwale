@@ -19,7 +19,7 @@ export default function AdminLayout({
       <Header />
       <Sidebar />
       <ScrollArea>
-        <main className="container flex flex-col gap-y-4 py-4">{children}</main>
+        <main className="container flex flex-col gap-y-4 p-4">{children}</main>
       </ScrollArea>
     </div>
   );

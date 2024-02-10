@@ -71,3 +71,9 @@ export const billingSchema = z.object({
   postal_code: z.string().min(3),
   order_note: z.string().min(1),
 });
+
+export const categorySchema = z.object({
+  title: z.string().min(1, {message: "Title cannot be empty"}),
+  styles: z.string(),
+  image: z.string()
+})

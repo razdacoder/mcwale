@@ -22,8 +22,8 @@ export default function MainNav() {
           <Button
             size="lg"
             className={cn(
-              "w-full flex bg-transparent justify-start pl-3 hover:text-white hover:bg-primary",
-              pathname === "/admin" && "text-white bg-primary"
+              "w-full flex justify-start pl-3 hover:text-white hover:bg-primary",
+              pathname.startsWith("/admin") && "text-white bg-primary"
             )}
             asChild
           >
@@ -38,14 +38,14 @@ export default function MainNav() {
             variant="ghost"
             size="lg"
             className={cn(
-              "w-full flex bg-transparen justify-start pl-3 hover:text-white hover:bg-primary",
-              pathname.startsWith("/bookings") && "text-white bg-primary"
+              "w-full flex justify-start pl-3 hover:text-white hover:bg-primary",
+              pathname === "/admin/categories" && "text-white bg-primary"
             )}
             asChild
           >
-            <Link className="flex items-center gap-[1.2rem]" href="/bookings">
+            <Link className="flex items-center gap-[1.2rem]" href="/admin/categories">
               <CalendarDaysIcon className="w-6 h-6" />
-              <span className="text-base font-medium">Bookings</span>
+              <span className="text-base font-medium">Categories</span>
             </Link>
           </Button>
         </li>
@@ -54,14 +54,14 @@ export default function MainNav() {
             variant="ghost"
             size="lg"
             className={cn(
-              "w-full flex bg-transparen justify-start pl-3 hover:text-white hover:bg-primary",
-              pathname === "/rooms" && "text-white bg-primary"
+              "w-full flex justify-start pl-3 hover:text-white hover:bg-primary",
+              pathname === "/admin/products" && "text-white bg-primary"
             )}
             asChild
           >
-            <Link className="flex items-center gap-[1.2rem]" href="/rooms">
+            <Link className="flex items-center gap-[1.2rem]" href="/admin/products">
               <BedSingleIcon className="w-6 h-6" />
-              <span className="text-base font-medium">Rooms</span>
+              <span className="text-base font-medium">Products</span>
             </Link>
           </Button>
         </li>
@@ -70,17 +70,17 @@ export default function MainNav() {
             variant="ghost"
             size="lg"
             className={cn(
-              "w-full flex bg-transparen justify-start pl-3 hover:text-white hover:bg-primary",
-              pathname === "/manage-users" && "text-white bg-primary"
+              "w-full flex justify-start pl-3 hover:text-white hover:bg-primary",
+              pathname === "/admin/orders" && "text-white bg-primary"
             )}
             asChild
           >
             <Link
               className="flex items-center gap-[1.2rem]"
-              href="/manage-users"
+              href="/admin/orders"
             >
               <UsersRound className="w-6 h-6" />
-              <span className="text-base font-medium">Manege Users</span>
+              <span className="text-base font-medium">Orders</span>
             </Link>
           </Button>
         </li>
@@ -89,7 +89,7 @@ export default function MainNav() {
             variant="ghost"
             size="lg"
             className={cn(
-              "w-full flex bg-transparen justify-start pl-3 hover:text-white hover:bg-primary",
+              "w-full flex justify-start pl-3 hover:text-white hover:bg-primary",
               pathname === "/settings" && "text-white bg-primary"
             )}
             asChild
