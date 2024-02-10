@@ -2,13 +2,22 @@ import { Product, TypedSupabaseClient } from "@/lib/types";
 
 export const getProductsByCategory = (
   client: TypedSupabaseClient,
-  slug: string
+  slug: string,
+  style: string | null
 ) => {
-  return client
-    .from("products")
-    .select("*, category!inner(*)")
-    .eq("category.slug", slug)
-    .throwOnError();
+  let query = client
+  .from("products")
+  .select("*, category!inner(*)")
+  .eq("category.slug", slug)
+  .order("created_at", {ascending: false})
+  
+  if(style) {
+    query.eq("style", style)
+  }
+
+
+
+  return query.throwOnError()
 };
 
 export const getProductBySlug = (client: TypedSupabaseClient, slug: string) => {

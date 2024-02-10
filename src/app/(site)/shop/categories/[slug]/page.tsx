@@ -10,19 +10,22 @@ import {
 import { cookies } from "next/headers";
 import CategoryProducts from "./_components/products-category";
 
-export default async function ShopCategoryPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
+interface SearchPageProps {
+  params: {slug: string}
+  searchParams: {
+    style: string;
+  }
+};
+
+export default async function ShopCategoryPage({params, searchParams}: SearchPageProps) {
   const queryClient = new QueryClient();
   const cookieStore = cookies();
   const supabase = useSupabaseServer(cookieStore);
 
-  await prefetchQuery(queryClient, getCategoryBySlug(supabase, params.slug));
+  await prefetchQuery(queryClient, getCategoryBySlug(supabase, params.slug, ));
   await prefetchQuery(
     queryClient,
-    getProductsByCategory(supabase, params.slug)
+    getProductsByCategory(supabase, params.slug, searchParams.style)
   );
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

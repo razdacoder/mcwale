@@ -104,7 +104,7 @@ export default function Navbar({ className }: NavbarProps) {
                                 <Link
                                   key={category.id}
                                   className={cn(
-                                    "w-max capitalize tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
+                                    "w-max capitalize tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-2 after:border-black hover:after:w-full after:transition-all after:duration-300",
                                     pathname ===
                                       `/shop/categories/${category.slug}` &&
                                       "after:w-full"
@@ -234,7 +234,7 @@ export default function Navbar({ className }: NavbarProps) {
                         prefetch={false}
                         key={category.title}
                         className={cn(
-                          "inline-block capitalize w-max tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
+                          "inline-block capitalize w-max tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-2 after:border-black hover:after:w-full after:transition-all after:duration-300",
                           pathname === `/shop/categories/${category.slug}` &&
                             "after:w-full"
                         )}

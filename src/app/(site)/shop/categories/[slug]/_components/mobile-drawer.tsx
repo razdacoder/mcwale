@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import qs from "query-string";
 import {
   Sheet,
   SheetContent,
@@ -16,24 +17,59 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { SlidersHorizontal } from "lucide-react";
+import { useState } from "react";
+import { 
+  usePathname, 
+  useRouter, 
+  useSearchParams
+} from "next/navigation";
 
-export default function MobileDrawer() {
+interface FilterPanelProps {
+  productLenght: number
+  styles: string[]
+}
+
+export default function MobileDrawer({productLenght, styles}: FilterPanelProps) {
+  const pathname = usePathname();
+  const router = useRouter();
+  const [open, setOpen] = useState(false)
+  const searchParams = useSearchParams();
+  const styleParam = searchParams.get("style")
+  const [selectedStyle, setSelectedStyle] = useState<string | null>(styleParam)
+  const filter = () => {
+    const url = qs.stringifyUrl({
+      url: pathname,
+      query: {
+        style: selectedStyle,
+      }
+    }, { skipNull: true, skipEmptyString: true });
+
+    router.push(url);
+    setOpen(false)
+  }
+
+  const clearFilter = () => {
+    const url = qs.stringifyUrl({url: pathname})
+    router.push(url)
+    setOpen(false)
+  }
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button
           variant="outline"
           size="lg"
-          className="py-6 w-[150px] md:w-[200px] px-8  border-primary flex gap-x-6 items-center"
+          onClick={() => setOpen(true)}
+          className="py-6 w-[150px] md:w-[200px] px-3  border-primary flex justify-between gap-x-4 items-center"
         >
           <SlidersHorizontal className="w-4 h-4" />
-          <span className="font-medium">Filter</span>
+          <span className="font-medium text-left text-sm">Filter</span>
         </Button>
       </SheetTrigger>
       <SheetContent className="w-3/4 lg:w-1/3 px-0 flex flex-col">
         <SheetHeader className="py-3 border-b px-6">
           <SheetTitle className="text-left tracking-wide">
-            Filter (250 items)
+            Filter ({productLenght} items)
           </SheetTitle>
         </SheetHeader>
         <Accordion
@@ -45,37 +81,26 @@ export default function MobileDrawer() {
             <AccordionTrigger className="hover:no-underline border-none text-sm font-medium">
               Style
             </AccordionTrigger>
-            <AccordionContent className="ml-1 flex gap-x-3">
-              <div className="flex items-center space-x-2">
+            <AccordionContent className="ml-1 flex gap-3 flex-wrap">
+              {styles.map((style, index) => (
+                <div key={style} className="flex items-center space-x-2">
                 <input
                   type="radio"
                   className="peer hidden"
                   name="style"
-                  value="option-one"
-                  id="option-one"
+                  value={style}
+                  checked={style === selectedStyle}
+                  onChange={(e) => setSelectedStyle(e.target.value)}
+                  id={style}
                 />
                 <Label
-                  htmlFor="option-one"
-                  className="border px-3 py-2 peer-checked:bg-primary peer-checked:text-white"
+                  htmlFor={style}
+                  className="border cursor-pointer px-3 py-2 peer-checked:bg-primary peer-checked:text-white"
                 >
-                  Plane
+                  {style}
                 </Label>
               </div>
-              <div className="flex items-center space-x-2">
-                <input
-                  type="radio"
-                  className="peer hidden"
-                  name="style"
-                  value="option-two"
-                  id="option-two"
-                />
-                <Label
-                  className="border px-2 py-2 peer-checked:bg-primary peer-checked:text-white"
-                  htmlFor="option-two"
-                >
-                  Embrode
-                </Label>
-              </div>
+              ))}
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-2" className="border-none">
@@ -238,10 +263,10 @@ export default function MobileDrawer() {
           </AccordionItem>
         </Accordion>
         <SheetFooter className="flex px-6 flex-row w-full gap-x-3 items-center mt-6">
-          <Button className="w-full py-3 px-12 font-bold" variant="outline">
+          <Button onClick={clearFilter} className="w-full py-3 px-12 font-bold" variant="outline">
             Clear
           </Button>
-          <Button className="w-full py-3 px-12 font-bold">Show</Button>
+          <Button onClick={filter} className="w-full py-3 px-12 font-bold">Show</Button>
         </SheetFooter>
       </SheetContent>
     </Sheet>
