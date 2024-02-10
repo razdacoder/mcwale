@@ -14,6 +14,8 @@ interface SearchPageProps {
   params: {slug: string}
   searchParams: {
     style: string;
+    minPrice: string,
+    maxPrice: string
   }
 };
 
@@ -25,7 +27,7 @@ export default async function ShopCategoryPage({params, searchParams}: SearchPag
   await prefetchQuery(queryClient, getCategoryBySlug(supabase, params.slug, ));
   await prefetchQuery(
     queryClient,
-    getProductsByCategory(supabase, params.slug, searchParams.style)
+    getProductsByCategory(supabase, params.slug, searchParams.style, searchParams.minPrice, searchParams.maxPrice)
   );
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

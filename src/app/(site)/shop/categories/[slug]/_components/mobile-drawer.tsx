@@ -16,13 +16,14 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { SlidersHorizontal } from "lucide-react";
+import { ChevronDown, SlidersHorizontal } from "lucide-react";
 import { useState } from "react";
 import { 
   usePathname, 
   useRouter, 
   useSearchParams
 } from "next/navigation";
+import { Input } from "@/components/ui/input";
 
 interface FilterPanelProps {
   productLenght: number
@@ -34,13 +35,16 @@ export default function MobileDrawer({productLenght, styles}: FilterPanelProps) 
   const router = useRouter();
   const [open, setOpen] = useState(false)
   const searchParams = useSearchParams();
-  const styleParam = searchParams.get("style")
-  const [selectedStyle, setSelectedStyle] = useState<string | null>(styleParam)
+  const [selectedStyle, setSelectedStyle] = useState<string | null>(searchParams.get("style"))
+  const [minPrice, setMinPrice] = useState<string | null>(searchParams.get("minPrice") || "30")
+  const [maxPrice, setMaxPrice] = useState<string | null>(searchParams.get("maxPrice") || "200")
   const filter = () => {
     const url = qs.stringifyUrl({
       url: pathname,
       query: {
         style: selectedStyle,
+        minPrice,
+        maxPrice
       }
     }, { skipNull: true, skipEmptyString: true });
 
@@ -50,6 +54,9 @@ export default function MobileDrawer({productLenght, styles}: FilterPanelProps) 
 
   const clearFilter = () => {
     const url = qs.stringifyUrl({url: pathname})
+    setSelectedStyle(null)
+    setMinPrice(null),
+    setMaxPrice(null)
     router.push(url)
     setOpen(false)
   }
@@ -64,6 +71,7 @@ export default function MobileDrawer({productLenght, styles}: FilterPanelProps) 
         >
           <SlidersHorizontal className="w-4 h-4" />
           <span className="font-medium text-left text-sm">Filter</span>
+          <ChevronDown className="w-4 h-4"/>
         </Button>
       </SheetTrigger>
       <SheetContent className="w-3/4 lg:w-1/3 px-0 flex flex-col">
@@ -103,7 +111,7 @@ export default function MobileDrawer({productLenght, styles}: FilterPanelProps) 
               ))}
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="item-2" className="border-none">
+          {/* <AccordionItem value="item-2" className="border-none">
             <AccordionTrigger className="hover:no-underline text-sm font-medium">
               Color
             </AccordionTrigger>
@@ -176,88 +184,19 @@ export default function MobileDrawer({productLenght, styles}: FilterPanelProps) 
                 ></Label>
               </div>
             </AccordionContent>
-          </AccordionItem>
+          </AccordionItem> */}
           <AccordionItem value="item-3" className="border-none">
             <AccordionTrigger className="hover:no-underline text-sm font-medium">
               Price
             </AccordionTrigger>
-            <AccordionContent className="flex gap-3 items-center flex-wrap">
+            <AccordionContent className="flex gap-3 items-center flex-wrap py-2 ml-3">
               <div className="flex items-center space-x-2">
-                <input
-                  type="radio"
-                  className="peer hidden"
-                  name="price"
-                  value="10-20"
-                  id="10-20"
-                />
-                <Label
-                  htmlFor="10-20"
-                  className="border px-2 py-2 peer-checked:bg-primary peer-checked:text-white"
-                >
-                  10k - 20k
-                </Label>
+                <Label htmlFor="min">Min:</Label>
+                <Input onChange={(e) => setMinPrice(e.target.value)} value={minPrice!} id="min" type="number"/>
               </div>
               <div className="flex items-center space-x-2">
-                <input
-                  type="radio"
-                  className="peer hidden"
-                  name="price"
-                  value="20-40"
-                  id="20-40"
-                />
-                <Label
-                  htmlFor="20-40"
-                  className="border px-2 py-2 peer-checked:bg-primary peer-checked:text-white"
-                >
-                  20k - 40k
-                </Label>
-              </div>
-
-              <div className="flex items-center space-x-2">
-                <input
-                  type="radio"
-                  className="peer hidden"
-                  name="price"
-                  value="40-60"
-                  id="40-60"
-                />
-                <Label
-                  htmlFor="40-60"
-                  className="border px-2 py-2 peer-checked:bg-primary peer-checked:text-white"
-                >
-                  40k - 60k
-                </Label>
-              </div>
-
-              <div className="flex items-center space-x-2">
-                <input
-                  type="radio"
-                  className="peer hidden"
-                  name="price"
-                  value="60-80"
-                  id="60-80"
-                />
-                <Label
-                  htmlFor="60-80"
-                  className="border px-2 py-2 peer-checked:bg-primary peer-checked:text-white"
-                >
-                  60k - 80k
-                </Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <input
-                  type="radio"
-                  className="peer hidden"
-                  name="price"
-                  value="80-100"
-                  id="80-100"
-                />
-                <Label
-                  htmlFor="80-100"
-                  className="border px-2 py-2 peer-checked:bg-primary peer-checked:text-white"
-                >
-                  80k - 100k
-                </Label>
+                <Label htmlFor="max">Max:</Label>
+                <Input onChange={(e) => setMaxPrice(e.target.value)} value={maxPrice!} className="flex-1" id="max" type="number"/>
               </div>
             </AccordionContent>
           </AccordionItem>

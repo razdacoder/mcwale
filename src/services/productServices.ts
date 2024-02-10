@@ -3,7 +3,9 @@ import { Product, TypedSupabaseClient } from "@/lib/types";
 export const getProductsByCategory = (
   client: TypedSupabaseClient,
   slug: string,
-  style: string | null
+  style: string | null,
+  minPrice: string | null,
+  maxPrice: string | null
 ) => {
   let query = client
   .from("products")
@@ -15,8 +17,13 @@ export const getProductsByCategory = (
     query.eq("style", style)
   }
 
+  if(minPrice) {
+    query.gte("price", parseFloat(minPrice))
+  }
 
-
+  if(maxPrice) {
+    query.lte("price", parseFloat(maxPrice))
+  }
   return query.throwOnError()
 };
 
