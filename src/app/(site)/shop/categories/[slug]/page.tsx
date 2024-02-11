@@ -11,23 +11,36 @@ import { cookies } from "next/headers";
 import CategoryProducts from "./_components/products-category";
 
 interface SearchPageProps {
-  params: {slug: string}
+  params: { slug: string };
   searchParams: {
     style: string;
-    minPrice: string,
-    maxPrice: string
-  }
-};
+    minPrice: string;
+    maxPrice: string;
+    currency: string;
+    rate: string;
+  };
+}
 
-export default async function ShopCategoryPage({params, searchParams}: SearchPageProps) {
+export default async function ShopCategoryPage({
+  params,
+  searchParams,
+}: SearchPageProps) {
   const queryClient = new QueryClient();
   const cookieStore = cookies();
   const supabase = useSupabaseServer(cookieStore);
 
-  await prefetchQuery(queryClient, getCategoryBySlug(supabase, params.slug, ));
+  await prefetchQuery(queryClient, getCategoryBySlug(supabase, params.slug));
   await prefetchQuery(
     queryClient,
-    getProductsByCategory(supabase, params.slug, searchParams.style, searchParams.minPrice, searchParams.maxPrice)
+    getProductsByCategory(
+      supabase,
+      params.slug,
+      searchParams.style,
+      searchParams.minPrice,
+      searchParams.maxPrice,
+      searchParams.currency,
+      searchParams.rate
+    )
   );
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

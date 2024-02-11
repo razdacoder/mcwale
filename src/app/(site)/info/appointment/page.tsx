@@ -17,14 +17,14 @@ export default function AppointmentPage() {
         </div>
       </section>
 
-      <section className="container h-[78vh] px-4 py-3 flex ">
+      <section className="container px-4 py-6 flex ">
         <div className="w-full md:w-2/4 flex items-center">
           <AppointmentForm />
         </div>
         <div className="md:block md:w-2/4 relative">
           {/* <div className="w-full h-full bg-[url('/img1-min.jpg')] bg-cover bg-center bg-no-repeat"></div> */}
           <div></div>
-          <div className="hidden xl:block absolute top-[50%] right-16 translate-y-[-50%]">
+          <div className="hidden lg:block absolute top-[50%] right-16 translate-y-[-50%]">
             <h1 className="text-6xl font-black">
               By <br /> Appointment
             </h1>

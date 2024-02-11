@@ -24,6 +24,8 @@ import {
   useSearchParams
 } from "next/navigation";
 import { Input } from "@/components/ui/input";
+import { useCurrencyStore } from "@/store/useCurrency";
+import { useRateStore } from "@/store/useRates";
 
 interface FilterPanelProps {
   productLenght: number
@@ -34,6 +36,8 @@ export default function MobileDrawer({productLenght, styles}: FilterPanelProps) 
   const pathname = usePathname();
   const router = useRouter();
   const [open, setOpen] = useState(false)
+  const {currency} = useCurrencyStore()
+  const {rate} = useRateStore()
   const searchParams = useSearchParams();
   const [selectedStyle, setSelectedStyle] = useState<string | null>(searchParams.get("style"))
   const [minPrice, setMinPrice] = useState<string | null>(searchParams.get("minPrice") || "30")
@@ -44,7 +48,9 @@ export default function MobileDrawer({productLenght, styles}: FilterPanelProps) 
       query: {
         style: selectedStyle,
         minPrice,
-        maxPrice
+        maxPrice,
+        currency,
+        rate: currency === "USD" ? null : rate[currency]
       }
     }, { skipNull: true, skipEmptyString: true });
 

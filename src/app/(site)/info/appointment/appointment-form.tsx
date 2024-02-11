@@ -42,12 +42,12 @@ export default function AppointmentForm() {
           name="first_name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="uppercase text-sm font-medium tracking-wider">
+              <FormLabel className="uppercase text-xs tracking-wider">
                 first name
               </FormLabel>
               <FormControl>
                 <Input
-                  className="w-full px-1 outline-none border-[3px] border-black"
+                  className="w-full px-1 outline-none  border-black"
                   {...field}
                 />
               </FormControl>
@@ -59,12 +59,12 @@ export default function AppointmentForm() {
           name="last_name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="uppercase text-sm font-medium tracking-wider">
+              <FormLabel className="uppercase text-xs tracking-wider">
                 last name
               </FormLabel>
               <FormControl>
                 <Input
-                  className="w-full px-1 outline-none border-[3px] border-black"
+                  className="w-full px-1 outline-none  border-black"
                   {...field}
                 />
               </FormControl>
@@ -76,12 +76,12 @@ export default function AppointmentForm() {
           name="address"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="uppercase text-sm font-medium tracking-wider">
+              <FormLabel className="uppercase text-xs tracking-wider">
                 address
               </FormLabel>
               <FormControl>
                 <Input
-                  className="w-full px-1 outline-none border-[3px] border-black"
+                  className="w-full px-1 outline-none  border-black"
                   {...field}
                 />
               </FormControl>
@@ -93,13 +93,13 @@ export default function AppointmentForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="uppercase text-sm font-medium tracking-wider">
+              <FormLabel className="uppercase text-xs tracking-wider">
                 email
               </FormLabel>
               <FormControl>
                 <Input
                   type="email"
-                  className="w-full px-1 outline-none border-[3px] border-black"
+                  className="w-full px-1 outline-none  border-black"
                   {...field}
                 />
               </FormControl>
@@ -114,13 +114,13 @@ export default function AppointmentForm() {
               name="date"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="uppercase text-sm font-medium tracking-wider">
+                  <FormLabel className="uppercase text-xs tracking-wider">
                     date
                   </FormLabel>
                   <FormControl>
                     <Input
                       type="date"
-                      className="w-full px-1 outline-none border-[3px] border-black"
+                      className="w-full px-1 outline-none  border-black"
                       value={new Date(field.value).toDateString()}
                       onChange={(e) => (field.value = new Date(e.target.value))}
                     />
@@ -136,16 +136,16 @@ export default function AppointmentForm() {
               name="hh"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="uppercase text-sm font-medium tracking-wider">
+                  <FormLabel className="uppercase text-xs tracking-wider">
                     time
                   </FormLabel>
                   <FormControl>
                     <Input
-                      className="w-full px-1 outline-none border-[3px] border-black"
+                      className="w-full px-1 outline-none  border-black"
                       {...field}
                     />
                   </FormControl>
-                  <FormLabel className="uppercase text-sm font-medium tracking-wider">
+                  <FormLabel className="uppercase text-xs tracking-wider">
                     hh
                   </FormLabel>
                 </FormItem>
@@ -156,16 +156,16 @@ export default function AppointmentForm() {
               name="mm"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="uppercase text-sm font-medium tracking-wider">
+                  <FormLabel className="uppercase text-xs tracking-wider">
                     &nbsp;
                   </FormLabel>
                   <FormControl>
                     <Input
-                      className="w-full px-1 outline-none border-[3px] border-black"
+                      className="w-full px-1 outline-none  border-black"
                       {...field}
                     />
                   </FormControl>
-                  <FormLabel className="uppercase text-sm font-medium tracking-wider">
+                  <FormLabel className="uppercase text-xs tracking-wider">
                     mm
                   </FormLabel>
                 </FormItem>
@@ -176,7 +176,7 @@ export default function AppointmentForm() {
               name="period"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="uppercase text-sm font-medium tracking-wider">
+                  <FormLabel className="uppercase text-xs tracking-wider">
                     &nbsp;
                   </FormLabel>
                   <Select
@@ -184,7 +184,7 @@ export default function AppointmentForm() {
                     defaultValue={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger className="w-full px-1 outline-none border-[3px] border-black">
+                      <SelectTrigger className="w-full px-1 outline-none  border-black">
                         <SelectValue placeholder="Select period" />
                       </SelectTrigger>
                     </FormControl>
@@ -203,12 +203,12 @@ export default function AppointmentForm() {
           name="phone_number"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="uppercase text-sm font-medium tracking-wider">
+              <FormLabel className="uppercase text-xs tracking-wider">
                 phone number
               </FormLabel>
               <FormControl>
                 <Input
-                  className="w-full px-1 outline-none border-[3px] border-black"
+                  className="w-full px-1 outline-none  border-black"
                   {...field}
                 />
               </FormControl>

@@ -15,9 +15,11 @@ export default function CategoryProducts({ slug }: { slug: string }) {
   const style = searchParams.get("style");
   const minPrice = searchParams.get("minPrice")
   const maxPrice = searchParams.get("maxPrice")
+  const currency = searchParams.get("currency")
+  const rate = searchParams.get("rate")
   const supabase = useSupabaseBrowser();
   const { data: products } = useQuery(
-    getProductsByCategory(supabase, slug, style, minPrice, maxPrice)
+    getProductsByCategory(supabase, slug, style, minPrice, maxPrice, currency, rate)
   );
   const { data: category } = useQuery(getCategoryBySlug(supabase, slug));
 
