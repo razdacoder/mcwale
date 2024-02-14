@@ -198,11 +198,11 @@ export default function MobileDrawer({productLenght, styles}: FilterPanelProps) 
             <AccordionContent className="flex gap-3 items-center flex-wrap py-2 ml-3">
               <div className="flex items-center space-x-2">
                 <Label htmlFor="min">Min:</Label>
-                <Input onChange={(e) => setMinPrice(e.target.value)} value={minPrice!} id="min" type="number"/>
+                <Input className="focus-visible:ring-0 focus-visible:ring-offset-0 px-3" onChange={(e) => setMinPrice(e.target.value)} value={minPrice!} id="min" type="number"/>
               </div>
               <div className="flex items-center space-x-2">
                 <Label htmlFor="max">Max:</Label>
-                <Input onChange={(e) => setMaxPrice(e.target.value)} value={maxPrice!} className="flex-1" id="max" type="number"/>
+                <Input  onChange={(e) => setMaxPrice(e.target.value)} value={maxPrice!} className="flex-1 focus-visible:ring-0 focus-visible:ring-offset-0 px-3" id="max" type="number"/>
               </div>
             </AccordionContent>
           </AccordionItem>

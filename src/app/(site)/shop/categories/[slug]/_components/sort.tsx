@@ -12,7 +12,7 @@ import { ArrowDownNarrowWide } from "lucide-react";
 export default function SortBy() {
   return (
     <Select value="newest">
-      <SelectTrigger className="py-6 border-primary flex w-[150px] md:w-[200px]">
+      <SelectTrigger className="py-6 border-primary flex w-[150px] md:w-[200px] focus:ring-0 focus:ring-offset-0 px-3" >
         <ArrowDownNarrowWide className="w-4 h-4" />
         <SelectValue
           defaultValue="newest"

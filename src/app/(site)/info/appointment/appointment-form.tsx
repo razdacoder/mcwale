@@ -47,7 +47,7 @@ export default function AppointmentForm() {
               </FormLabel>
               <FormControl>
                 <Input
-                  className="w-full px-1 outline-none  border-black"
+                  className="w-full outline-none focus-visible:ring-0 focus-visible:ring-offset-0 px-3  border-black"
                   {...field}
                 />
               </FormControl>
@@ -64,7 +64,7 @@ export default function AppointmentForm() {
               </FormLabel>
               <FormControl>
                 <Input
-                  className="w-full px-1 outline-none  border-black"
+                  className="w-full outline-none focus-visible:ring-0 focus-visible:ring-offset-0 px-3  border-black"
                   {...field}
                 />
               </FormControl>
@@ -81,7 +81,7 @@ export default function AppointmentForm() {
               </FormLabel>
               <FormControl>
                 <Input
-                  className="w-full px-1 outline-none  border-black"
+                  className="w-full focus-visible:ring-0 focus-visible:ring-offset-0 px-3 outline-none  border-black"
                   {...field}
                 />
               </FormControl>
@@ -99,7 +99,7 @@ export default function AppointmentForm() {
               <FormControl>
                 <Input
                   type="email"
-                  className="w-full px-1 outline-none  border-black"
+                  className="w-full focus-visible:ring-0 focus-visible:ring-offset-0 px-3 outline-none  border-black"
                   {...field}
                 />
               </FormControl>
@@ -120,7 +120,7 @@ export default function AppointmentForm() {
                   <FormControl>
                     <Input
                       type="date"
-                      className="w-full px-1 outline-none  border-black"
+                      className="w-full focus-visible:ring-0 focus-visible:ring-offset-0 px-3 outline-none  border-black"
                       value={new Date(field.value).toDateString()}
                       onChange={(e) => (field.value = new Date(e.target.value))}
                     />
@@ -141,7 +141,7 @@ export default function AppointmentForm() {
                   </FormLabel>
                   <FormControl>
                     <Input
-                      className="w-full px-1 outline-none  border-black"
+                      className="w-full focus-visible:ring-0 focus-visible:ring-offset-0 px-3 outline-none  border-black"
                       {...field}
                     />
                   </FormControl>
@@ -161,7 +161,7 @@ export default function AppointmentForm() {
                   </FormLabel>
                   <FormControl>
                     <Input
-                      className="w-full px-1 outline-none  border-black"
+                      className="w-full focus-visible:ring-0 focus-visible:ring-offset-0 px-3 outline-none  border-black"
                       {...field}
                     />
                   </FormControl>
@@ -184,7 +184,7 @@ export default function AppointmentForm() {
                     defaultValue={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger className="w-full px-1 outline-none  border-black">
+                      <SelectTrigger className="w-full focus-visible:ring-0 focus-visible:ring-offset-0 px-3 outline-none  border-black">
                         <SelectValue placeholder="Select period" />
                       </SelectTrigger>
                     </FormControl>
@@ -208,7 +208,7 @@ export default function AppointmentForm() {
               </FormLabel>
               <FormControl>
                 <Input
-                  className="w-full px-1 outline-none  border-black"
+                  className="w-full focus-visible:ring-0 focus-visible:ring-offset-0 px-3 outline-none  border-black"
                   {...field}
                 />
               </FormControl>
