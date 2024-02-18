@@ -40,15 +40,19 @@ export default function ProductCarousel({ images }: ProductCarouselProps) {
 
       <div className="absolute bottom-6 z-30 flex justify-center gap-x-2 w-full py-2 text-center text-sm text-muted-foreground">
         {[...Array(count)].map((_, index) => (
-          <div key={index} className="w-6 h-6 rounded-full border-2 border-white flex justify-center items-center">
-            {current == index + 1 && <div className="w-4 h-4 bg-white rounded-full"></div>}
-            
+          <div
+            key={index}
+            className=" cursor-pointer w-6 h-6 rounded-full border-2 border-white flex justify-center items-center"
+          >
+            {current == index + 1 && (
+              <div className="w-4 h-4 bg-white rounded-full"></div>
+            )}
           </div>
         ))}
       </div>
 
       <CarouselContent className="xl:h-[90vh] -ml-0 w-full">
-        {images.map((image, index) => (
+        {images?.map((image, index) => (
           <CarouselItem key={index} className="pl-0">
             <div className="relative flex items-center">
               <Image

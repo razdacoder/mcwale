@@ -6,11 +6,9 @@ import {
   cn,
   formatPriceToDollar,
   getRatePrice,
-
 } from "@/lib/utils";
 import {
   getProductBySlug,
-
   getRelatedProducts,
 } from "@/services/productServices";
 import { useCartStore } from "@/store/useCart";
@@ -27,14 +25,21 @@ import ProductSize from "./product-size";
 import SizeChart from "./size-chart";
 import ProductCard from "@/components/layouts/ProductCard";
 import { ChevronRight } from "lucide-react";
+import ProductSkeleton from "./product-skeleton";
+import PageSkeleton from "./page-skeleton";
+import { Button } from "@/components/ui/button";
 
 export default function ProductPage({ slug }: { slug: string }) {
   const supabase = useSupabaseBrowser();
-  const { data: productsData } = useQuery(getProductBySlug(supabase, slug));
+  const {
+    data: productsData,
+    isError,
+    isLoading,
+  } = useQuery(getProductBySlug(supabase, slug));
 
   const { currency } = useCurrencyStore();
   const { rate } = useRateStore();
-  const product: Product = productsData;
+  const product = productsData as Product;
 
   const {
     data: relatedProductsData,
@@ -59,18 +64,38 @@ export default function ProductPage({ slug }: { slug: string }) {
     addItem({ product, size: size!, color: color!, quantity });
   };
 
+  if (isLoading) {
+    return <PageSkeleton />;
+  }
+
+  if (isError) {
+    return (
+      <div className="container px-4 my-12 h-[70vh] flex items-center justify-center flex-col">
+        <p>Product Not Found</p>
+        <Button asChild>
+          <Link href="/">Back Home</Link>
+        </Button>
+      </div>
+    );
+  }
+
   return (
     <main>
       <section className="container px-4 py-4">
         <span className="inline-flex text-muted-foreground text-sm  gap-x-3">
-          <Link href="/">Home</Link><ChevronRight className="w-4 h-4 "/><Link href="/shop">Shop</Link><ChevronRight className="w-4 h-4 "/>
+          <Link href="/">Home</Link>
+          <ChevronRight className="w-4 h-4 " />
+          <Link href="/shop">Shop</Link>
+          <ChevronRight className="w-4 h-4 " />
           <Link
             href={`/shop/categories/${product?.category.slug}`}
             className="capitalize"
           >
             {product?.category.title}
           </Link>
-          <span className="hidden md:inline"><ChevronRight className="w-4 h-4 "/></span>
+          <span className="hidden md:inline">
+            <ChevronRight className="w-4 h-4 " />
+          </span>
           <span className="hidden md:inline font-meidum text-primary truncate capitalize">
             {product?.name}
           </span>
@@ -83,9 +108,9 @@ export default function ProductPage({ slug }: { slug: string }) {
         </div>
         <div className="w-full lg:w-6/12 py-3">
           <h3 className="uppercase tracking-wider text-xl font-medium">
-            {product.name}
+            {product?.name}
           </h3>
-         
+
           {isClient ? (
             <div className="mt-4 flex items-center gap-x-3">
               {product?.discount_percentage > 0 && (
@@ -104,12 +129,13 @@ export default function ProductPage({ slug }: { slug: string }) {
               <span
                 className={cn(
                   "text-lg font-medium tracking-wider text-primary/90",
-                  product.discount_percentage > 0 && "line-through text-red-500"
+                  product?.discount_percentage > 0 &&
+                    "line-through text-red-500"
                 )}
               >
                 {getRatePrice(
                   currency,
-                  product.price,
+                  product?.price,
                   currency === "USD" ? null : rate[currency]
                 )}
               </span>
@@ -121,7 +147,7 @@ export default function ProductPage({ slug }: { slug: string }) {
             </div>
           ) : (
             <div className="mt-4 flex items-center gap-x-3">
-              {product.discount_percentage > 0 && (
+              {product?.discount_percentage > 0 && (
                 <span className="text-lg font-medium tracking-wider">
                   {formatPriceToDollar(
                     calculateDiscountPrice(
@@ -167,7 +193,7 @@ export default function ProductPage({ slug }: { slug: string }) {
             </div>
             <div className="mt-5 flex gap-x-3 items-center">
               <AddToCart
-                productId={product.id}
+                productId={product?.id}
                 size={size}
                 color={color}
                 addToCart={addToCart}
@@ -188,7 +214,13 @@ export default function ProductPage({ slug }: { slug: string }) {
             May Also Like
           </h2>
         </div>
-        {relatedLoading && <p>Loading...</p>}
+        {relatedLoading && (
+          <div className=" grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-6">
+            {[...Array(5)].map((_, index) => (
+              <ProductSkeleton key={index} />
+            ))}
+          </div>
+        )}
         {relatedError && <p>Error</p>}
         {relatedProducts && (
           <div className=" grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-6">
@@ -198,12 +230,10 @@ export default function ProductPage({ slug }: { slug: string }) {
                 height="h-[220px] md:h-[350px]"
                 key={relatedProduct.id}
               />
-           
             ))}
           </div>
         )}
       </section>
-      
     </main>
   );
 }

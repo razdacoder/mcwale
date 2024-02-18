@@ -67,8 +67,8 @@ export const getRelatedProducts = (
   return client
     .from("products")
     .select("*, category!inner(*)")
-    .eq("category.slug", product.category.slug)
-    .neq("id", product.id)
+    .eq("category.slug", product?.category.slug)
+    .neq("id", product?.id)
     .limit(6)
     .throwOnError();
 };

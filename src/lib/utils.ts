@@ -1,7 +1,7 @@
 import { CartItem } from "@/store/useCart";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import {format} from "date-fns"
+import { format } from "date-fns";
 import { Product, Review } from "./types";
 
 export function cn(...inputs: ClassValue[]) {
@@ -20,7 +20,7 @@ export function getTotalRating(reviews: Review[]): number {
 }
 
 export function parseDate(date: Date): string {
-  return format(date, 'dd/MM/yyyy');
+  return format(date, "dd/MM/yyyy");
 }
 
 export function formatPriceToNaira(price: number): string {
@@ -34,7 +34,7 @@ export function formatPriceToNaira(price: number): string {
 }
 
 export function formatPriceToDollar(price: number): string {
-  const formattedPrice = price.toLocaleString("en-US", {
+  const formattedPrice = price?.toLocaleString("en-US", {
     style: "currency",
     currency: "USD",
     minimumFractionDigits: 2,

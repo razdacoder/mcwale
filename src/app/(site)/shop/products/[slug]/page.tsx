@@ -18,7 +18,6 @@ export default async function ProductPageView({
   const cookieStore = cookies();
   const supabase = useSupabaseServer(cookieStore);
   await prefetchQuery(queryClient, getProductBySlug(supabase, params.slug));
- 
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
