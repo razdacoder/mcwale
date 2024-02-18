@@ -23,7 +23,10 @@ export default function FeaturedCarousel({ products }: FeaturedCarouselProps) {
             key={product.id}
             className="pl-6 basis-full md:basis-1/2 lg:basis-1/4"
           >
-            <Link href="#" className="w-full h-[450]">
+            <Link
+              href={`/shop/products/${product.slug}`}
+              className="w-full h-[450]"
+            >
               <div className=" relative h-[450px] w-full">
                 <Image src={product.images[0]} fill alt={product.name} />
               </div>

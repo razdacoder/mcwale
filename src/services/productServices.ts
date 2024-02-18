@@ -58,6 +58,10 @@ export const getFeaturedProducts = (client: TypedSupabaseClient) => {
   return client.from("products").select("*").eq("is_featured", true).limit(12);
 };
 
+export const searchProducts = (client: TypedSupabaseClient, q: string) => {
+  return client.rpc("search_products", { keyword: q });
+};
+
 // Your Orders ->
 
 export const getRelatedProducts = (

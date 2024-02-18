@@ -9,8 +9,8 @@ import { useCurrencyStore } from "@/store/useCurrency";
 import { useQuery } from "@supabase-cache-helpers/postgrest-react-query";
 import { Menu, Search } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { FormEvent, useEffect, useState } from "react";
 import { AiOutlineShopping } from "react-icons/ai";
 import Logo from "../ui/Logo";
 import {
@@ -34,6 +34,7 @@ type NavbarProps = {
 };
 
 export default function Navbar({ className }: NavbarProps) {
+  const router = useRouter();
   const navlinks = [
     {
       name: "Home",
@@ -63,6 +64,13 @@ export default function Navbar({ className }: NavbarProps) {
   }, []);
   const supabase = useSupabaseBrowser();
   const { data: categories } = useQuery(getAllCategories(supabase));
+
+  const search = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formdata = new FormData(e.target as HTMLFormElement);
+    const query = formdata.get("query");
+    router.push(`/search?q=${query}`);
+  };
   return (
     <header className="border-b py-3 sticky top-0 z-20 w-full bg-white">
       <nav className="w-full flex items-center lg:hidden px-4">
@@ -82,11 +90,13 @@ export default function Navbar({ className }: NavbarProps) {
                 <form
                   autoFocus={false}
                   className="flex gap-x-2 items-center border-b border-primary"
+                  onSubmit={(e) => search(e)}
                 >
                   <Input
                     autoFocus={false}
                     className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                     placeholder="Search..."
+                    name="query"
                   />
                   <Search strokeWidth={1.5} />
                 </form>
@@ -174,9 +184,13 @@ export default function Navbar({ className }: NavbarProps) {
       </nav>
 
       <div className="hidden lg:flex lg:justify-between px-4">
-        <form className="flex gap-x-2 items-center border-b border-primary">
+        <form
+          className="flex gap-x-2 items-center border-b border-primary"
+          onSubmit={(e) => search(e)}
+        >
           <Input
             className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+            name="query"
             placeholder="Search..."
           />
           <Search strokeWidth={1.5} />
