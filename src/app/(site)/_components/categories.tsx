@@ -28,7 +28,7 @@ export default function Category() {
               fill
               className=" z-10"
             />
-            <div className="flex justify-center flex-col absolute z-30 animate-bounce">
+            <div className="flex justify-center flex-col absolute z-30 bottom-8">
               <Button asChild>
                 <Link
                   href={`/shop/categories/${category.slug}`}

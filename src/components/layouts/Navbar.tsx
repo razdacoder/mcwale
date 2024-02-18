@@ -99,7 +99,7 @@ export default function Navbar({ className }: NavbarProps) {
                             <AccordionTrigger className=" flex justify-between hover:no-underline  tracking-widest py-0">
                               Shop
                             </AccordionTrigger>
-                            <AccordionContent className="inline-flex flex-col gap-y-2 ml-1 mt-3">
+                            <AccordionContent className="inline-flex flex-col gap-y-4 mt-4">
                               {categories?.map((category: Category, index) => (
                                 <Link
                                   key={category.id}
@@ -121,8 +121,8 @@ export default function Navbar({ className }: NavbarProps) {
                         <Link
                           key={index}
                           className={cn(
-                            "tracking-widest py-0 relative after:block after:content-[''] after:w-0 after:border-b-[3px] after:border-black hover:after:w-full after:transition-all after:duration-300",
-                            pathname === nav.link && "before:w-full"
+                            "tracking-widest inline-block py-0 relative after:block after:content-[''] after:w-0 after:border-b-2 after:border-black hover:after:w-full after:transition-all after:duration-300",
+                            pathname === nav.link && "after:w-full"
                           )}
                           href={nav.link}
                         >
