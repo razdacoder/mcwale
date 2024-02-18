@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
-export default function () {
+export default function PageSkeleton() {
   return (
     <div className="container px-4 flex flex-col lg:flex-row gap-y-6 gap-x-3 xl:gap-x-12 my-12 h-[60vh]">
       <Skeleton className="w-full lg:w-5/12" />
