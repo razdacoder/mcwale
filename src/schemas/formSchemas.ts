@@ -73,7 +73,17 @@ export const billingSchema = z.object({
 });
 
 export const categorySchema = z.object({
-  title: z.string().min(1, {message: "Title cannot be empty"}),
+  title: z.string().min(1, { message: "Title cannot be empty" }),
   styles: z.string(),
-  image: z.string()
-})
+});
+
+export const productSchema = z.object({
+  name: z.string().min(1, { message: "Name cannot be empty" }),
+  price: z.number(),
+  discount_percentage: z.number(),
+  description: z
+    .string()
+    .min(5, { message: "Description must not be less than 5 letters" }),
+  is_featured: z.boolean(),
+  style: z.string(),
+});

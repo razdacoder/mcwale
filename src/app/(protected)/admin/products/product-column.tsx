@@ -11,6 +11,16 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import {
+  Check,
+  Edit3,
+  Loader2,
+  Minus,
+  MoreVertical,
+  Trash2,
+  X,
+} from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -26,54 +36,103 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Edit3, Loader2, MoreVertical, Trash2 } from "lucide-react";
+import { formatPriceToDollar, parseDate } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
-import { Category } from "@/lib/types";
-import CategoryForm from "./create-edit-form";
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
+import { Product } from "@/lib/types";
 import { deleteCategory } from "@/services/categoriesServices";
-import { parseDate } from "@/lib/utils";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import useSupabaseBrowser from "@/lib/supabase-client";
 
-export const columns: ColumnDef<Category>[] = [
+export const columns: ColumnDef<Product>[] = [
   {
     accessorKey: "image",
     header: "Image",
     cell: ({ row }) => {
-      const imageUrl = row.getValue("image") as string;
+      const { images } = row.original;
 
       return (
-        <Image src={imageUrl} alt="Category Image" width={50} height={50} />
+        <Image src={images[0]} alt="Category Image" width={50} height={50} />
       );
     },
   },
   {
-    accessorKey: "title",
-    header: "Title",
+    accessorKey: "name",
+    header: "Name",
   },
   {
-    accessorKey: "styles",
-    header: "Styles",
+    id: "category",
+    accessorKey: "category.title",
+    header: "Category",
+    // cell: ({ row }) => {
+    //   const { category } = row.original;
+    //   return <span>{category.title}</span>;
+    // },
+  },
+  {
+    accessorKey: "style",
+    header: "Style",
+  },
+  {
+    accessorKey: "price",
+    header: "price",
     cell: ({ row }) => {
-      const { styles } = row.original;
+      const { price } = row.original;
       return (
-        <div>
-          {styles?.map((style) => (
-            <span className="p-2" key={style}>
-              {style}
-            </span>
-          ))}
-        </div>
+        <span className="text-green-500">{formatPriceToDollar(price)}</span>
+      );
+    },
+  },
+  {
+    accessorKey: "discount_percentage",
+    header: "Discount",
+    cell: ({ row }) => {
+      const { discount_percentage } = row.original;
+      return (
+        <span className="lowercase text-red-500">
+          {discount_percentage === 0 ? (
+            <Minus className="w-4 h-4 text-primary" />
+          ) : (
+            `${discount_percentage}% off`
+          )}
+        </span>
+      );
+    },
+  },
+
+  {
+    accessorKey: "is_featured",
+    header: "Featured",
+    cell: ({ row }) => {
+      const { is_featured } = row.original;
+      return (
+        <span>
+          {is_featured ? (
+            <Check className="w-4 h-4" />
+          ) : (
+            <X className="w-4 h-4" />
+          )}
+        </span>
       );
     },
   },
   {
     accessorKey: "created_at",
-    header: "Created at",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="flex items-center gap-x-3 px-0 hover:bg-transparent"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Created At
+          <ArrowUpDown className="h-3 w-3" />
+        </Button>
+      );
+    },
     cell: ({ row }) => {
       const { created_at } = row.original;
       return <span>{parseDate(created_at)}</span>;
@@ -82,7 +141,7 @@ export const columns: ColumnDef<Category>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const category = row.original;
+      const product = row.original;
       const [open, setOpen] = useState(false);
       const [alertOpen, setAlertOpen] = useState(false);
       const [deleting, setDeleting] = useState(false);
@@ -91,7 +150,7 @@ export const columns: ColumnDef<Category>[] = [
       async function deleteAction() {
         try {
           setDeleting(true);
-          await deleteCategory(supabase, category.id);
+          await deleteCategory(supabase, product.id);
           toast.success("Category Deleted");
         } catch (error: any) {
           toast.error(error.message);
@@ -161,10 +220,10 @@ export const columns: ColumnDef<Category>[] = [
                 Edit this category infor for mcwale shop.
               </DialogDescription>
             </DialogHeader>
-            <CategoryForm
+            {/* <CategoryForm
               setOpen={(value: boolean) => setOpen(value)}
               category={category}
-            />
+            /> */}
           </DialogContent>
         </Dialog>
       );

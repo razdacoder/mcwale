@@ -10,16 +10,18 @@ import {
 } from "@/components/ui/dialog";
 
 import { Button } from "@/components/ui/button";
-import CategoryForm from "./create-edit-form";
 import Heading from "@/components/ui/Heading";
 import { Plus } from "lucide-react";
+import ProductCreateEditForm from "./create-edit-form";
 import { useState } from "react";
 
-export default function CategoryHeader() {
+// import CategoryForm from "./create-edit-form";
+
+export default function ProductHeader() {
   const [open, setOpen] = useState(false);
   return (
     <section className="flex justify-between">
-      <Heading className="normal-case">Category</Heading>
+      <Heading className="normal-case">Products</Heading>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button
@@ -27,18 +29,18 @@ export default function CategoryHeader() {
             className="flex gap-x-3 items-center"
           >
             <Plus className="w-4 h-4" />
-            Add Category
+            Add Product
           </Button>
         </DialogTrigger>
 
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Create Category</DialogTitle>
+            <DialogTitle>Create Product</DialogTitle>
             <DialogDescription>
-              Create new category for mcwale shop.
+              Create new product for mcwale shop.
             </DialogDescription>
           </DialogHeader>
-          <CategoryForm setOpen={(value: boolean) => setOpen(value)} />
+          <ProductCreateEditForm />
         </DialogContent>
       </Dialog>
     </section>

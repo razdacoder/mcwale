@@ -108,3 +108,31 @@ export const calTotal = (cart: CartItem[]) => {
     0
   );
 };
+
+function generateRandomString(length: number): string {
+  let result = "";
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+
+export function generateUniqueFilename(originalFilename: string): string {
+  const timestamp = new Date().getTime();
+  const randomString = generateRandomString(8);
+  const extension = originalFilename.split(".").pop();
+  const uniqueFilename = `${timestamp}-${randomString}.${extension}`;
+  return uniqueFilename;
+}
+
+export function slugify(str: string): string {
+  return str
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, "") // Remove non-word characters
+    .replace(/\s+/g, "-") // Replace spaces with -
+    .replace(/^-+/g, "") // Remove leading dashes
+    .replace(/-+$/g, ""); // Remove trailing dashes
+}

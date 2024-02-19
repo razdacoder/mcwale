@@ -1,15 +1,18 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+
 import {
   BedSingleIcon,
   CalendarDaysIcon,
   HomeIcon,
+  Indent,
   SettingsIcon,
+  Shirt,
   UsersRound,
 } from "lucide-react";
-import Link from "next/link";
 
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 
 export default function MainNav() {
@@ -21,9 +24,10 @@ export default function MainNav() {
         <li>
           <Button
             size="lg"
+            variant="ghost"
             className={cn(
               "w-full flex justify-start pl-3 hover:text-white hover:bg-primary",
-              pathname.startsWith("/admin") && "text-white bg-primary"
+              pathname === "/admin" && "text-white bg-primary"
             )}
             asChild
           >
@@ -43,8 +47,11 @@ export default function MainNav() {
             )}
             asChild
           >
-            <Link className="flex items-center gap-[1.2rem]" href="/admin/categories">
-              <CalendarDaysIcon className="w-6 h-6" />
+            <Link
+              className="flex items-center gap-[1.2rem]"
+              href="/admin/categories"
+            >
+              <Indent className="w-6 h-6" />
               <span className="text-base font-medium">Categories</span>
             </Link>
           </Button>
@@ -59,8 +66,11 @@ export default function MainNav() {
             )}
             asChild
           >
-            <Link className="flex items-center gap-[1.2rem]" href="/admin/products">
-              <BedSingleIcon className="w-6 h-6" />
+            <Link
+              className="flex items-center gap-[1.2rem]"
+              href="/admin/products"
+            >
+              <Shirt className="w-6 h-6" />
               <span className="text-base font-medium">Products</span>
             </Link>
           </Button>

@@ -84,3 +84,7 @@ export const getRelatedProducts = (
     .limit(6)
     .throwOnError();
 };
+
+export const getAllProducts = (client: TypedSupabaseClient) => {
+  return client.from("products").select("*, category!inner(*)").throwOnError();
+};
