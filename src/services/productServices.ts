@@ -7,13 +7,21 @@ export const getProductsByCategory = (
   minPrice: string | null,
   maxPrice: string | null,
   currency: string | null,
-  rate: string | null
+  rate: string | null,
+  sortBy: string | null
 ) => {
   let query = client
     .from("products")
     .select("*, category!inner(*)")
-    .eq("category.slug", slug)
-    .order("created_at", { ascending: false });
+    .eq("category.slug", slug);
+
+  if (!sortBy || sortBy === "newest") {
+    query.order("created_at", { ascending: false });
+  } else if (sortBy === "price-l-h") {
+    query.order("price", { ascending: true });
+  } else {
+    query.order("price", { ascending: false });
+  }
 
   if (style) {
     query.eq("style", style);

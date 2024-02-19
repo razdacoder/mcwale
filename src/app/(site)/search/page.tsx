@@ -23,7 +23,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   await prefetchQuery(queryClient, searchProducts(supabase, q));
   return (
     <main className="container px-4 my-12">
-      <div className="px-4 mb-6">
+      <div className=" mb-6">
         Search results for &quot;{searchParams.q}&quot;
       </div>
 

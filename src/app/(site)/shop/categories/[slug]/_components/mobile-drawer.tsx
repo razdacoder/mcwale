@@ -18,54 +18,84 @@ import {
 } from "@/components/ui/sheet";
 import { ChevronDown, SlidersHorizontal } from "lucide-react";
 import { useState } from "react";
-import { 
-  usePathname, 
-  useRouter, 
-  useSearchParams
-} from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { useCurrencyStore } from "@/store/useCurrency";
 import { useRateStore } from "@/store/useRates";
 
 interface FilterPanelProps {
-  productLenght: number
-  styles: string[]
+  productLenght: number;
+  styles: string[];
 }
 
-export default function MobileDrawer({productLenght, styles}: FilterPanelProps) {
+export default function MobileDrawer({
+  productLenght,
+  styles,
+}: FilterPanelProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const [open, setOpen] = useState(false)
-  const {currency} = useCurrencyStore()
-  const {rate} = useRateStore()
+  const [open, setOpen] = useState(false);
+  const { currency } = useCurrencyStore();
+  const { rate } = useRateStore();
   const searchParams = useSearchParams();
-  const [selectedStyle, setSelectedStyle] = useState<string | null>(searchParams.get("style"))
-  const [minPrice, setMinPrice] = useState<string | null>(searchParams.get("minPrice") || "30")
-  const [maxPrice, setMaxPrice] = useState<string | null>(searchParams.get("maxPrice") || "200")
+  const [selectedStyle, setSelectedStyle] = useState<string | null>(
+    searchParams.get("style")
+  );
+  const [minPrice, setMinPrice] = useState<string | null>(
+    searchParams.get("minPrice") || "30"
+  );
+  const [maxPrice, setMaxPrice] = useState<string | null>(
+    searchParams.get("maxPrice") || "200"
+  );
   const filter = () => {
-    const url = qs.stringifyUrl({
-      url: pathname,
-      query: {
-        style: selectedStyle,
-        minPrice,
-        maxPrice,
-        currency,
-        rate: currency === "USD" ? null : rate[currency]
-      }
-    }, { skipNull: true, skipEmptyString: true });
+    // now you got a read/write object
+    const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
 
-    router.push(url);
-    setOpen(false)
-  }
+    if (!currency) {
+      current.delete("currency");
+    } else {
+      current.set("currency", currency);
+    }
+
+    if (!selectedStyle) {
+      current.delete("style");
+    } else {
+      current.set("style", selectedStyle);
+    }
+
+    if (!rate || currency === "USD") {
+      current.delete("rate");
+    } else {
+      current.set("rate", rate[currency].toString());
+    }
+    if (!minPrice || minPrice === "") {
+      current.delete("minPrice");
+    } else {
+      current.set("minPrice", minPrice);
+    }
+
+    if (!maxPrice || maxPrice === "") {
+      current.delete("maxPrice");
+    } else {
+      current.set("maxPrice", maxPrice);
+    }
+
+    // cast to string
+    const search = current.toString();
+    // or const query = `${'?'.repeat(search.length && 1)}${search}`;
+    const query = search ? `?${search}` : "";
+
+    router.push(`${pathname}${query}`);
+    setOpen(false);
+  };
 
   const clearFilter = () => {
-    const url = qs.stringifyUrl({url: pathname})
-    setSelectedStyle(null)
-    setMinPrice(null),
-    setMaxPrice(null)
-    router.push(url)
-    setOpen(false)
-  }
+    const url = qs.stringifyUrl({ url: pathname });
+    setSelectedStyle(null);
+    setMinPrice(null), setMaxPrice(null);
+    router.push(url);
+    setOpen(false);
+  };
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
@@ -77,7 +107,7 @@ export default function MobileDrawer({productLenght, styles}: FilterPanelProps) 
         >
           <SlidersHorizontal className="w-4 h-4" />
           <span className="font-medium text-left text-sm">Filter</span>
-          <ChevronDown className="w-4 h-4"/>
+          <ChevronDown className="w-4 h-4" />
         </Button>
       </SheetTrigger>
       <SheetContent className="w-3/4 lg:w-1/3 px-0 flex flex-col">
@@ -98,22 +128,22 @@ export default function MobileDrawer({productLenght, styles}: FilterPanelProps) 
             <AccordionContent className="ml-1 flex gap-3 flex-wrap">
               {styles.map((style, index) => (
                 <div key={style} className="flex items-center space-x-2">
-                <input
-                  type="radio"
-                  className="peer hidden"
-                  name="style"
-                  value={style}
-                  checked={style === selectedStyle}
-                  onChange={(e) => setSelectedStyle(e.target.value)}
-                  id={style}
-                />
-                <Label
-                  htmlFor={style}
-                  className="border cursor-pointer px-3 py-2 peer-checked:bg-primary peer-checked:text-white"
-                >
-                  {style}
-                </Label>
-              </div>
+                  <input
+                    type="radio"
+                    className="peer hidden"
+                    name="style"
+                    value={style}
+                    checked={style === selectedStyle}
+                    onChange={(e) => setSelectedStyle(e.target.value)}
+                    id={style}
+                  />
+                  <Label
+                    htmlFor={style}
+                    className="border cursor-pointer px-3 py-2 peer-checked:bg-primary peer-checked:text-white"
+                  >
+                    {style}
+                  </Label>
+                </div>
               ))}
             </AccordionContent>
           </AccordionItem>
@@ -198,20 +228,38 @@ export default function MobileDrawer({productLenght, styles}: FilterPanelProps) 
             <AccordionContent className="flex gap-3 items-center flex-wrap py-2 ml-3">
               <div className="flex items-center space-x-2">
                 <Label htmlFor="min">Min:</Label>
-                <Input className="focus-visible:ring-0 focus-visible:ring-offset-0 px-3" onChange={(e) => setMinPrice(e.target.value)} value={minPrice!} id="min" type="number"/>
+                <Input
+                  className="focus-visible:ring-0 focus-visible:ring-offset-0 px-3"
+                  onChange={(e) => setMinPrice(e.target.value)}
+                  value={minPrice!}
+                  id="min"
+                  type="number"
+                />
               </div>
               <div className="flex items-center space-x-2">
                 <Label htmlFor="max">Max:</Label>
-                <Input  onChange={(e) => setMaxPrice(e.target.value)} value={maxPrice!} className="flex-1 focus-visible:ring-0 focus-visible:ring-offset-0 px-3" id="max" type="number"/>
+                <Input
+                  onChange={(e) => setMaxPrice(e.target.value)}
+                  value={maxPrice!}
+                  className="flex-1 focus-visible:ring-0 focus-visible:ring-offset-0 px-3"
+                  id="max"
+                  type="number"
+                />
               </div>
             </AccordionContent>
           </AccordionItem>
         </Accordion>
         <SheetFooter className="flex px-6 flex-row w-full gap-x-3 items-center mt-6">
-          <Button onClick={clearFilter} className="w-full py-3 px-12 font-bold" variant="outline">
+          <Button
+            onClick={clearFilter}
+            className="w-full py-3 px-12 font-bold"
+            variant="outline"
+          >
             Clear
           </Button>
-          <Button onClick={filter} className="w-full py-3 px-12 font-bold">Show</Button>
+          <Button onClick={filter} className="w-full py-3 px-12 font-bold">
+            Show
+          </Button>
         </SheetFooter>
       </SheetContent>
     </Sheet>

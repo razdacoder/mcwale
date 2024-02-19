@@ -17,16 +17,14 @@ export default function SearchResults() {
   const res = searchResults as Product[];
   return (
     <>
-      {" "}
       {res?.length == 0 ? (
-        <section className="px-4 py-6 container grid place-items-center">
+        <section className="py-6 grid place-items-center">
           <span className="capitalize">
-            No Products For {query}
-            Found
+            No Products For &quot;{query}&quot; Found
           </span>
         </section>
       ) : (
-        <section className="px-4 container py-3">
+        <section className=" py-3">
           <div className=" grid grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-6 md:gap-6">
             {res?.map((product: Product, index) => (
               <ProductCard

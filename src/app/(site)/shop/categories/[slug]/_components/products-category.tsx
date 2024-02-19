@@ -13,13 +13,23 @@ import { useSearchParams } from "next/navigation";
 export default function CategoryProducts({ slug }: { slug: string }) {
   const searchParams = useSearchParams();
   const style = searchParams.get("style");
-  const minPrice = searchParams.get("minPrice")
-  const maxPrice = searchParams.get("maxPrice")
-  const currency = searchParams.get("currency")
-  const rate = searchParams.get("rate")
+  const minPrice = searchParams.get("minPrice");
+  const maxPrice = searchParams.get("maxPrice");
+  const currency = searchParams.get("currency");
+  const rate = searchParams.get("rate");
+  const sortBy = searchParams.get("sortBy");
   const supabase = useSupabaseBrowser();
   const { data: products } = useQuery(
-    getProductsByCategory(supabase, slug, style, minPrice, maxPrice, currency, rate)
+    getProductsByCategory(
+      supabase,
+      slug,
+      style,
+      minPrice,
+      maxPrice,
+      currency,
+      rate,
+      sortBy
+    )
   );
   const { data: category } = useQuery(getCategoryBySlug(supabase, slug));
 

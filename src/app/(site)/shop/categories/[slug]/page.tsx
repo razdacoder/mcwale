@@ -18,6 +18,7 @@ interface SearchPageProps {
     maxPrice: string;
     currency: string;
     rate: string;
+    sortBy: string;
   };
 }
 
@@ -39,7 +40,8 @@ export default async function ShopCategoryPage({
       searchParams.minPrice,
       searchParams.maxPrice,
       searchParams.currency,
-      searchParams.rate
+      searchParams.rate,
+      searchParams.sortBy
     )
   );
   return (
