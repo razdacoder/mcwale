@@ -25,22 +25,30 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
+import { StringDecoder } from "string_decoder";
 import { Textarea } from "@/components/ui/textarea";
+import { createProduct } from "@/services/productServices";
 import { getAllCategories } from "@/services/categoriesServices";
 import { productSchema } from "@/schemas/formSchemas";
+import { slugify } from "@/lib/utils";
+import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { useQuery } from "@supabase-cache-helpers/postgrest-react-query";
+import { useRouter } from "next/navigation";
 import useSupabaseBrowser from "@/lib/supabase-client";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 interface ProductCreateEditFormProps {
   product?: Product;
+  setOpen: (value: boolean) => void;
 }
 
 export default function ProductCreateEditForm({
+  setOpen,
   product,
 }: ProductCreateEditFormProps) {
   const isEditMode = Boolean(product);
+  const router = useRouter();
   const supabase = useSupabaseBrowser();
   const { data, isLoading } = useQuery(getAllCategories(supabase));
   const [seletedCategorySlug, setSelectedCategorySlug] = useState<
@@ -53,16 +61,16 @@ export default function ProductCreateEditForm({
     defaultValues: isEditMode
       ? {
           name: product?.name,
-          price: product?.price,
-          discount_percentage: product?.discount_percentage,
+          price: product?.price.toString(),
+          discount_percentage: product?.discount_percentage.toString(),
           description: product?.description,
           style: product?.style,
           is_featured: product?.is_featured,
         }
       : {
           name: "",
-          price: 0,
-          discount_percentage: 0,
+          price: "0",
+          discount_percentage: "0",
           description: "",
           style: "",
           is_featured: false,
@@ -71,7 +79,37 @@ export default function ProductCreateEditForm({
 
   const { isSubmitting, isValid } = form.formState;
 
-  function onSubmit() {}
+  async function onSubmit(values: z.infer<typeof productSchema>) {
+    // const category = categories.find((cat) => cat.slug === cat.slug);
+    // const data = {
+    //   ...values,
+    //   price: parseFloat(values.price),
+    //   discount_percentage: parseInt(values.discount_percentage),
+    //   slug: slugify(values.name),
+    //   category_id: category?.id as string,
+    //   images: images as FileList,
+    // };
+    // console.log(data);
+    if (!isEditMode) {
+      try {
+        const category = categories.find((cat) => cat.slug === cat.slug);
+        const data = {
+          ...values,
+          price: parseFloat(values.price),
+          discount_percentage: parseInt(values.discount_percentage),
+          slug: slugify(values.name),
+          category_id: category?.id as string,
+          images: images as FileList,
+        };
+        await createProduct(supabase, data);
+        toast.success("Product Created Successfully");
+        setOpen(false);
+        router.refresh();
+      } catch (error: any) {
+        toast.error(error.mesaage);
+      }
+    }
+  }
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -81,7 +119,7 @@ export default function ProductCreateEditForm({
             control={form.control}
             render={({ field }) => (
               <FormItem className="w-1/2">
-                <FormLabel>Title</FormLabel>
+                <FormLabel>Name</FormLabel>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
@@ -178,7 +216,7 @@ export default function ProductCreateEditForm({
             <FormLabel>Images</FormLabel>
             <FormControl>
               <Input
-                //   onChange={(e) => setImage(e.target.files![0])}
+                onChange={(e) => setImages(e.target.files)}
                 type="file"
                 accept="image/*"
                 multiple
@@ -194,7 +232,10 @@ export default function ProductCreateEditForm({
               <FormItem className="w-1/2">
                 <FormLabel>Style</FormLabel>
                 <FormControl>
-                  <Select>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
                     <SelectTrigger
                       disabled={!seletedCategorySlug}
                       className="w-full"
@@ -243,9 +284,7 @@ export default function ProductCreateEditForm({
         />
 
         <Button
-          disabled={
-            !isValid || isSubmitting || (!isEditMode && images === null)
-          }
+          disabled={!isValid || isSubmitting || (!isEditMode && images == null)}
           type="submit"
           className="w-full flex items-center gap-x-3"
         >

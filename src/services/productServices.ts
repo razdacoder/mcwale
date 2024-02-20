@@ -1,5 +1,7 @@
 import { Product, TypedSupabaseClient } from "@/lib/types";
 
+import { generateUniqueFilename } from "@/lib/utils";
+
 export const getProductsByCategory = (
   client: TypedSupabaseClient,
   slug: string,
@@ -87,4 +89,62 @@ export const getRelatedProducts = (
 
 export const getAllProducts = (client: TypedSupabaseClient) => {
   return client.from("products").select("*, category!inner(*)").throwOnError();
+};
+
+export const createProduct = async (
+  client: TypedSupabaseClient,
+  values: {
+    name: string;
+    slug: string;
+    price: number;
+    discount_percentage: number;
+    is_featured: boolean;
+    description: string;
+    style: string;
+    category_id: string;
+    images: FileList;
+  }
+) => {
+  const imagesUrls: string[] = [];
+  // Upload Images to Supabase
+  for (let i = 0; i < values.images.length; i++) {
+    const filename = generateUniqueFilename(values.images[i].name);
+    const { data: uploadImage, error: uploadError } = await client.storage
+      .from("images")
+      .upload(`${filename}`, values.images[i], {
+        cacheControl: "3600",
+        upsert: false,
+      });
+
+    if (uploadError) {
+      throw new Error("Could not upload image");
+    }
+
+    const { data: imageUrl } = client.storage
+      .from("images")
+      .getPublicUrl(uploadImage.path);
+
+    imagesUrls.push(imageUrl.publicUrl);
+  }
+
+  const { data, error } = await client
+    .from("products")
+    .insert({
+      name: values.name,
+      category: values.category_id,
+      slug: values.slug,
+      style: values.style,
+      is_featured: values.is_featured,
+      price: values.price,
+      discount_percentage: values.discount_percentage,
+      description: values.description,
+      images: imagesUrls,
+    })
+    .select();
+
+  if (error) {
+    throw new Error("Could not add product");
+  }
+
+  return data as unknown as Product;
 };

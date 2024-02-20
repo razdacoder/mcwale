@@ -40,7 +40,7 @@ export default function ProductHeader() {
               Create new product for mcwale shop.
             </DialogDescription>
           </DialogHeader>
-          <ProductCreateEditForm />
+          <ProductCreateEditForm setOpen={(value: boolean) => setOpen(value)} />
         </DialogContent>
       </Dialog>
     </section>

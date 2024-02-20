@@ -79,8 +79,8 @@ export const categorySchema = z.object({
 
 export const productSchema = z.object({
   name: z.string().min(1, { message: "Name cannot be empty" }),
-  price: z.number(),
-  discount_percentage: z.number(),
+  price: z.string(),
+  discount_percentage: z.string(),
   description: z
     .string()
     .min(5, { message: "Description must not be less than 5 letters" }),

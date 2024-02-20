@@ -118,7 +118,10 @@ export default function ProductAction({ product }: ProductActionProp) {
             Edit this category infor for mcwale shop.
           </DialogDescription>
         </DialogHeader>
-        <ProductCreateEditForm product={product} />
+        <ProductCreateEditForm
+          product={product}
+          setOpen={(value: boolean) => setOpen(value)}
+        />
       </DialogContent>
     </Dialog>
   );
