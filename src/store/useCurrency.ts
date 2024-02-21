@@ -1,3 +1,5 @@
+"use client";
+
 import { create } from "zustand";
 
 interface CurrencyState {
@@ -6,7 +8,10 @@ interface CurrencyState {
 }
 
 const getInitailData = () => {
-  const currency = localStorage.getItem("currency") || "USD";
+  const currency =
+    typeof window !== "undefined"
+      ? localStorage.getItem("currency") || "USD"
+      : false;
   return currency;
 };
 
