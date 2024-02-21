@@ -1,26 +1,13 @@
 "use client";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import useSupabaseBrowser from "@/lib/supabase-client";
-import { Category } from "@/lib/types";
-import { cn } from "@/lib/utils";
-import { getAllCategories } from "@/services/categoriesServices";
-import { useCartStore } from "@/store/useCart";
-import { useCurrencyStore } from "@/store/useCurrency";
-import { useQuery } from "@supabase-cache-helpers/postgrest-react-query";
-import { Menu, Search } from "lucide-react";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { FormEvent, useEffect, useState } from "react";
-import { AiOutlineShopping } from "react-icons/ai";
-import Logo from "../ui/Logo";
+
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "../ui/accordion";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
+import { FormEvent, useEffect, useState } from "react";
+import { Menu, Search } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -28,6 +15,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { usePathname, useRouter } from "next/navigation";
+
+import { AiOutlineShopping } from "react-icons/ai";
+import { Button } from "../ui/button";
+import { Category } from "@/lib/types";
+import { Input } from "../ui/input";
+import Link from "next/link";
+import Logo from "../ui/Logo";
+import { cn } from "@/lib/utils";
+import { getAllCategories } from "@/services/categoriesServices";
+import { getSetting } from "@/services/settingsServices";
+import { useCartStore } from "@/store/useCart";
+import { useCurrencyStore } from "@/store/useCurrency";
+import { useQuery } from "@supabase-cache-helpers/postgrest-react-query";
+import { useRateStore } from "@/store/useRates";
+import useSupabaseBrowser from "@/lib/supabase-client";
 
 type NavbarProps = {
   className?: string;
@@ -58,12 +62,15 @@ export default function Navbar({ className }: NavbarProps) {
   const { currency, setCurrency } = useCurrencyStore();
   const { cart } = useCartStore();
   const [isClient, setIsClient] = useState(false);
+  const { setRate } = useRateStore();
 
   useEffect(() => {
     setIsClient(true);
   }, []);
+
   const supabase = useSupabaseBrowser();
   const { data: categories } = useQuery(getAllCategories(supabase));
+  const { data: setting } = useQuery(getSetting(supabase));
 
   const search = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -71,6 +78,11 @@ export default function Navbar({ className }: NavbarProps) {
     const query = formdata.get("query");
     router.push(`/search?q=${query}`);
   };
+
+  useEffect(() => {
+    setRate({ NGN: setting?.ngn_rate, GBP: setting?.gbp_rate });
+  }, [isClient]);
+
   return (
     <header className="border-b py-3 sticky top-0 z-20 w-full bg-white">
       <nav className="w-full flex items-center lg:hidden px-4">

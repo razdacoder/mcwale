@@ -31,8 +31,9 @@ import { Edit3, Loader2, MoreVertical, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Product } from "@/lib/types";
 import ProductCreateEditForm from "./create-edit-form";
-import { deleteCategory } from "@/services/categoriesServices";
+import { deleteProduct } from "@/services/productServices";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import useSupabaseBrowser from "@/lib/supabase-client";
 
@@ -45,12 +46,14 @@ export default function ProductAction({ product }: ProductActionProp) {
   const [alertOpen, setAlertOpen] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const supabase = useSupabaseBrowser();
+  const router = useRouter();
 
   async function deleteAction() {
     try {
       setDeleting(true);
-      await deleteCategory(supabase, product.id);
-      toast.success("Category Deleted");
+      await deleteProduct(supabase, product.id);
+      toast.success("Product Deleted");
+      router.refresh();
     } catch (error: any) {
       toast.error(error.message);
     } finally {
@@ -95,8 +98,8 @@ export default function ProductAction({ product }: ProductActionProp) {
           <AlertDialogHeader>
             <AlertDialogTitle>Are you sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              Deleting this category will remove the category and assciated
-              products from the database.
+              Deleting this product will remove the product and associated
+              dependencies from the database.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

@@ -20,6 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { createProduct, updateProduct } from "@/services/productServices";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -27,7 +28,6 @@ import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
 import { StringDecoder } from "string_decoder";
 import { Textarea } from "@/components/ui/textarea";
-import { createProduct } from "@/services/productServices";
 import { getAllCategories } from "@/services/categoriesServices";
 import { productSchema } from "@/schemas/formSchemas";
 import { slugify } from "@/lib/utils";
@@ -80,29 +80,28 @@ export default function ProductCreateEditForm({
   const { isSubmitting, isValid } = form.formState;
 
   async function onSubmit(values: z.infer<typeof productSchema>) {
-    // const category = categories.find((cat) => cat.slug === cat.slug);
-    // const data = {
-    //   ...values,
-    //   price: parseFloat(values.price),
-    //   discount_percentage: parseInt(values.discount_percentage),
-    //   slug: slugify(values.name),
-    //   category_id: category?.id as string,
-    //   images: images as FileList,
-    // };
-    // console.log(data);
+    const category = categories.find((cat) => cat.slug === cat.slug);
+    const data = {
+      ...values,
+      price: parseFloat(values.price),
+      discount_percentage: parseInt(values.discount_percentage),
+      slug: slugify(values.name),
+      category_id: category?.id as string,
+      images: images,
+    };
     if (!isEditMode) {
       try {
-        const category = categories.find((cat) => cat.slug === cat.slug);
-        const data = {
-          ...values,
-          price: parseFloat(values.price),
-          discount_percentage: parseInt(values.discount_percentage),
-          slug: slugify(values.name),
-          category_id: category?.id as string,
-          images: images as FileList,
-        };
-        await createProduct(supabase, data);
+        await createProduct(supabase, { ...data, images: images as FileList });
         toast.success("Product Created Successfully");
+        setOpen(false);
+        router.refresh();
+      } catch (error: any) {
+        toast.error(error.mesaage);
+      }
+    } else {
+      try {
+        await updateProduct(supabase, { ...data, id: product?.id as string });
+        toast.success("Product Updated Successfully Successfully");
         setOpen(false);
         router.refresh();
       } catch (error: any) {

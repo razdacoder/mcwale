@@ -4,7 +4,7 @@ import {
   DEFAULT_LOGIN_REDIRECT,
   apiAuthPrefix,
   authRoutes,
-  publicRoutes,
+  privateRoutes,
 } from "../routes";
 
 export async function middleware(request: NextRequest) {
@@ -67,24 +67,46 @@ export async function middleware(request: NextRequest) {
   const isLoggedIn = !!data.session;
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
-  const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
+  const isPrivateRoute = nextUrl.pathname.startsWith(privateRoutes);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
 
   if (isApiAuthRoute) {
     return null;
   }
 
-  if (isAuthRoute) {
-    if (isLoggedIn) {
-      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+  if (isAuthRoute && isLoggedIn) {
+    return Response.redirect(new URL("/admin", nextUrl));
+  }
+
+  if (isPrivateRoute) {
+    if (!isLoggedIn) {
+      return Response.redirect(new URL("/", nextUrl));
     }
     return null;
   }
 
+  // Handle other cases where no redirect is needed
+  return null;
+
+  // if (isPrivateRoute) {
+  //   if (!isLoggedIn) {
+  //     return Response.redirect(new URL("/auth/login", nextUrl));
+  //   }
+
+  //   return null;
+  // }
+
+  // if (isAuthRoute) {
+  //   if (isLoggedIn) {
+  //     return Response.redirect(new URL("/admin", nextUrl));
+  //   }
+  //   return Response.redirect(new URL("/auth/login", nextUrl));
+  // }
+
   // if (!isLoggedIn && !isPublicRoute) {
   //   return Response.redirect(new URL("/account/login", nextUrl));
   // }
-  return null;
+  // return null;
 }
 
 // Ensure the middleware is only called for relevant paths.

@@ -1,5 +1,4 @@
 "use client";
-import { Button } from "@/components/ui/button";
 
 import {
   Carousel,
@@ -8,7 +7,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+
 import Autoplay from "embla-carousel-autoplay";
+import { Button } from "@/components/ui/button";
 import { useRef } from "react";
 
 export default function CarouselBanner() {
@@ -42,15 +43,15 @@ export default function CarouselBanner() {
           </div>
         </CarouselItem>
         <CarouselItem>
-          <div className="h-full bg-[url('/casual.jpg')] bg-no-repeat bg-cover bg-top flex items-end lg:px-32">
-            <div className="flex flex-col gap-y-6 w-full">
+          <div className="h-full bg-[url('/casual.jpg')] bg-no-repeat bg-cover bg-top flex justify-center items-end lg:items-center lg:px-32">
+            <div className="flex flex-col gap-y-6 w-full lg:w-max lg:mt-24">
               {/* <h1 className="scroll-m-20 text-5xl font-extrabold tracking-tight lg:text-7xl text-white">
                 McWale Acceesories
               </h1> */}
-              <div className="w-full">
+              <div>
                 <Button
                   size="lg"
-                  className="uppercase py-8 px-16 font-medium tracking-wider w-full"
+                  className="uppercase py-8 px-16 font-medium tracking-wider w-full lg:w-max"
                 >
                   Shop now
                 </Button>

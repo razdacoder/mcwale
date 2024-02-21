@@ -148,3 +148,95 @@ export const createProduct = async (
 
   return data as unknown as Product;
 };
+
+export const updateProduct = async (
+  client: TypedSupabaseClient,
+  values: {
+    id: string;
+    name: string;
+    slug: string;
+    price: number;
+    discount_percentage: number;
+    is_featured: boolean;
+    description: string;
+    style: string;
+    category_id: string;
+    images: FileList | null;
+  }
+) => {
+  if (values.images) {
+    const imagesUrls: string[] = [];
+    // Upload Images to Supabase
+    for (let i = 0; i < values.images.length; i++) {
+      const filename = generateUniqueFilename(values.images[i].name);
+      const { data: uploadImage, error: uploadError } = await client.storage
+        .from("images")
+        .upload(`${filename}`, values.images[i], {
+          cacheControl: "3600",
+          upsert: false,
+        });
+
+      if (uploadError) {
+        throw new Error("Could not upload image");
+      }
+
+      const { data: imageUrl } = client.storage
+        .from("images")
+        .getPublicUrl(uploadImage.path);
+
+      imagesUrls.push(imageUrl.publicUrl);
+    }
+
+    const { data, error } = await client
+      .from("products")
+      .update({
+        name: values.name,
+        category: values.category_id,
+        slug: values.slug,
+        style: values.style,
+        is_featured: values.is_featured,
+        price: values.price,
+        discount_percentage: values.discount_percentage,
+        description: values.description,
+        images: imagesUrls,
+      })
+      .eq("id", values.id);
+
+    if (error) {
+      throw new Error("Could not update category");
+    }
+    return data;
+  } else {
+    const { data, error } = await client
+      .from("products")
+      .update({
+        name: values.name,
+        category: values.category_id,
+        slug: values.slug,
+        style: values.style,
+        is_featured: values.is_featured,
+        price: values.price,
+        discount_percentage: values.discount_percentage,
+        description: values.description,
+      })
+      .eq("id", values.id);
+
+    if (error) {
+      throw new Error("Could not update category");
+    }
+    return data;
+  }
+};
+
+export const deleteProduct = async (
+  client: TypedSupabaseClient,
+  id: string
+) => {
+  const { error } = await client.from("products").delete().eq("id", id);
+
+  if (error) {
+    throw new Error("Could not delete product");
+  }
+
+  return {};
+};

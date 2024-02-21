@@ -10,7 +10,7 @@ interface RateState {
 export const useRateStore = create<RateState>()(
   persist(
     (set) => ({
-      rate: { NGN: 1420, GBP: 0.79 },
+      rate: { NGN: 0, GBP: 0 },
       setRate: (value: { NGN: number; GBP: number }) => set({ rate: value }),
     }),
     {

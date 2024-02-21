@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Carousel,
   CarouselContent,
@@ -6,9 +7,10 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Product } from "@/lib/types";
+
 import Image from "next/image";
 import Link from "next/link";
+import { Product } from "@/lib/types";
 
 interface FeaturedCarouselProps {
   products: Product[];
@@ -18,7 +20,7 @@ export default function FeaturedCarousel({ products }: FeaturedCarouselProps) {
   return (
     <Carousel className="w-full relative">
       <CarouselContent className="-ml-6 ">
-        {products.map((product, index) => (
+        {products?.map((product, index) => (
           <CarouselItem
             key={product.id}
             className="pl-6 basis-full md:basis-1/2 lg:basis-1/4"
