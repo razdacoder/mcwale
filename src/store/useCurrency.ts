@@ -6,7 +6,7 @@ interface CurrencyState {
 }
 
 const getInitailData = () => {
-  const currency = window.localStorage.getItem("currency") || "USD";
+  const currency = localStorage.getItem("currency") || "USD";
   return currency;
 };
 
