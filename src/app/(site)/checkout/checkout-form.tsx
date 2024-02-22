@@ -1,6 +1,7 @@
 "use client";
-import Heading from "@/components/ui/Heading";
-import { Button } from "@/components/ui/button";
+
+import * as z from "zod";
+
 import {
   Form,
   FormControl,
@@ -9,33 +10,39 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import {
   calTotal,
   formatPriceToDollar,
   getPrice,
   getRatePrice,
 } from "@/lib/utils";
-import { billingSchema } from "@/schemas/formSchemas";
-import { getPaymentLink } from "@/services/paymentServices";
-import { useCartStore } from "@/store/useCart";
-import { useFlutterwave, closePaymentModal } from 'flutterwave-react-v3';
-import { useCurrencyStore } from "@/store/useCurrency";
-import { useRateStore } from "@/store/useRates";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 } from "lucide-react";
-import { redirect } from "next/navigation";
+import { closePaymentModal, useFlutterwave } from "flutterwave-react-v3";
+import { redirect, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+
+import { Button } from "@/components/ui/button";
+import Heading from "@/components/ui/Heading";
+import { Input } from "@/components/ui/input";
+import { Loader2 } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { billingSchema } from "@/schemas/formSchemas";
+import { createOrder } from "@/services/paymentServices";
+import toast from "react-hot-toast";
+import { useCartStore } from "@/store/useCart";
+import { useCurrencyStore } from "@/store/useCurrency";
 import { useForm } from "react-hook-form";
-import * as z from "zod";
+import { useRateStore } from "@/store/useRates";
+import useSupabaseBrowser from "@/lib/supabase-client";
 import { v4 as uuidv4 } from "uuid";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function CheckoutForm() {
   const { currency } = useCurrencyStore();
-  const { cart } = useCartStore();
+  const { cart, clearItems } = useCartStore();
   const [isClient, setIsClient] = useState(false);
+  const router = useRouter();
   const { rate } = useRateStore();
+  const supabase = useSupabaseBrowser();
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -56,20 +63,39 @@ export default function CheckoutForm() {
     },
   });
 
+  // Payment Response Body
+  //   {
+  //     "status": "successful",
+  //     "customer": {
+  //         "name": "Rasheed Ramon",
+  //         "email": "ramonrash2@gmail.com",
+  //         "phone_number": "08024283327"
+  //     },
+  //     "transaction_id": 4926855,
+  //     "tx_ref": "26caa421-aeb9-40fc-b06b-3317e63bb67c",
+  //     "flw_ref": "FLW-MOCK-a24dee80e1c6129fcabbc5c87da630b2",
+  //     "currency": "NGN",
+  //     "amount": 3000,
+  //     "charged_amount": 3000,
+  //     "charge_response_code": "00",
+  //     "charge_response_message": "Please enter the OTP sent to your mobile number 080****** and email te**@rave**.com",
+  //     "created_at": "2024-02-22T14:56:15.000Z"
+  // }
+
   const config = {
     public_key: process.env.NEXT_PUBLIC_FLW_PUBLIC_KEY!,
     tx_ref: "",
-    amount: 30000, //(calTotal(cart) + 2) * (currency === "USD" ? 1 : rate[currency]),
+    amount: 3000, //(calTotal(cart) + 2) * (currency === "USD" ? 1 : rate[currency]),
     currency: currency,
-    payment_options: 'card,mobilemoney,ussd',
+    payment_options: "card,mobilemoney,ussd",
     customer: {
       email: "",
-       phone_number: "",
+      phone_number: "",
       name: "",
     },
     customizations: {
       title: "McWale Checkout",
-      description: 'Payment for items in cart',
+      description: "Payment for items in cart",
       logo: "https://bucafededczesdbjtygt.supabase.co/storage/v1/object/public/images/mcwale%20logo.svg",
     },
   };
@@ -77,15 +103,26 @@ export default function CheckoutForm() {
   const handleFlutterPayment = useFlutterwave(config);
   const { isSubmitting } = form.formState;
 
-  function onSubmit(values: z.infer<typeof billingSchema>) {
-    config.tx_ref = uuidv4()
-    config.customer.email = values.email
-    config.customer.name = `${values.first_name} ${values.last_name}`
-    config.customer.phone_number = values.phoneNumber
+  async function onSubmit(values: z.infer<typeof billingSchema>) {
+    config.tx_ref = uuidv4();
+    config.customer.email = values.email;
+    config.customer.name = `${values.first_name} ${values.last_name}`;
+    config.customer.phone_number = values.phoneNumber;
     handleFlutterPayment({
-      callback: (response) => {
-         console.log(response);
-          closePaymentModal() // this will close the modal programmatically
+      callback: async (response) => {
+        if (response.status === "successful") {
+          try {
+            await createOrder(supabase, values, cart, calTotal(cart));
+            toast.success("Order Created Successfully");
+            clearItems();
+            router.replace("/");
+          } catch (error: any) {
+            toast.error(error.message);
+          }
+        } else {
+          console.log("Payment Failed");
+        }
+        closePaymentModal(); // this will close the modal programmatically
       },
       onClose: () => {},
     });

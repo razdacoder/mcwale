@@ -1,42 +1,64 @@
-import axios from "axios";
-import { v4 as uuidv4 } from "uuid";
+import { CartItem } from "@/store/useCart";
+import { TypedSupabaseClient } from "@/lib/types";
+import { billingSchema } from "@/schemas/formSchemas";
+import { z } from "zod";
 
-export async function getPaymentLink(
-  amount: number,
-  currency: string,
-  name: string,
-  email: string,
-  phonenumber: string
-) {
-  try {
-    const response = await axios.post(
-      "https://api.flutterwave.com/v3/payments",
+const createOrderItem = async (client: TypedSupabaseClient, cart: CartItem) => {
+  const { data, error } = await client
+    .from("order_item")
+    .insert([
       {
-        tx_ref: uuidv4(),
-        amount,
-        currency,
-        redirect_url: "https://webhook.site/9d0b00ba-9a69-44fa-a43d-a82c33c36fdc",
-  
-        customer: {
-          email,
-          phonenumber,
-          name,
-        },
-        customizations: {
-          title: "McWale Checkout",
-          logo: "http://www.piedpiper.com/app/themes/joystick-v27/images/logo.png",
-        },
+        product: cart.product.id,
+        size: cart.size,
+        color: cart.color,
+        quantity: cart.quantity,
       },
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_FLW_SECRET_KEY}`,
-        },
-      }
-    );
-      return response.data
-  } catch (err) {
-    console.log(err)
+    ])
+    .select()
+    .single();
+
+  if (error) {
+    throw new Error(error.message);
   }
-  
-  
-}
+
+  return data.id;
+};
+
+export const createOrder = async (
+  client: TypedSupabaseClient,
+  values: z.infer<typeof billingSchema>,
+  cart: CartItem[],
+  price: number
+) => {
+  const itemsIds: string[] = [];
+  for (let i = 0; i < cart.length; i++) {
+    const data = await createOrderItem(client, cart[i]);
+    itemsIds.push(data);
+  }
+  const { data, error } = await client
+    .from("orders")
+    .insert([
+      {
+        first_name: values.first_name,
+        last_name: values.last_name,
+        email: values.email,
+        phone_number: values.phoneNumber,
+        address1: values.address1,
+        address2: values.address2,
+        town: values.town,
+        state: values.state,
+        country: values.country,
+        postal_code: values.postal_code,
+        order_note: values.order_note,
+        items: itemsIds,
+        price: price,
+      },
+    ])
+    .select();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+};

@@ -1,13 +1,12 @@
 "use client";
+
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import qs from "query-string";
+import { ChevronDown, SlidersHorizontal } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -16,12 +15,15 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { ChevronDown, SlidersHorizontal } from "lucide-react";
-import { useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import qs from "query-string";
 import { useCurrencyStore } from "@/store/useCurrency";
 import { useRateStore } from "@/store/useRates";
+import { useState } from "react";
 
 interface FilterPanelProps {
   productLenght: number;
@@ -42,16 +44,16 @@ export default function MobileDrawer({
     searchParams.get("style")
   );
   const [minPrice, setMinPrice] = useState<string | null>(
-    searchParams.get("minPrice") || "30"
+    searchParams.get("minPrice") || ""
   );
   const [maxPrice, setMaxPrice] = useState<string | null>(
-    searchParams.get("maxPrice") || "200"
+    searchParams.get("maxPrice") || ""
   );
   const filter = () => {
     // now you got a read/write object
     const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
 
-    if (!currency) {
+    if (!currency || (minPrice === "" && maxPrice === "")) {
       current.delete("currency");
     } else {
       current.set("currency", currency);
@@ -63,7 +65,7 @@ export default function MobileDrawer({
       current.set("style", selectedStyle);
     }
 
-    if (!rate || currency === "USD") {
+    if (!rate || currency === "USD" || (minPrice === "" && maxPrice === "")) {
       current.delete("rate");
     } else {
       current.set("rate", rate[currency].toString());

@@ -14,7 +14,6 @@ import FeaturedProducts from "./_components/featured";
 import NewArrivals from "./_components/new-arrivals";
 import { cookies } from "next/headers";
 import { getAllCategories } from "@/services/categoriesServices";
-import { getSetting } from "@/services/settingsServices";
 import { prefetchQuery } from "@supabase-cache-helpers/postgrest-react-query";
 import useSupabaseServer from "@/lib/supabase-server";
 
@@ -25,7 +24,6 @@ export default async function Home() {
   await prefetchQuery(queryClient, getNewArrivals(supabase));
   await prefetchQuery(queryClient, getFeaturedProducts(supabase));
   await prefetchQuery(queryClient, getAllCategories(supabase));
-  await prefetchQuery(queryClient, getSetting(supabase));
 
   return (
     <>

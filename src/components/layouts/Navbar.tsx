@@ -70,7 +70,7 @@ export default function Navbar({ className }: NavbarProps) {
 
   const supabase = useSupabaseBrowser();
   const { data: categories } = useQuery(getAllCategories(supabase));
-  const { data: setting } = useQuery(getSetting(supabase));
+  // const { data: setting } = useQuery(getSetting(supabase));
 
   const search = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -80,8 +80,13 @@ export default function Navbar({ className }: NavbarProps) {
   };
 
   useEffect(() => {
-    setRate({ NGN: setting?.ngn_rate, GBP: setting?.gbp_rate });
-  }, [isClient]);
+    const getRates = async () => {
+      const data = await getSetting(supabase);
+      setRate({ NGN: data?.ngn_rate, GBP: data?.gbp_rate });
+    };
+
+    getRates();
+  }, []);
 
   return (
     <header className="border-b py-3 sticky top-0 z-20 w-full bg-white">

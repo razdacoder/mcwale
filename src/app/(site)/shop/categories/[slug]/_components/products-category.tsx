@@ -1,15 +1,17 @@
 "use client";
-import ProductCard from "@/components/layouts/ProductCard";
-import useSupabaseBrowser from "@/lib/supabase-client";
+
+import { ChevronRight } from "lucide-react";
+import Link from "next/link";
+import MobileDrawer from "./mobile-drawer";
 import { Product } from "@/lib/types";
+import ProductCard from "@/components/layouts/ProductCard";
+import SortBy from "./sort";
 import { getCategoryBySlug } from "@/services/categoriesServices";
 import { getProductsByCategory } from "@/services/productServices";
 import { useQuery } from "@supabase-cache-helpers/postgrest-react-query";
-import Link from "next/link";
-import MobileDrawer from "./mobile-drawer";
-import SortBy from "./sort";
-import { ChevronRight } from "lucide-react";
 import { useSearchParams } from "next/navigation";
+import useSupabaseBrowser from "@/lib/supabase-client";
+
 export default function CategoryProducts({ slug }: { slug: string }) {
   const searchParams = useSearchParams();
   const style = searchParams.get("style");
@@ -80,7 +82,8 @@ export default function CategoryProducts({ slug }: { slug: string }) {
             {products?.map((product: Product, index) => (
               <ProductCard
                 product={product}
-                height="h-[250px] md:h-[450px] lg:h-[550px]"
+                height="max-h-[250px] md:min-h-[450px] lg:min-h-[350px] xl:min-h-[550px]"
+                // height="h-[100px]"
                 key={product.id}
               />
             ))}
