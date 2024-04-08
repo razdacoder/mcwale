@@ -82,7 +82,7 @@ export default function CategoryProducts({ slug }: { slug: string }) {
             {products?.map((product: Product, index) => (
               <ProductCard
                 product={product}
-                height="max-h-[250px] md:min-h-[450px] lg:min-h-[350px] xl:min-h-[550px]"
+                height="max-h-[300px] sm:min-h-[350px] md:min-h-[450px] lg:min-h-[350px] xl:min-h-[550px]"
                 // height="h-[100px]"
                 key={product.id}
               />

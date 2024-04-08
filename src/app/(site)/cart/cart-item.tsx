@@ -32,7 +32,7 @@ export default function CartItemUI({ item }: CartItemProps) {
     updateQuantity(item.product.id, item.quantity);
   };
   return (
-    <div className=" flex border p-4 h-[200px] md:h-[250px] lg:h-[300px] ">
+    <div className=" flex border p-4 h-[200px] md:h-[300px] lg:h-[300px] ">
       <div className="flex flex-1 gap-x-6">
         <div className="w-1/2 md:w-4/12 relative">
           <Image
@@ -40,6 +40,9 @@ export default function CartItemUI({ item }: CartItemProps) {
             fill
             alt={item.product.name}
             className="absolute"
+            style={{
+              objectFit: "cover",
+            }}
           />
         </div>
         <div className="w-6/12 md:w-8/12 flex flex-col justify-center">

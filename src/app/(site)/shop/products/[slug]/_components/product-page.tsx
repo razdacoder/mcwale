@@ -205,7 +205,7 @@ export default function ProductPage({ slug }: { slug: string }) {
             <h4 className="text-lg tracking-wider font-medium">Description:</h4>
             <p className="text-sm mt-2 tracking-wide">{product?.description}</p>
           </div>
-          <SizeChart />
+          {/* <SizeChart /> */}
         </div>
       </section>
       <section className=" px-4 container my-12">
@@ -227,7 +227,7 @@ export default function ProductPage({ slug }: { slug: string }) {
             {relatedProducts.map((relatedProduct, index) => (
               <ProductCard
                 product={relatedProduct}
-                height="h-[220px] md:h-[350px]"
+                height="max-h-[300px] sm:min-h-[350px]"
                 key={relatedProduct.id}
               />
             ))}

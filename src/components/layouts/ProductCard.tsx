@@ -41,6 +41,9 @@ export default function ProductCard({ height, product }: ProductCardProps) {
                       fill
                       alt={product.name}
                       className="absolute"
+                      style={{
+                        objectFit: "cover",
+                      }}
                     />
                   </div>
                 </CarouselItem>
