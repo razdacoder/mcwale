@@ -1,4 +1,3 @@
-"use client";
 import * as SliderPrimitive from "@radix-ui/react-slider";
 import React, { useState } from "react";
 
@@ -59,13 +58,13 @@ const Slider = React.forwardRef(
         {localValues.map((value, index) => (
           <React.Fragment key={index}>
             <div
-              className="absolute text-center"
+              className="absolute w-full flex justify-between"
               style={{
-                left: `calc(${((value - min) / (max - min)) * 100}% + 0px)`,
-                top: `10px`,
+                left: `calc(${((value - min) / (max - min)) * 85}% + 0px)`,
+                top: `15px`,
               }}
             >
-              <span className="text-sm">
+              <span className="text-xs text-balance">
                 {formatLabel ? formatLabel(value) : value}
               </span>
             </div>

@@ -1,26 +1,42 @@
+import { validateRequest } from "@/services/actions";
+import { getCategories } from "@/services/categoriesServices";
+import { getAllProducts } from "@/services/productServices";
 import {
   HydrationBoundary,
   QueryClient,
   dehydrate,
 } from "@tanstack/react-query";
-
-import ProductBody from "./product-body";
-import ProductHeader from "./product-header";
-import React from "react";
-import { cookies } from "next/headers";
-import { getAllProducts } from "@/services/productServices";
-import { prefetchQuery } from "@supabase-cache-helpers/postgrest-react-query";
-import useSupabaseServer from "@/lib/supabase-server";
+import { redirect } from "next/navigation";
+import CategoriesList from "./categories-list";
+import ProductActions from "./product-actions";
+import ProductList from "./product-list";
 
 export default async function AdminProductPage() {
+  const { isValid } = await validateRequest();
+  if (!isValid) {
+    redirect("/auth/login");
+  }
   const queryClient = new QueryClient();
-  const cookieStore = cookies();
-  const supabase = useSupabaseServer(cookieStore);
-  await prefetchQuery(queryClient, getAllProducts(supabase));
+  await queryClient.prefetchQuery({
+    queryKey: ["admin-get-all-products"],
+    queryFn: () => getAllProducts(),
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: ["admin-get-all-categories"],
+    queryFn: getCategories,
+  });
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <ProductHeader />
-      <ProductBody />
-    </HydrationBoundary>
+    <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
+      <div className="flex items-center">
+        <ProductActions />
+      </div>
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <div className="flex gap-x-12">
+          <ProductList />
+          <CategoriesList />
+        </div>
+      </HydrationBoundary>
+    </main>
   );
 }

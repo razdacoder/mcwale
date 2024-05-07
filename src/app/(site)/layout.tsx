@@ -13,7 +13,7 @@ export default function SiteLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className=" scroll-smooth">
+    <html lang="en" className="scroll-smooth">
       <body>
         <Navbar />
         {children}

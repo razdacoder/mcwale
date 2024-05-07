@@ -18,7 +18,7 @@ export const reviewSchema = z.object({
   stars: z.string().max(1),
   first_name: z
     .string()
-    .min(2, { message: "Name must be at leat 2 characters" }),
+    .min(2, { message: "Name must be at least 2 characters" }),
   last_name: z
     .string()
     .min(2, { message: "Name must be at least 2 characters" }),
@@ -69,21 +69,22 @@ export const billingSchema = z.object({
   state: z.string().min(1),
   country: z.string().min(1),
   postal_code: z.string().min(3),
-  order_note: z.string().min(1),
+  order_note: z.string().optional(),
 });
 
 export const categorySchema = z.object({
   title: z.string().min(1, { message: "Title cannot be empty" }),
-  styles: z.string(),
+  styles: z.string().array(),
+  image: z.string(),
 });
 
 export const productSchema = z.object({
-  name: z.string().min(1, { message: "Name cannot be empty" }),
-  price: z.string(),
-  discount_percentage: z.string(),
+  title: z.string().min(1, { message: "Name cannot be empty" }),
+  price: z.number(),
+  discount_percentage: z.number(),
   description: z
     .string()
     .min(5, { message: "Description must not be less than 5 letters" }),
-  is_featured: z.boolean(),
+  is_featured: z.boolean().default(false),
   style: z.string(),
 });

@@ -1,5 +1,6 @@
 "use client";
-import useSupabaseBrowser from "@/lib/supabase-client";
+import ProductCard from "@/components/layouts/ProductCard";
+import { Button } from "@/components/ui/button";
 import { Product } from "@/lib/types";
 import {
   calculateDiscountPrice,
@@ -14,39 +15,39 @@ import {
 import { useCartStore } from "@/store/useCart";
 import { useCurrencyStore } from "@/store/useCurrency";
 import { useRateStore } from "@/store/useRates";
-import { useQuery } from "@supabase-cache-helpers/postgrest-react-query";
+import { useQuery } from "@tanstack/react-query";
+import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import AddToCart from "./add-to-cart";
+import PageSkeleton from "./page-skeleton";
 import ProductCarousel from "./product-carousel";
 import ProductColor from "./product-color";
 import ProductQuantity from "./product-quantity";
 import ProductSize from "./product-size";
-import SizeChart from "./size-chart";
-import ProductCard from "@/components/layouts/ProductCard";
-import { ChevronRight } from "lucide-react";
 import ProductSkeleton from "./product-skeleton";
-import PageSkeleton from "./page-skeleton";
-import { Button } from "@/components/ui/button";
 
 export default function ProductPage({ slug }: { slug: string }) {
-  const supabase = useSupabaseBrowser();
   const {
-    data: productsData,
+    data: product,
     isError,
     isLoading,
-  } = useQuery(getProductBySlug(supabase, slug));
+  } = useQuery({
+    queryKey: ["product", slug],
+    queryFn: () => getProductBySlug(slug),
+  });
+
+  const {
+    data: relatedProducts,
+    isError: relatedError,
+    isLoading: relatedLoading,
+  } = useQuery({
+    queryKey: ["related-products", slug],
+    queryFn: () => getRelatedProducts(slug),
+  });
 
   const { currency } = useCurrencyStore();
   const { rate } = useRateStore();
-  const product = productsData as Product;
-
-  const {
-    data: relatedProductsData,
-    isLoading: relatedLoading,
-    isError: relatedError,
-  } = useQuery(getRelatedProducts(supabase, product));
-  const relatedProducts = relatedProductsData as Product[];
 
   const { addItem } = useCartStore();
 
@@ -61,14 +62,19 @@ export default function ProductPage({ slug }: { slug: string }) {
 
   const addToCart = () => {
     if (!size || !color) return;
-    addItem({ product, size: size!, color: color!, quantity });
+    addItem({
+      product: product as Product,
+      size: size!,
+      color: color!,
+      quantity,
+    });
   };
 
   if (isLoading) {
     return <PageSkeleton />;
   }
 
-  if (isError) {
+  if (isError || !product) {
     return (
       <div className="container px-4 my-12 h-[70vh] flex items-center justify-center flex-col">
         <p>Product Not Found</p>
@@ -96,19 +102,19 @@ export default function ProductPage({ slug }: { slug: string }) {
           <span className="hidden md:inline">
             <ChevronRight className="w-4 h-4 " />
           </span>
-          <span className="hidden md:inline font-meidum text-primary truncate capitalize">
-            {product?.name}
+          <span className="hidden md:inline font-medium text-primary truncate capitalize">
+            {product?.title}
           </span>
         </span>
       </section>
       {/*  -- */}
       <section className="container px-4 flex flex-col lg:flex-row gap-y-6 gap-x-3 xl:gap-x-12">
-        <div className="w-full lg:w-5/12">
-          <ProductCarousel images={product?.images} />
+        <div className="w-full lg:w-4/12">
+          <ProductCarousel images={product?.images as string[]} />
         </div>
         <div className="w-full lg:w-6/12 py-3">
           <h3 className="uppercase tracking-wider text-xl font-medium">
-            {product?.name}
+            {product?.title}
           </h3>
 
           {isClient ? (
@@ -209,29 +215,36 @@ export default function ProductPage({ slug }: { slug: string }) {
         </div>
       </section>
       <section className=" px-4 container my-12">
-        <div className="mb-4">
-          <h2 className="inline-block scroll-m-20 pb-2 tracking-wider relative text-xl font-medium ">
-            May Also Like
-          </h2>
-        </div>
-        {relatedLoading && (
-          <div className=" grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-6">
-            {[...Array(5)].map((_, index) => (
-              <ProductSkeleton key={index} />
-            ))}
-          </div>
-        )}
-        {relatedError && <p>Error</p>}
-        {relatedProducts && (
-          <div className=" grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-6">
-            {relatedProducts.map((relatedProduct, index) => (
-              <ProductCard
-                product={relatedProduct}
-                height="max-h-[300px] sm:min-h-[350px]"
-                key={relatedProduct.id}
-              />
-            ))}
-          </div>
+        {relatedProducts && relatedProducts.length > 0 && (
+          <>
+            <div className="mb-4">
+              <h2 className="inline-block scroll-m-20 pb-2 tracking-wider relative text-xl font-medium ">
+                May Also Like
+              </h2>
+            </div>
+            {relatedLoading && (
+              <div className=" grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-6">
+                {[...Array(5)].map((_, index) => (
+                  <ProductSkeleton key={index} />
+                ))}
+              </div>
+            )}
+            {relatedError && (
+              <p className="text-center text-sm font-medium">
+                Failed to fetch related products
+              </p>
+            )}
+            {relatedProducts && (
+              <div className=" grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-4 gap-y-6">
+                {relatedProducts.map((relatedProduct, index) => (
+                  <ProductCard
+                    product={relatedProduct}
+                    key={relatedProduct.id}
+                  />
+                ))}
+              </div>
+            )}
+          </>
         )}
       </section>
     </main>

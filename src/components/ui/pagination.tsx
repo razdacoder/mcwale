@@ -1,4 +1,3 @@
-"use client";
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
@@ -14,6 +13,7 @@ const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
     {...props}
   />
 );
+Pagination.displayName = "Pagination";
 
 const PaginationContent = React.forwardRef<
   HTMLUListElement,
@@ -40,26 +40,23 @@ type PaginationLinkProps = {
 } & Pick<ButtonProps, "size"> &
   React.ComponentProps<typeof Link>;
 
-// pagination.tsx
 const PaginationLink = ({
   className,
   isActive,
   size = "icon",
   ...props
 }: PaginationLinkProps) => (
-  <PaginationItem>
-    <Link
-      aria-current={isActive ? "page" : undefined}
-      className={cn(
-        buttonVariants({
-          variant: isActive ? "outline" : "ghost",
-          size,
-        }),
-        className
-      )}
-      {...props}
-    ></Link>
-  </PaginationItem>
+  <Link
+    aria-current={isActive ? "page" : undefined}
+    className={cn(
+      buttonVariants({
+        variant: isActive ? "outline" : "ghost",
+        size,
+      }),
+      className
+    )}
+    {...props}
+  />
 );
 PaginationLink.displayName = "PaginationLink";
 
@@ -93,6 +90,7 @@ const PaginationNext = ({
     <ChevronRight className="h-4 w-4" />
   </PaginationLink>
 );
+PaginationNext.displayName = "PaginationNext";
 
 const PaginationEllipsis = ({
   className,
@@ -107,6 +105,7 @@ const PaginationEllipsis = ({
     <span className="sr-only">More pages</span>
   </span>
 );
+PaginationEllipsis.displayName = "PaginationEllipsis";
 
 export {
   Pagination,

@@ -8,13 +8,12 @@ export type Category = {
   title: string;
   slug: string;
   image: string;
-  created_at: Date;
   styles: string[];
 };
 
 export type Product = {
   id: string;
-  name: string;
+  title: string;
   slug: string;
   price: number;
   description: string;
@@ -26,15 +25,21 @@ export type Product = {
   created_at: Date;
 };
 
-
 export type Review = {
-  id: string
-  stars: number
-  review: string
-  created_at: Date
-  first_name: string
-  last_name: string
+  id: string;
+  stars: number;
+  review: string;
+  created_at: Date;
+  first_name: string;
+  last_name: string;
   product: {
-    slug: string
-  }
-}
+    slug: string;
+  };
+};
+
+export type PaginatedProducts = {
+  data: Product[];
+  page: number;
+  results: number;
+  pages: number;
+};

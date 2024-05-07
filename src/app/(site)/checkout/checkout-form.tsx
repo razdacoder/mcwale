@@ -17,32 +17,30 @@ import {
   getRatePrice,
 } from "@/lib/utils";
 import { closePaymentModal, useFlutterwave } from "flutterwave-react-v3";
-import { redirect, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { Button } from "@/components/ui/button";
 import Heading from "@/components/ui/Heading";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Loader2 } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
+import useCreateOder from "@/hooks/useCreateOder";
 import { billingSchema } from "@/schemas/formSchemas";
-import { createOrder } from "@/services/paymentServices";
-import toast from "react-hot-toast";
 import { useCartStore } from "@/store/useCart";
 import { useCurrencyStore } from "@/store/useCurrency";
-import { useForm } from "react-hook-form";
 import { useRateStore } from "@/store/useRates";
-import useSupabaseBrowser from "@/lib/supabase-client";
-import { v4 as uuidv4 } from "uuid";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { v4 as uuidv4 } from "uuid";
 
 export default function CheckoutForm() {
   const { currency } = useCurrencyStore();
   const { cart, clearItems } = useCartStore();
   const [isClient, setIsClient] = useState(false);
-  const router = useRouter();
+  const { createOrderFn } = useCreateOder();
+
   const { rate } = useRateStore();
-  const supabase = useSupabaseBrowser();
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -111,16 +109,10 @@ export default function CheckoutForm() {
     handleFlutterPayment({
       callback: async (response) => {
         if (response.status === "successful") {
-          try {
-            await createOrder(supabase, values, cart, calTotal(cart));
-            toast.success("Order Created Successfully");
-            clearItems();
-            router.replace("/");
-          } catch (error: any) {
-            toast.error(error.message);
-          }
+          const total = calTotal(cart);
+          createOrderFn({ values, total });
         } else {
-          console.log("Payment Failed");
+          toast.error("Payment failed");
         }
         closePaymentModal(); // this will close the modal programmatically
       },
@@ -148,6 +140,7 @@ export default function CheckoutForm() {
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
             name="last_name"
@@ -192,7 +185,7 @@ export default function CheckoutForm() {
             name="address1"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Adreess Line 1</FormLabel>
+                <FormLabel>Address Line 1</FormLabel>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
@@ -205,7 +198,7 @@ export default function CheckoutForm() {
             name="address2"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Adreess Line 2</FormLabel>
+                <FormLabel>Address Line 2</FormLabel>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
@@ -307,7 +300,7 @@ export default function CheckoutForm() {
                   key={item.product.id}
                   className="grid grid-cols-5 text-sm py-3 gap-x-3"
                 >
-                  <span className="truncate">{item.product.name}</span>
+                  <span className="truncate">{item.product.title}</span>
                   <span>{item.size}</span>
                   <span>{item.color}</span>
                   <span>x {item.quantity}</span>

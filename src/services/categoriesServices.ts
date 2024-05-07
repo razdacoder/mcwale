@@ -1,6 +1,16 @@
 import { Category, TypedSupabaseClient } from "@/lib/types";
 
 import { generateUniqueFilename } from "@/lib/utils";
+import { api } from "./supabase";
+
+export const getCategories = async () => {
+  const response = await api.get("/categories");
+  if (response.status != 200) {
+    throw new Error("Failed to fetch categories");
+  }
+
+  return response.data as Category[];
+};
 
 export const getAllCategories = (client: TypedSupabaseClient) => {
   return client
@@ -9,16 +19,13 @@ export const getAllCategories = (client: TypedSupabaseClient) => {
     .order("created_at", { ascending: true });
 };
 
-export const getCategoryBySlug = (
-  client: TypedSupabaseClient,
-  slug: string
-) => {
-  return client
-    .from("categories")
-    .select("*")
-    .eq("slug", slug)
-    .throwOnError()
-    .single();
+export const getCategoryBySlug = async (slug: string) => {
+  const response = await api.get(`/categories/${slug}`);
+  if (response.status != 200) {
+    throw new Error("Failed to get category");
+  }
+
+  return response.data as Category;
 };
 
 export const deleteCategory = async (

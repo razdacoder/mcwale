@@ -1,12 +1,12 @@
-import useSupabaseServer from "@/lib/supabase-server";
-import { getProductBySlug } from "@/services/productServices";
-import { prefetchQuery } from "@supabase-cache-helpers/postgrest-react-query";
 import {
-  dehydrate,
+  getProductBySlug,
+  getRelatedProducts,
+} from "@/services/productServices";
+import {
   HydrationBoundary,
   QueryClient,
+  dehydrate,
 } from "@tanstack/react-query";
-import { cookies } from "next/headers";
 import ProductPage from "./_components/product-page";
 
 export default async function ProductPageView({
@@ -15,9 +15,15 @@ export default async function ProductPageView({
   params: { slug: string };
 }) {
   const queryClient = new QueryClient();
-  const cookieStore = cookies();
-  const supabase = useSupabaseServer(cookieStore);
-  await prefetchQuery(queryClient, getProductBySlug(supabase, params.slug));
+  await queryClient.prefetchQuery({
+    queryKey: ["product", params.slug],
+    queryFn: () => getProductBySlug(params.slug),
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: ["related-products", params.slug],
+    queryFn: () => getRelatedProducts(params.slug),
+  });
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

@@ -1,9 +1,14 @@
 import Heading from "@/components/ui/Heading";
-import Image from "next/image";
-import LoginForm from "./login-form";
 import LogoBig from "@/components/ui/LogoBig";
+import { validateRequest } from "@/services/actions";
+import { redirect } from "next/navigation";
+import LoginForm from "./login-form";
 
-export default function LoginPage() {
+export default async function LoginPage() {
+  const { isValid } = await validateRequest();
+  if (isValid) {
+    return redirect("/admin");
+  }
   return (
     <main className="w-full h-dvh flex justify-center items-center">
       <div>

@@ -51,7 +51,7 @@ export default function ProductCarousel({ images }: ProductCarouselProps) {
         ))}
       </div>
 
-      <CarouselContent className="xl:h-[90vh] -ml-0 w-full">
+      <CarouselContent className="xl:h-[70vh] -ml-0 w-full">
         {images?.map((image, index) => (
           <CarouselItem key={index} className="pl-0">
             <div className="relative flex items-center">

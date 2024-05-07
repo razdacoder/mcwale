@@ -1,242 +1,201 @@
-import { Product, TypedSupabaseClient } from "@/lib/types";
+import { PaginatedProducts, Product } from "@/lib/types";
 
-import { generateUniqueFilename } from "@/lib/utils";
+import { api } from "./supabase";
 
-export const getProductsByCategory = (
-  client: TypedSupabaseClient,
+// export const getProductsByCategory = (
+//   client: TypedSupabaseClient,
+//   slug: string,
+//   style: string | null,
+//   minPrice: string | null,
+//   maxPrice: string | null,
+//   currency: string | null,
+//   rate: string | null,
+//   sortBy: string | null
+// ) => {
+//   let query = client
+//     .from("products")
+//     .select("*, category!inner(*)")
+//     .eq("category.slug", slug);
+
+//   if (!sortBy || sortBy === "newest") {
+//     query.order("created_at", { ascending: false });
+//   } else if (sortBy === "price-l-h") {
+//     query.order("price", { ascending: true });
+//   } else {
+//     query.order("price", { ascending: false });
+//   }
+
+//   if (style) {
+//     query.eq("style", style);
+//   }
+
+//   if (minPrice) {
+//     if (currency === "USD") {
+//       query.gte("price", parseFloat(minPrice));
+//     } else {
+//       query.gte("price", parseFloat(minPrice) / parseFloat(rate!));
+//     }
+//   }
+
+//   if (maxPrice) {
+//     if (currency === "USD") {
+//       query.lte("price", parseFloat(maxPrice));
+//     } else {
+//       query.lte("price", parseFloat(maxPrice) / parseFloat(rate!));
+//     }
+//   }
+//   return query.throwOnError();
+// };
+
+export const getProductsByCategory = async (
   slug: string,
   style: string | null,
-  minPrice: string | null,
-  maxPrice: string | null,
-  currency: string | null,
-  rate: string | null,
-  sortBy: string | null
+  minPrice: number | null,
+  maxPrice: number | null,
+  sortBy: string | null,
+  page: number | null
 ) => {
-  let query = client
-    .from("products")
-    .select("*, category!inner(*)")
-    .eq("category.slug", slug);
+  const url = `/products/category/${slug}`;
 
-  if (!sortBy || sortBy === "newest") {
-    query.order("created_at", { ascending: false });
-  } else if (sortBy === "price-l-h") {
-    query.order("price", { ascending: true });
-  } else {
-    query.order("price", { ascending: false });
-  }
+  const params = new URLSearchParams();
 
   if (style) {
-    query.eq("style", style);
+    params.append("style", style);
   }
 
   if (minPrice) {
-    if (currency === "USD") {
-      query.gte("price", parseFloat(minPrice));
-    } else {
-      query.gte("price", parseFloat(minPrice) / parseFloat(rate!));
-    }
+    params.append("min_price", minPrice.toString());
   }
 
   if (maxPrice) {
-    if (currency === "USD") {
-      query.lte("price", parseFloat(maxPrice));
-    } else {
-      query.lte("price", parseFloat(maxPrice) / parseFloat(rate!));
-    }
+    params.append("max_price", maxPrice.toString());
   }
-  return query.throwOnError();
+
+  if (sortBy) {
+    params.append("sortBy", sortBy);
+  }
+
+  if (page) {
+    params.append("page", page.toString());
+  }
+
+  const response = await api.get(`${url}?${params.toString()}`);
+  if (response.status != 200) {
+    throw new Error("Failed to fetch products");
+  }
+
+  return response.data as PaginatedProducts;
 };
 
-export const getProductBySlug = (client: TypedSupabaseClient, slug: string) => {
-  return client
-    .from("products")
-    .select("*, category!inner(*)")
-    .eq("slug", slug)
-    .throwOnError()
-    .single();
+export const getProductBySlug = async (slug: string) => {
+  const response = await api.get(`/products/${slug}`);
+  if (response.status != 200) {
+    throw new Error("Failed to fetch product info");
+  }
+
+  return response.data as Product;
 };
 
-export const getNewArrivals = (client: TypedSupabaseClient) => {
-  return client
-    .from("products")
-    .select("*")
-    .order("created_at", { ascending: false })
-    .limit(4);
+export const getRelatedProducts = async (slug: string) => {
+  const response = await api.get(`/products/related/${slug}`);
+  if (response.status != 200) {
+    throw new Error("Failed to fetch related products");
+  }
+
+  return response.data as Product[];
 };
 
-export const getFeaturedProducts = (client: TypedSupabaseClient) => {
-  return client.from("products").select("*").eq("is_featured", true).limit(12);
+// export const getNewArrivals = (client: TypedSupabaseClient) => {
+//   return client
+//     .from("products")
+//     .select("*")
+//     .order("created_at", { ascending: false })
+//     .limit(4);
+// };
+
+export const getNewArrivals = async () => {
+  const response = await api.get("/products/recent");
+  if (response.status != 200) {
+    throw new Error("Failed to fetch recent products");
+  }
+
+  return response.data as Product[];
 };
 
-export const searchProducts = (client: TypedSupabaseClient, q: string) => {
-  return client.rpc("search_products", { keyword: q });
+// export const getFeaturedProducts = (client: TypedSupabaseClient) => {
+//   return client.from("products").select("*").eq("is_featured", true).limit(12);
+// };
+
+export const getFeaturedProducts = async () => {
+  const response = await api.get("/products/featured");
+  if (response.status != 200) {
+    throw new Error("Failed to fetch featured products");
+  }
+
+  return response.data as Product[];
+};
+
+export const searchProducts = async (
+  query: string,
+  page: number | null,
+  sortBy: string | null
+) => {
+  const url = `/products/search`;
+
+  const params = new URLSearchParams();
+  params.append("q", query);
+  if (sortBy) {
+    params.append("sortBy", sortBy);
+  }
+
+  if (page) {
+    params.append("page", page.toString());
+  }
+  const response = await api.get(`${url}?${params.toString()}`);
+  if (response.status != 200) {
+    throw new Error("Failed to search for products");
+  }
+
+  return response.data as PaginatedProducts;
 };
 
 // Your Orders ->
 
-export const getRelatedProducts = (
-  client: TypedSupabaseClient,
-  product: Product
+export const getAllProducts = async (
+  minPrice?: number | null,
+  maxPrice?: number | null,
+  category_slug?: string | null,
+  sortBy?: string | null,
+  page?: number | null
 ) => {
-  return client
-    .from("products")
-    .select("*, category!inner(*)")
-    .eq("category.slug", product?.category.slug)
-    .neq("id", product?.id)
-    .limit(6)
-    .throwOnError();
-};
+  const url = `/products`;
 
-export const getAllProducts = (client: TypedSupabaseClient) => {
-  return client.from("products").select("*, category!inner(*)").throwOnError();
-};
+  const params = new URLSearchParams();
 
-export const createProduct = async (
-  client: TypedSupabaseClient,
-  values: {
-    name: string;
-    slug: string;
-    price: number;
-    discount_percentage: number;
-    is_featured: boolean;
-    description: string;
-    style: string;
-    category_id: string;
-    images: FileList;
-  }
-) => {
-  const imagesUrls: string[] = [];
-  // Upload Images to Supabase
-  for (let i = 0; i < values.images.length; i++) {
-    const filename = generateUniqueFilename(values.images[i].name);
-    const { data: uploadImage, error: uploadError } = await client.storage
-      .from("images")
-      .upload(`${filename}`, values.images[i], {
-        cacheControl: "3600",
-        upsert: false,
-      });
-
-    if (uploadError) {
-      throw new Error("Could not upload image");
-    }
-
-    const { data: imageUrl } = client.storage
-      .from("images")
-      .getPublicUrl(uploadImage.path);
-
-    imagesUrls.push(imageUrl.publicUrl);
+  if (minPrice) {
+    params.append("min_price", minPrice.toString());
   }
 
-  const { data, error } = await client
-    .from("products")
-    .insert({
-      name: values.name,
-      category: values.category_id,
-      slug: values.slug,
-      style: values.style,
-      is_featured: values.is_featured,
-      price: values.price,
-      discount_percentage: values.discount_percentage,
-      description: values.description,
-      images: imagesUrls,
-    })
-    .select();
-
-  if (error) {
-    throw new Error("Could not add product");
+  if (maxPrice) {
+    params.append("max_price", maxPrice.toString());
   }
 
-  return data as unknown as Product;
-};
-
-export const updateProduct = async (
-  client: TypedSupabaseClient,
-  values: {
-    id: string;
-    name: string;
-    slug: string;
-    price: number;
-    discount_percentage: number;
-    is_featured: boolean;
-    description: string;
-    style: string;
-    category_id: string;
-    images: FileList | null;
-  }
-) => {
-  if (values.images) {
-    const imagesUrls: string[] = [];
-    // Upload Images to Supabase
-    for (let i = 0; i < values.images.length; i++) {
-      const filename = generateUniqueFilename(values.images[i].name);
-      const { data: uploadImage, error: uploadError } = await client.storage
-        .from("images")
-        .upload(`${filename}`, values.images[i], {
-          cacheControl: "3600",
-          upsert: false,
-        });
-
-      if (uploadError) {
-        throw new Error("Could not upload image");
-      }
-
-      const { data: imageUrl } = client.storage
-        .from("images")
-        .getPublicUrl(uploadImage.path);
-
-      imagesUrls.push(imageUrl.publicUrl);
-    }
-
-    const { data, error } = await client
-      .from("products")
-      .update({
-        name: values.name,
-        category: values.category_id,
-        slug: values.slug,
-        style: values.style,
-        is_featured: values.is_featured,
-        price: values.price,
-        discount_percentage: values.discount_percentage,
-        description: values.description,
-        images: imagesUrls,
-      })
-      .eq("id", values.id);
-
-    if (error) {
-      throw new Error("Could not update category");
-    }
-    return data;
-  } else {
-    const { data, error } = await client
-      .from("products")
-      .update({
-        name: values.name,
-        category: values.category_id,
-        slug: values.slug,
-        style: values.style,
-        is_featured: values.is_featured,
-        price: values.price,
-        discount_percentage: values.discount_percentage,
-        description: values.description,
-      })
-      .eq("id", values.id);
-
-    if (error) {
-      throw new Error("Could not update category");
-    }
-    return data;
-  }
-};
-
-export const deleteProduct = async (
-  client: TypedSupabaseClient,
-  id: string
-) => {
-  const { error } = await client.from("products").delete().eq("id", id);
-
-  if (error) {
-    throw new Error("Could not delete product");
+  if (category_slug) {
+    params.append("category", category_slug);
   }
 
-  return {};
+  if (sortBy) {
+    params.append("sortBy", sortBy);
+  }
+
+  if (page) {
+    params.append("page", page.toString());
+  }
+
+  const response = await api.get(`${url}?${params.toString()}`);
+  if (response.status != 200) {
+    throw new Error("Failed to fetch products");
+  }
+
+  return response.data as PaginatedProducts;
 };

@@ -1,13 +1,6 @@
 "use client";
 
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { ChevronDown, SlidersHorizontal } from "lucide-react";
-import {
   Sheet,
   SheetContent,
   SheetFooter,
@@ -15,14 +8,16 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { ChevronDown, SlidersHorizontal } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import qs from "query-string";
+import { Slider } from "@/components/ui/slider";
+import { getRatePrice } from "@/lib/utils";
 import { useCurrencyStore } from "@/store/useCurrency";
 import { useRateStore } from "@/store/useRates";
+import qs from "query-string";
 import { useState } from "react";
 
 interface FilterPanelProps {
@@ -43,58 +38,48 @@ export default function MobileDrawer({
   const [selectedStyle, setSelectedStyle] = useState<string | null>(
     searchParams.get("style")
   );
-  const [minPrice, setMinPrice] = useState<string | null>(
-    searchParams.get("minPrice") || ""
+
+  const [minPrice, setMinPrice] = useState<number>(
+    parseInt(searchParams.get("min_price") as string) || 0
   );
-  const [maxPrice, setMaxPrice] = useState<string | null>(
-    searchParams.get("maxPrice") || ""
+  const [maxPrice, setMaxPrice] = useState<number>(
+    parseInt(searchParams.get("max_price") as string) || 1000
   );
+
+  const initialValue = [minPrice, maxPrice];
+  const [localValues, setLocalValues] = useState(initialValue);
+
+  const handleValueChange = (newValues: number[]) => {
+    setLocalValues(newValues);
+  };
+
   const filter = () => {
-    // now you got a read/write object
-    const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
-
-    if (!currency || (minPrice === "" && maxPrice === "")) {
-      current.delete("currency");
-    } else {
-      current.set("currency", currency);
-    }
-
+    const newParams = new URLSearchParams(searchParams.toString());
     if (!selectedStyle) {
-      current.delete("style");
+      newParams.delete("style");
     } else {
-      current.set("style", selectedStyle);
+      newParams.set("style", selectedStyle);
     }
 
-    if (!rate || currency === "USD" || (minPrice === "" && maxPrice === "")) {
-      current.delete("rate");
+    if (minPrice <= 0) {
+      newParams.delete("min_price");
     } else {
-      current.set("rate", rate[currency].toString());
-    }
-    if (!minPrice || minPrice === "") {
-      current.delete("minPrice");
-    } else {
-      current.set("minPrice", minPrice);
+      newParams.set("min_price", localValues[0].toString());
     }
 
-    if (!maxPrice || maxPrice === "") {
-      current.delete("maxPrice");
+    if (maxPrice == 1000) {
+      newParams.delete("max_price");
     } else {
-      current.set("maxPrice", maxPrice);
+      newParams.set("max_price", localValues[1].toString());
     }
-
-    // cast to string
-    const search = current.toString();
-    // or const query = `${'?'.repeat(search.length && 1)}${search}`;
-    const query = search ? `?${search}` : "";
-
-    router.push(`${pathname}${query}`);
     setOpen(false);
+    router.push(`${pathname}?${newParams}`);
   };
 
   const clearFilter = () => {
     const url = qs.stringifyUrl({ url: pathname });
     setSelectedStyle(null);
-    setMinPrice(null), setMaxPrice(null);
+    setMinPrice(50), setMaxPrice(1000);
     router.push(url);
     setOpen(false);
   };
@@ -112,145 +97,58 @@ export default function MobileDrawer({
           <ChevronDown className="w-4 h-4" />
         </Button>
       </SheetTrigger>
-      <SheetContent className="w-3/4 lg:w-1/3 px-0 flex flex-col">
+      <SheetContent className="w-full sm:w-[540px] px-3 flex flex-col">
         <SheetHeader className="py-3 border-b px-6">
           <SheetTitle className="text-left tracking-wide">
             Filter ({productLenght} items)
           </SheetTitle>
         </SheetHeader>
-        <Accordion
-          type="single"
-          collapsible
-          className="w-full flex-1 px-6 space-y-2"
-        >
-          <AccordionItem className="border-none" value="item-1">
-            <AccordionTrigger className="hover:no-underline border-none text-sm font-medium">
-              Style
-            </AccordionTrigger>
-            <AccordionContent className="ml-1 flex gap-3 flex-wrap">
-              {styles.map((style, index) => (
-                <div key={style} className="flex items-center space-x-2">
-                  <input
-                    type="radio"
-                    className="peer hidden"
-                    name="style"
-                    value={style}
-                    checked={style === selectedStyle}
-                    onChange={(e) => setSelectedStyle(e.target.value)}
-                    id={style}
-                  />
-                  <Label
-                    htmlFor={style}
-                    className="border cursor-pointer px-3 py-2 peer-checked:bg-primary peer-checked:text-white"
-                  >
-                    {style}
-                  </Label>
-                </div>
-              ))}
-            </AccordionContent>
-          </AccordionItem>
-          {/* <AccordionItem value="item-2" className="border-none">
-            <AccordionTrigger className="hover:no-underline text-sm font-medium">
-              Color
-            </AccordionTrigger>
-            <AccordionContent className="ml-1 flex gap-x-3">
-              <div className="flex items-center space-x-2">
+        <div className="space-y-6">
+          <div>
+            <h6 className="font-medium ">Style:</h6>
+            {styles.map((style, index) => (
+              <div key={style} className="flex items-center space-y-2 ">
                 <input
                   type="radio"
                   className="peer hidden"
-                  name="color"
-                  value="black"
-                  id="black"
+                  name="style"
+                  value={style}
+                  checked={style === selectedStyle}
+                  onChange={(e) => setSelectedStyle(e.target.value)}
+                  id={style}
                 />
                 <Label
-                  className="border w-6 h-6 rounded-full bg-black  peer-checked:border-black"
-                  htmlFor="black"
-                ></Label>
+                  htmlFor={style}
+                  className="border cursor-pointer px-3 py-3 peer-checked:bg-primary peer-checked:text-white w-full"
+                >
+                  {style}
+                </Label>
               </div>
-              <div className="flex items-center space-x-2">
-                <input
-                  type="radio"
-                  className="peer hidden"
-                  name="color"
-                  value="white"
-                  id="white"
-                />
-                <Label
-                  className="border w-6 h-6 rounded-full bg-white  peer-checked:border-black"
-                  htmlFor="white"
-                ></Label>
-              </div>
+            ))}
+          </div>
+          <div>
+            <h6 className="font-medium">Price:</h6>
+            <div className="flex items-center space-x-2">
+              <Slider
+                min={0}
+                max={1000}
+                value={[localValues[0], localValues[1]]}
+                minStepsBetweenThumbs={10}
+                className="my-6 px-3"
+                step={10}
+                onValueChange={handleValueChange}
+                formatLabel={(value) =>
+                  getRatePrice(
+                    currency,
+                    value,
+                    currency === "USD" ? null : rate[currency]
+                  )
+                }
+              />
+            </div>
+          </div>
+        </div>
 
-              <div className="flex items-center space-x-2">
-                <input
-                  type="radio"
-                  className="peer hidden"
-                  name="color"
-                  value="red"
-                  id="red"
-                />
-                <Label
-                  className="border w-6 h-6 rounded-full bg-red-500  peer-checked:border-black"
-                  htmlFor="red"
-                ></Label>
-              </div>
-
-              <div className="flex items-center space-x-2">
-                <input
-                  type="radio"
-                  className="peer hidden"
-                  name="color"
-                  value="blue"
-                  id="blue"
-                />
-                <Label
-                  className="border w-6 h-6 rounded-full bg-blue-500  peer-checked:border-black"
-                  htmlFor="blue"
-                ></Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <input
-                  type="radio"
-                  className="peer hidden"
-                  name="color"
-                  value="yellow"
-                  id="yellow"
-                />
-                <Label
-                  className="border w-6 h-6 rounded-full bg-yellow-500  peer-checked:border-black"
-                  htmlFor="yellow"
-                ></Label>
-              </div>
-            </AccordionContent>
-          </AccordionItem> */}
-          <AccordionItem value="item-3" className="border-none">
-            <AccordionTrigger className="hover:no-underline text-sm font-medium">
-              Price
-            </AccordionTrigger>
-            <AccordionContent className="flex gap-3 items-center flex-wrap py-2 ml-3">
-              <div className="flex items-center space-x-2">
-                <Label htmlFor="min">Min:</Label>
-                <Input
-                  className="focus-visible:ring-0 focus-visible:ring-offset-0 px-3"
-                  onChange={(e) => setMinPrice(e.target.value)}
-                  value={minPrice!}
-                  id="min"
-                  type="number"
-                />
-              </div>
-              <div className="flex items-center space-x-2">
-                <Label htmlFor="max">Max:</Label>
-                <Input
-                  onChange={(e) => setMaxPrice(e.target.value)}
-                  value={maxPrice!}
-                  className="flex-1 focus-visible:ring-0 focus-visible:ring-offset-0 px-3"
-                  id="max"
-                  type="number"
-                />
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
         <SheetFooter className="flex px-6 flex-row w-full gap-x-3 items-center mt-6">
           <Button
             onClick={clearFilter}

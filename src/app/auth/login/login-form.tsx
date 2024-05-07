@@ -12,31 +12,23 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Loader2 } from "lucide-react";
-import { login } from "@/services/authServices";
 import { loginSchema } from "@/schemas/formSchemas";
-import toast from "react-hot-toast";
-import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
-import useSupabaseBrowser from "@/lib/supabase-client";
+import { Loader2 } from "lucide-react";
+
+import useLogin from "@/hooks/useLogin";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
 
 export default function LoginForm() {
-  const supabase = useSupabaseBrowser();
+  const { loginFn } = useLogin();
   const router = useRouter();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
   });
   const { isValid, isSubmitting } = form.formState;
   async function onSubmit(values: z.infer<typeof loginSchema>) {
-    try {
-      if (!isValid) return;
-      await login(supabase, values);
-      toast.success("Login Successfull");
-      router.refresh();
-    } catch (error: any) {
-      toast.error(error.message);
-    }
+    loginFn(values);
   }
   return (
     <Form {...form}>

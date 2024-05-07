@@ -11,7 +11,6 @@ import { useRateStore } from "@/store/useRates";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 
 type ProductCardProps = {
   height?: string;
@@ -30,31 +29,23 @@ export default function ProductCard({ height, product }: ProductCardProps) {
   return (
     <Link href={`/shop/products/${product.slug}`}>
       <div className="w-full">
-        <div className={cn("h-[450px] w-full", height)}>
-          <Carousel className="w-full">
-            <CarouselContent className={cn("h-[450px] w-full -ml-0", height)}>
-              {product.images.map((image, index) => (
-                <CarouselItem key={index} className="pl-0">
-                  <div className="h-full relative">
-                    <Image
-                      src={image}
-                      fill
-                      alt={product.name}
-                      className="absolute"
-                      style={{
-                        objectFit: "cover",
-                      }}
-                    />
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-          </Carousel>
+        <div className={cn("h-[280px] md:h-[380px] w-full", height)}>
+          <div className="h-full relative overflow-hidden">
+            <Image
+              src={product.images[0]}
+              fill
+              alt={product.title}
+              className="absolute hover:scale-150 transition-all duration-500"
+              style={{
+                objectFit: "cover",
+              }}
+            />
+          </div>
         </div>
 
         <div className="w-full flex flex-col gap-y-2 mt-4">
           <span className="text-sm truncate lg:text-base font-light w-full capitalize tracking-wider">
-            {product.name}
+            {product.title}
           </span>
           {isClient ? (
             <div className="flex gap-x-3">

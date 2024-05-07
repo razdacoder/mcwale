@@ -1,14 +1,15 @@
 "use client";
 import Heading from "@/components/ui/Heading";
-import useSupabaseBrowser from "@/lib/supabase-client";
 import { Product } from "@/lib/types";
 import { getFeaturedProducts } from "@/services/productServices";
-import { useQuery } from "@supabase-cache-helpers/postgrest-react-query";
+import { useQuery } from "@tanstack/react-query";
 import FeaturedCarousel from "./featured-carousel";
 
 export default function FeaturedProducts() {
-  const supabase = useSupabaseBrowser();
-  const { data: products } = useQuery(getFeaturedProducts(supabase));
+  const { data: products } = useQuery({
+    queryKey: ["get-featured"],
+    queryFn: getFeaturedProducts,
+  });
   return (
     <section className="pb-12 px-4 container my-12">
       <div className="mb-3">

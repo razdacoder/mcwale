@@ -8,8 +8,9 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-import Autoplay from "embla-carousel-autoplay";
 import { Button } from "@/components/ui/button";
+import Autoplay from "embla-carousel-autoplay";
+import Link from "next/link";
 import { useRef } from "react";
 
 export default function CarouselBanner() {
@@ -35,8 +36,9 @@ export default function CarouselBanner() {
                 <Button
                   size="lg"
                   className="uppercase py-8 px-16 font-medium tracking-wider w-full lg:w-max"
+                  asChild
                 >
-                  Shop now
+                  <Link href="/shop">Shop now</Link>
                 </Button>
               </div>
             </div>
@@ -46,14 +48,15 @@ export default function CarouselBanner() {
           <div className="h-full bg-[url('/casual.jpg')] bg-no-repeat bg-cover bg-top flex justify-center items-end lg:items-center lg:px-32">
             <div className="flex flex-col gap-y-6 w-full lg:w-max lg:mt-24">
               {/* <h1 className="scroll-m-20 text-5xl font-extrabold tracking-tight lg:text-7xl text-white">
-                McWale Acceesories
+                McWale Accessories
               </h1> */}
               <div>
                 <Button
                   size="lg"
                   className="uppercase py-8 px-16 font-medium tracking-wider w-full lg:w-max"
+                  asChild
                 >
-                  Shop now
+                  <Link href="/shop">Shop now</Link>
                 </Button>
               </div>
             </div>
