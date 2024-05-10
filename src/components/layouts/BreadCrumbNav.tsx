@@ -33,6 +33,16 @@ export default function BreadCrumbNav() {
           </>
         )}
 
+        {pathname.startsWith("/admin/appointments") && (
+          <>
+            <BreadcrumbSeparator />
+
+            <BreadcrumbItem>
+              <BreadcrumbPage>Appointments</BreadcrumbPage>
+            </BreadcrumbItem>
+          </>
+        )}
+
         {pathname.startsWith("/admin/products") && (
           <>
             <BreadcrumbSeparator />

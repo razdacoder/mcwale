@@ -189,6 +189,51 @@ export const updateCategory = async (
     return redirect("/auth/login");
   }
 };
+
+export const updateOrderStatus = async (id: string, status: string) => {
+  const cookieStore = cookies();
+  const { isValid } = await validateRequest();
+  if (isValid) {
+    const response = await fetch(`${BASE_URL}/orders/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify({ status }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${cookieStore.get("session_token")?.value}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Could not update order");
+    }
+
+    return await response.json();
+  } else {
+    return redirect("/auth/login");
+  }
+};
+
+export const deleteOrder = async (id: string) => {
+  const cookieStore = cookies();
+  const { isValid } = await validateRequest();
+  if (isValid) {
+    const response = await fetch(`${BASE_URL}/orders/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${cookieStore.get("session_token")?.value}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Could not delete order");
+    }
+
+    return null;
+  } else {
+    return redirect("/auth/login");
+  }
+};
 // Auth Stuff
 
 export const validateRequest = async (): Promise<{ isValid: boolean }> => {

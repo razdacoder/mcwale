@@ -1,13 +1,13 @@
 "use client";
 import { cn } from "@/lib/utils";
 import {
+  CalendarDaysIcon,
   Home,
   LineChart,
   Package,
   Package2,
   Settings,
   ShoppingCart,
-  Users2,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -87,14 +87,18 @@ export default function AdminSideBar() {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                href="/admin/appointments"
+                className={cn(
+                  "flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8",
+                  pathname.startsWith("/admin/appointments") &&
+                    "bg-accent text-accent-foreground"
+                )}
               >
-                <Users2 className="h-5 w-5" />
-                <span className="sr-only">Customers</span>
+                <CalendarDaysIcon className="h-5 w-5" />
+                <span className="sr-only">Appointments</span>
               </Link>
             </TooltipTrigger>
-            <TooltipContent side="right">Customers</TooltipContent>
+            <TooltipContent side="right">Appointments</TooltipContent>
           </Tooltip>
         </TooltipProvider>
         <TooltipProvider>

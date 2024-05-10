@@ -43,3 +43,61 @@ export type PaginatedProducts = {
   results: number;
   pages: number;
 };
+
+export type Order = {
+  id: string;
+  order_number: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone_number: string;
+  address_line_1: string;
+  address_line_2: string;
+  town: string;
+  state: string;
+  country: string;
+  postal_code: string;
+  order_note: string;
+  status: "pending" | "shipped" | "delivered";
+  total: number;
+  created_at: Date;
+};
+
+export type OrderDetail = {
+  id: string;
+  order_number: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone_number: string;
+  address_line_1: string;
+  address_line_2: string;
+  town: string;
+  state: string;
+  country: string;
+  postal_code: string;
+  order_note: string;
+  status: "pending" | "shipped" | "delivered";
+  total: number;
+  created_at: Date;
+  items: OrderItem[];
+};
+
+type OrderItem = {
+  id: string;
+  product: Product;
+  size: string;
+  color: string;
+  quantity: number;
+};
+
+export type Appointment = {
+  id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone_number: string;
+  address: string;
+  date: Date;
+  created_at: Date;
+};
